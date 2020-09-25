@@ -1,0 +1,108 @@
+<input id="fileDetail" type="file" [formControl]="file" class="submit-file">
+<div class="row">
+    <div class="col-md-12 mb-3">
+        <nav class="navbar navbar-dark bg-dark rounded">
+            <span class="navbar-brand mb-0 h1"><i class="fa fa-ticket fa-lg"></i><b> Ticket</b> [id-ticket]</span>
+            <span class="navbar-text"><b class="text-white">Fecha Compromiso </b> 01-01-2020</span>
+            <span class="navbar-text text-white">
+                <b>Prioridad </b> 
+                <ngb-rating class="text-danger"  [(rate)]="currentRate" [readonly]="true" [max]="3"></ngb-rating>
+            </span>
+            <div class="form-inline">
+                <button class="btn btn-ghost-info mr-1" (click)="openFileUpload()"><i class="fa fa-paperclip"></i> Adjuntar Archivos</button>
+                <button class="btn btn-ghost-light mr-1"><i class="fa fa-user-plus"></i> Pedir ayuda</button>
+                <button class="btn btn-ghost-danger"><i class="fa fa-ban"></i> Cancelar</button>
+            </div>
+        </nav>
+    </div>
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <div class="row">
+                    <div class="col-md-3 text-center"><small>10-11-2020 10:43</small></div>
+                    <div class="col-md-3 text-center"><small>10-11-2020 10:43</small></div>
+                    <div class="col-md-3 text-center"><small>10-11-2020 10:43</small></div>
+                    <div class="col-md-3 text-center"><small>10-11-2020 10:43</small></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 text-center">
+                        <span class="badge badge-pill badge-warning">Pendiente</span>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <span class="badge badge-pill badge-danger">Asignado</span>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <span class="badge badge-pill badge-primary">Atendiendo</span>
+                    </div>
+                    <div class="col-md-3 text-center">
+                        <span class="badge badge-pill badge-success">Completado</span>
+                        <!-- <span class="badge badge-pill badge-danger">Cancelado</span> -->
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6 text-left"><b>Creado por:</b> Alguien hizo esto</div>
+                    <div class="col-md-6 text-right"><small>martes, 14 de abril 2020</small></div>
+                </div>
+                <div class="row mt-3 mb-3">
+                    <div class="col-md-6">
+                        <i class="fa fa-location-arrow text-danger"></i> domicilio de donde se hizo el ticket
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header bg-info">
+                                <i class="fa fa-question-circle-o" aria-hidden="true"></i> <b>Descripción</b>
+                            </div>
+                            <div class="card-body text-justify">
+                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Magni, vero. Suscipit aliquid odit rerum sed autem nesciunt vitae, quisquam natus labore officia! Ullam quibusdam, laborum vel doloribus cupiditate voluptatibus officia.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-secondary">
+                                <i class="fa fa-paperclip"></i> <b>Archivos adjuntos</b>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">Algo</li>
+                                <li class="list-group-item">Algo</li>
+                                <li class="list-group-item">Algo</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header bg-secondary">
+                                <i class="fa fa-user-circle-o"></i> <b>Atendido por</b>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">
+                                    <img class="img-avatar" src="assets/img/avatars/1.jpg"> Alguien atendio 1
+                                </li>
+                                <li class="list-group-item">
+                                    <img class="img-avatar" src="assets/img/avatars/7.jpg"> Alguien atendio 2
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col-md-12">
+                        <b>Evaluacion General </b>
+                        <small>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. In fuga iste cum aut nemo ut suscipit itaque officia harum magni reiciendis, consequuntur dignissimos laboriosam nobis maxime quam nam at explicabo.
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-chat class="col-md-4"></app-chat>
+</div>

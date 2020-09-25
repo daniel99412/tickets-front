@@ -1,0 +1,38 @@
+.message-box {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 1px solid black;
+    padding: 10px;
+    text-align: justify;
+    background-color: white;
+}
+
+.receiver {
+    border-left: 3px solid red;
+}
+
+.sender {
+    border-right: 3px solid green;
+}
+
+.time {
+    font-size: 10px;
+    text-align: right;
+}
+
+.person {
+    font-size: 12px;
+}
+
+.submit-file {
+    display: none;
+    visibility: hidden;
+}
+
+.message {
+    font-size: 10px;
+}
+
+.download-file {
+    font-size: 10px;
+}

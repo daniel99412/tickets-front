@@ -1,0 +1,23 @@
+<div class="message-box {{howSend}}">
+    <div class="row mt-1 mb-2">
+        <div class="col-md-9 person">
+            <b>{{person}}</b>
+        </div>
+        <div class="col-md-3 time">
+            <b>{{hour}}</b>
+        </div>
+    </div>
+    <div class="row" *ngIf="type === 'file'">
+        <div class="col-1 dowload-file-logo">
+            <a href="#"><i class="fa fa-download"></i></a>
+        </div>
+        <div class="col-11 download-file">
+            {{message}}
+        </div>
+    </div>
+    <div class="row" *ngIf="type === 'message'">
+        <div class="col-12 message">
+            {{message}}
+        </div>
+    </div>
+</div>

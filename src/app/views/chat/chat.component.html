@@ -1,0 +1,39 @@
+<div class="card">
+    <div class="card-header bg-success">
+        <i class="fa fa-commenting fa-lg"></i><b> Chat</b>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <div class="message-list overflow-auto">
+                    <div class="row" *ngFor="let item of messages">
+                        <div class="col-12">
+                            <app-message [howSend]="item.howSend" [person]="item.person" [hour]="item.hour"
+                                [message]="item.message" [type]="item.type"></app-message>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <button type="button" class="btn btn-ghost-info" (click)="openFileUpload()"
+                            *ngIf="!file.value" tooltip="Adjuntar archivos" placement="top"><i
+                                class="fa fa-paperclip"></i></button>
+                        <button type="button" class="btn btn-ghost-danger" (click)="deleteFile()" *ngIf="file.value"
+                            tooltip="Borrar archivos" placement="top"><i class="fa fa-trash"></i></button>
+                    </div>
+                    <textarea class="form-control" type="textarea" [formControl]="message"
+                        placeholder="Escribe un mensaje" (keyup)="autoscroll($event)"></textarea>
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-ghost-success" tooltip="Enviar" placement="top"><i
+                                class="fa fa-send"></i></button>
+                    </div>
+                </div>
+                <input id="file" type="file" [formControl]="file" class="submit-file">
+            </div>
+        </div>
+    </div>
+</div>

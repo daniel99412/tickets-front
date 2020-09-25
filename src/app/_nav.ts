@@ -7,6 +7,11 @@ export const navItems: INavData[] = [
     icon: 'icon-speedometer'
   },
   {
+    name: 'Tickets',
+    url: '/tickets/list',
+    icon: 'icon-note'
+  },
+  {
     title: true,
     name: 'Theme'
   },
@@ -94,8 +99,7 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Buttons',
-    url: '/buttons',
-    icon: 'icon-cursor',
+    url: '/buttons', icon: 'icon-cursor',
     children: [
       {
         name: 'Buttons',
