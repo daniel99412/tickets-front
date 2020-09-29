@@ -7,19 +7,30 @@ import { TicketRoutingModule } from './ticket-routing.module';
 import { ChatModule } from '../chat/chat.module';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { TicketComponent } from './ticket/ticket.component';
+import { AssignComponent } from './assign/assign.component';
+import { ModalModule } from 'ngx-bootstrap/modal';
 
 @NgModule({
   imports: [
     CommonModule,
     TicketRoutingModule,
-    ChatModule,
     NgbRatingModule,
-    ReactiveFormsModule
+    TabsModule,
+    ReactiveFormsModule,
+    ModalModule.forRoot(),
+    ChatModule,
   ],
   declarations: [
     ListComponent,
     DetailComponent,
-    CreateComponent
+    CreateComponent,
+    TicketComponent,
+    AssignComponent
+  ],
+  exports: [
+    TicketComponent
   ]
 })
 export class TicketModule { }
