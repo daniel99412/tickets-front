@@ -1,0 +1,140 @@
+<div class="row">
+  <div class="col-lg-12 add">
+    <button type="button" class="btn btn-info mr-1" data-toggle="modal" (click)="infoModal.show()">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+  <br><br>
+  <div class="col-lg-12 table">
+    <div class="card">
+      <div class="card-body">
+        <table class="table table-bordered table-striped table-sm">
+          <thead>
+            <tr>
+              <th>Sucursal</th>
+              <th>Domicilio</th>
+              <th>Estatus</th>
+              <th> </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="info">CUCEI</td>
+              <td class="info">Blvd. Gral. Marcelino García Barragán #1421</td>
+              <td>
+                <span class="badge badge-success">Activo</span>
+              </td>
+              <td class="button-actions">
+                <button type="button" class="btn btn-ghost-primary" (click)="infoModal2.show()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-ghost-primary"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </td>
+            </tr>
+            <tr>
+              <td class="info">CUCEA</td>
+              <td class="info">Periférico Norte N° 799</td>
+              <td>
+                <span class="badge badge-success">Activo</span>
+              </td>
+              <td class="button-actions">
+                <button type="button" class="btn btn-ghost-primary" (click)="infoModal2.show()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-ghost-primary"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </td>
+            </tr>
+            <tr>
+              <td class="info">CUCS</td>
+              <td class="info">Sierra Mojada #950</td>
+              <td>
+                <span class="badge badge-success">Activo</span>
+              </td>
+              <td class="button-actions">
+                <button type="button" class="btn btn-ghost-primary" (click)="infoModal2.show()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-ghost-primary"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </td>
+            </tr>
+            <tr>
+              <td class="info">CUCSH</td>
+              <td class="info">Calle Guanajuato #1045</td>
+              <td>
+                <span class="badge badge-success">Activo</span>
+              </td>
+              <td class="button-actions">
+                <button type="button" class="btn btn-ghost-primary" (click)="infoModal2.show()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-ghost-primary"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </td>
+            </tr>
+            <tr>
+              <td class="info">CUAD</td>
+              <td class="info">C. Morelos #191</td>
+              <td>
+                <span class="badge badge-success">Activo</span>
+              </td>
+              <td class="button-actions">
+                <button type="button" class="btn btn-ghost-primary" (click)="infoModal2.show()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-ghost-primary"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <!--/.col-->
+</div>
+
+<div bsModal #infoModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Crear Sucursal</h4>
+        <button type="button" class="close" (click)="infoModal.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" id="name" placeholder="Nombre">
+          </div>
+          <div class="form-group">
+            <label for="address">Domicilio</label>
+            <input type="text" class="form-control" id="address" placeholder="Domicilio">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="infoModal.hide()">Cancelar</button>
+        <button type="button" class="btn btn-info">Crear Sucursal</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div bsModal #infoModal2="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-info" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Editar Usuario</h4>
+        <button type="button" class="close" (click)="infoModal2.hide()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" id="name" placeholder="Nombre">
+          </div>
+          <div class="form-group">
+            <label for="address">Domicilio</label>
+            <input type="text" class="form-control" id="address" placeholder="Domicilio">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="infoModal2.hide()">Cancelar</button>
+        <button type="button" class="btn btn-info">Guardar Cambios</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

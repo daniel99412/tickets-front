@@ -59,6 +59,26 @@ export const routes: Routes = [
         loadChildren: () => import('./views/ticket/ticket.module').then(m => m.TicketModule)
       },
       {
+        path: 'users',
+        loadChildren: () => import('./views/users/users.module').then(m => m.UsersModule)
+      },
+      {
+        path: 'roles',
+        loadChildren: () => import('./views/roles/roles.module').then(m => m.RolesModule)
+      },
+      {
+        path: 'branchOffices',
+        loadChildren: () => import('./views/branchOffices/branchOffices.module').then(m => m.BranchOfficesModule)
+      },
+      {
+        path: 'categories',
+        loadChildren: () => import('./views/categories/categories.module').then(m => m.CategoriesModule)
+      },
+      {
+        path: 'subcategories',
+        loadChildren: () => import('./views/subcategories/subcategories.module').then(m => m.SubcategoriesModule)
+      },
+      {
         path: 'buttons',
         loadChildren: () => import('./views/buttons/buttons.module').then(m => m.ButtonsModule)
       },

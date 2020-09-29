@@ -12,6 +12,31 @@ export const navItems: INavData[] = [
     icon: 'icon-note'
   },
   {
+    name: 'Usuarios',
+    url: '/users',
+    icon: 'icon-user'
+  },
+  {
+    name: 'Roles',
+    url: '/roles',
+    icon: 'icon-book-open'
+  },
+  {
+    name: 'Sucursales',
+    url: '/branchOffices',
+    icon: 'icon-home'
+  },
+  {
+    name: 'Categorias',
+    url: '/categories',
+    icon: 'icon-list'
+  },
+  {
+    name: 'Subcategorias',
+    url: '/subcategories',
+    icon: 'icon-organization'
+  },
+  {
     title: true,
     name: 'Theme'
   },
