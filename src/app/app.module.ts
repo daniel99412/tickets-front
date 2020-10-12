@@ -42,6 +42,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { SocketioService } from './socketio.service';
 
 @NgModule({
   imports: [
@@ -67,12 +68,14 @@ import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
     P404Component,
     P500Component,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
   ],
-  providers: [{
-    provide: LocationStrategy,
-    useClass: HashLocationStrategy
-  }],
-  bootstrap: [ AppComponent ]
+  providers: [
+    SocketioService,
+    {
+      provide: LocationStrategy,
+      useClass: HashLocationStrategy
+    }],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
