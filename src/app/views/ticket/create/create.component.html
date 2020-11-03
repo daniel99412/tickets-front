@@ -1,1 +1,60 @@
-<p>create works!</p>
+<div class="modal fade" bsModal #createModal="bs-modal" tabindex="-1">
+    <div class="modal-dialog modal-info modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Crear ticket</h4>
+                <button type="button" class="close" (click)="hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="ticketForm">
+                <div class="modal-body">
+                    <div class="form-group row">
+                        <div class="col-md-2 offset-4 mt-2">
+                            <label>Prioridad</label>
+                            <ngb-rating [max]="3" formControlName="rating"></ngb-rating>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="creationDate">Fecha de creación</label>
+                            <input formControlName="creationDate" class="form-control" id="creationDate" type="date" readonly>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="description">Descripción</label>
+                            <textarea formControlName="description" id="description" class="form-control"></textarea>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="category">Categoria</label>
+                            <select formControlName="category" class="form-control" id="category">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mt-2">
+                            <label for="subcategory">Subcategoria</label>
+                            <select formControlName="subcategory"  class="form-control" id="subcategory">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12 mt-2">
+                            <label for="reportedFrom">Reportado desde</label>
+                            <select formControlName="reportedFrom" class="form-control" id="reportedFrom" *ngFor="let branchOffice of branchOffices">
+                                <option [value]="branchOffice._id">{{branchOffice.name}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" (click)="hide()">Cancelar</button>
+                    <button class="btn btn-info" (click)="send()">Crear Ticket</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

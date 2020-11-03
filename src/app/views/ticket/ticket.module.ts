@@ -11,6 +11,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TicketComponent } from './ticket/ticket.component';
 import { AssignComponent } from './assign/assign.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
+import { CategoryService } from '../../services/category.service';
 
 @NgModule({
   imports: [
@@ -31,6 +32,10 @@ import { ModalModule } from 'ngx-bootstrap/modal';
   ],
   exports: [
     TicketComponent
+  ],
+  providers: [
+    CategoryService,
+    // BranchOfficeService
   ]
 })
 export class TicketModule { }

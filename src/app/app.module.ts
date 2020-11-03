@@ -43,6 +43,9 @@ import { ChartsModule } from 'ng2-charts';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { SocketioService } from './socketio.service';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { LoginModule } from './views/login/login.module';
+import { AddTokenInterceptor } from './services/addToken.interceptor';
 
 @NgModule({
   imports: [
@@ -60,22 +63,22 @@ import { SocketioService } from './socketio.service';
     ChartsModule,
     ToastrModule.forRoot(),
     NgbModule,
-    NgbRatingModule
+    NgbRatingModule,
+    HttpClientModule,
+    LoginModule
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
     P404Component,
     P500Component,
-    LoginComponent,
     RegisterComponent,
   ],
   providers: [
     SocketioService,
-    {
-      provide: LocationStrategy,
-      useClass: HashLocationStrategy
-    }],
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+    { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

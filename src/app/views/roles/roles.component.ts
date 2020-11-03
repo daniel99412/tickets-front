@@ -1,4 +1,5 @@
 import { Component, ViewChild} from '@angular/core';
+import { FormControl } from '@angular/forms';
 import {ModalDirective} from 'ngx-bootstrap/modal';
 
 @Component({
@@ -7,7 +8,6 @@ import {ModalDirective} from 'ngx-bootstrap/modal';
 })
 
 export class RolesComponent {
-
   @ViewChild('infoModal') public infoModal: ModalDirective;
-
+  role = new FormControl();
 }

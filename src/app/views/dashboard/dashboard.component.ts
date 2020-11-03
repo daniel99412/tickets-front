@@ -1,8 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { getStyle, hexToRgba } from '@coreui/coreui/dist/js/coreui-utilities';
-import { CustomTooltips } from '@coreui/coreui-plugin-chartjs-custom-tooltips';
-import { ToastrService } from 'ngx-toastr';
-import { SocketioService } from '../../socketio.service';
 
 @Component({
   templateUrl: 'dashboard.component.html',
@@ -10,13 +6,7 @@ import { SocketioService } from '../../socketio.service';
 export class DashboardComponent implements OnInit {
   public room;
 
-  constructor(
-    // public socketService: SocketioService
-  ) {}
+  constructor() {}
 
-  ngOnInit(): void {
-    // this.socketService.listen('message').subscribe((data) => {
-    //   console.log(data);
-    // });
-  }
+  ngOnInit(): void {}
 }
