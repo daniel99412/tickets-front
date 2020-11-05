@@ -11,8 +11,8 @@ export class RoleService {
 
   constructor( private httpClient: HttpClient ) { }
 
-  save(role: Role): Observable<Role> {
-    return this.httpClient.post<Role>(`${AppSettings.API}/role/`, role);
+  save(role: Role): Observable<any> {
+    return this.httpClient.post<any>(`${AppSettings.API}/role/`, role);
   }
 
   getAll(): Observable<Role[]> {

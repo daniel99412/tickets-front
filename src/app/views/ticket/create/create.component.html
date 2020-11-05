@@ -25,27 +25,20 @@
                         <div class="col-md-6 mt-2">
                             <label for="category">Categoria</label>
                             <select formControlName="category" class="form-control" id="category">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}</option>
                             </select>
                         </div>
                         <div class="col-md-6 mt-2">
                             <label for="subcategory">Subcategoria</label>
                             <select formControlName="subcategory"  class="form-control" id="subcategory">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+                                <option *ngIf="subcategories.length === 0" value="">Selecciona una categoria antes</option>
+                                <option *ngFor="let subcategory of subcategories" [value]="subcategory._id">{{ subcategory.name }}</option>
                             </select>
                         </div>
                         <div class="col-md-12 mt-2">
                             <label for="reportedFrom">Reportado desde</label>
-                            <select formControlName="reportedFrom" class="form-control" id="reportedFrom" *ngFor="let branchOffice of branchOffices">
-                                <option [value]="branchOffice._id">{{branchOffice.name}}</option>
+                            <select formControlName="reportedFrom" class="form-control" id="reportedFrom">
+                                <option *ngFor="let branchOffice of branchOffices" [value]="branchOffice._id">{{branchOffice.name}}</option>
                             </select>
                         </div>
                     </div>

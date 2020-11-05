@@ -11,12 +11,12 @@ export class CategoryService {
 
   constructor( private httpClient: HttpClient ) {}
 
-  save(category: Category): Observable<Category> {
-    return this.httpClient.post<Category>(`${AppSettings.API}/category/`, category);
+  save(category: Category): Observable<any> {
+    return this.httpClient.post<any>(`${AppSettings.API}/category/`, category);
   }
 
-  getAll(): Observable<Category[]> {
-    return this.httpClient.get<Category[]>(`${AppSettings.API}/category/`);
+  getAll(): Observable<any> {
+    return this.httpClient.get<any>(`${AppSettings.API}/category/`);
   }
 
   getById(id): Observable<Category> {

@@ -11,8 +11,8 @@ export class BranchOfficeService {
 
     constructor( private httpClient: HttpClient ) {}
 
-    save(branchOffice: BranchOffice): Observable<BranchOffice> {
-        return this.httpClient.post<BranchOffice>(`${AppSettings.API}/branch-office/`, branchOffice);
+    save(branchOffice: BranchOffice): Observable<any> {
+        return this.httpClient.post<any>(`${AppSettings.API}/branch-office/`, branchOffice);
     }
 
     getAll(): Observable<any> {

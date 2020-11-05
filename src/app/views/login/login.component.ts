@@ -28,7 +28,10 @@ export class LoginComponent {
 
         this.userRoleService.getRoles(resp.user._id).subscribe( userRoles => {
           sessionStorage.setItem('roles', JSON.stringify(userRoles));
-          this.router.navigate(['dashboard']);
+
+          if (sessionStorage.getItem('token')) {
+            this.router.navigate(['dashboard']);
+          }
         });
       });
   }

@@ -1,46 +1,42 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import * as moment from 'moment';
 import { FormControl, FormGroup } from '@angular/forms';
 import { CategoryService } from '../../../services/category.service';
-import { switchMap } from 'rxjs/operators';
-import { Category } from '../../../models/category';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { BranchOfficeService } from '../../../services/branchOffice.service';
-import { BranchOffice } from '../../../models/branchOffice';
+import { Subject } from 'rxjs';
+import { SubcategoryService } from '../../../services/subcategory.service';
 
 @Component({
   selector: 'app-create-ticket',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css']
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent implements OnInit, OnDestroy {
   @ViewChild('createModal', {static: false}) modal: ModalDirective;
+  private unsubscribe = new Subject<any>();
 
   creationDate = moment().format('yyyy-MM-DD');
-  categories: Category[] = [];
+  categories: any[] = [];
   branchOffices: any[] = [];
+  subcategories: any[] = [];
 
-  ticketForm = new FormGroup({
-    description: new FormControl(),
-    category: new FormControl(),
-    subcategory: new FormControl(),
-    creationDate: new FormControl(),
-    reportedFrom: new FormControl(),
-    rating: new FormControl()
-  });
+  ticketForm: FormGroup;
 
   constructor(
     private categoryService: CategoryService,
-    private branchOfficeService: BranchOfficeService
+    private branchOfficeService: BranchOfficeService,
+    private subcategoryService: SubcategoryService
   ) { }
 
   ngOnInit(): void {
-    this.ticketForm.get('creationDate').setValue(this.creationDate);
+    this.initForm();
 
     this.categoryService.getAll()
       .pipe(
-        switchMap((categories: Category[]) => {
-          this.categories = categories;
+        switchMap(categories => {
+          this.categories = categories.categories;
           return this.branchOfficeService.getAll();
         }),
         switchMap(resp => {
@@ -48,6 +44,30 @@ export class CreateComponent implements OnInit {
           return resp.branchOffice;
         })
       ).subscribe();
+
+      this.ticketForm.get('category').valueChanges
+        .pipe(takeUntil(this.unsubscribe))
+        .subscribe( value => {
+          this.subcategoryService.getByCategory(value).subscribe( subcategories => {
+            this.subcategories = subcategories.subcategories;
+          });
+        });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
+  }
+
+  initForm() {
+    this.ticketForm = new FormGroup({
+      description: new FormControl(null),
+      category: new FormControl(null),
+      subcategory: new FormControl(null),
+      creationDate: new FormControl(this.creationDate),
+      reportedFrom: new FormControl(null),
+      rating: new FormControl(null)
+    });
   }
 
   show() {

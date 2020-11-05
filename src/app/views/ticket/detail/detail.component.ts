@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-detail',
@@ -10,7 +11,7 @@ export class DetailComponent implements OnInit {
   file = new FormControl('');
   currentRate = 3;
 
-  constructor() { }
+  constructor( private router: Router ) { }
 
   ngOnInit(): void {
     this.file.valueChanges.subscribe(value => {
@@ -20,5 +21,9 @@ export class DetailComponent implements OnInit {
 
   public openFileUpload(): void {
     document.getElementById('fileDetail').click();
+  }
+
+  return() {
+    this.router.navigate(['/tickets/list']);
   }
 }

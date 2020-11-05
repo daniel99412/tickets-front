@@ -1,15 +1,18 @@
 <input id="fileDetail" type="file" [formControl]="file" class="submit-file">
 <div class="row">
+    <!-- <div class="col-md-1 mb-3">
+        
+    </div> -->
     <div class="col-md-12 mb-3">
         <nav class="navbar navbar-dark bg-dark rounded">
-            <span class="navbar-brand mb-0 h1"><i class="fa fa-ticket fa-lg"></i><b> Ticket</b> [id-ticket]</span>
+            <span class="navbar-brand mb-0 h1"><button class="btn btn-ghost-danger" (click)="return()"><i class="fa fa-chevron-left"></i></button> <i class="fa fa-ticket fa-lg"></i><b> Ticket</b> [id-ticket]</span>
             <span class="navbar-text"><b class="text-white">Fecha Compromiso </b> 01-01-2020</span>
             <span class="navbar-text text-white">
                 <b>Prioridad </b> 
                 <ngb-rating class="text-danger"  [(rate)]="currentRate" [readonly]="true" [max]="3"></ngb-rating>
             </span>
             <div class="form-inline">
-                <button class="btn btn-ghost-info mr-1" (click)="openFileUpload()"><i class="fa fa-paperclip"></i> Adjuntar Archivos</button>
+                <button class="btn btn-ghost-info mr-1" (click)="openFileUpload()"><i class="fa fa-paperclip mr-1"></i>Adj. Archivos</button>
                 <button class="btn btn-ghost-light mr-1"><i class="fa fa-user-plus"></i> Pedir ayuda</button>
                 <button class="btn btn-ghost-danger"><i class="fa fa-ban"></i> Cancelar</button>
             </div>

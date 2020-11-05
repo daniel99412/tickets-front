@@ -12,6 +12,7 @@ import { TicketComponent } from './ticket/ticket.component';
 import { AssignComponent } from './assign/assign.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CategoryService } from '../../services/category.service';
+import { TooltipModule } from 'ngx-bootstrap/tooltip';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { CategoryService } from '../../services/category.service';
     ReactiveFormsModule,
     ModalModule.forRoot(),
     ChatModule,
+    TooltipModule.forRoot()
   ],
   declarations: [
     ListComponent,
