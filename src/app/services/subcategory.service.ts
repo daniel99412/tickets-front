@@ -15,11 +15,19 @@ export class SubcategoryService {
     return this.httpClient.get<any>(`${AppSettings.API}/subcategory/`);
   }
 
-  getByCategory(category): Observable<any> {
-    return this.httpClient.get<any>(`${AppSettings.API}/subcategory/category/${category}`);
+  getByCategoryAndStatus(category, status): Observable<any> {
+    return this.httpClient.get<any>(`${AppSettings.API}/subcategory/category/${category}/status/${status}`);
+  }
+
+  getById(id): Observable<any> {
+    return this.httpClient.get<any>(`${AppSettings.API}/subcategory/${id}`);
   }
 
   save(subcategory: Subcategory): Observable<any> {
     return this.httpClient.post<any>(`${AppSettings.API}/subcategory/`, subcategory);
+  }
+
+  changeStatus(subcategory, status): Observable<any> {
+    return this.httpClient.delete<any>(`${AppSettings.API}/subcategory/${subcategory}/status/${status}`);
   }
 }

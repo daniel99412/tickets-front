@@ -1,0 +1,34 @@
+<div bsModal #create="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Crear Subcategoria</h4>
+                <button type="button" class="close" (click)="cancel()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="branchOffice">Categoria</label>
+                        <select [(ngModel)]="categorySelected" name="categorySelected" class="form-control"
+                            id="branchOffice">
+                            <option *ngFor="let category of categories" [value]="category._id">{{category.name}}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Subategoria</label>
+                        <input [(ngModel)]="subcategoryName" name="subcategoryName" type="text" class="form-control"
+                            id="name" placeholder="Subcategoria">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+                <button type="button" class="btn btn-info" (click)="save()">Crear Subcategoria</button>
+            </div>
+        </div>
+    </div>
+</div>

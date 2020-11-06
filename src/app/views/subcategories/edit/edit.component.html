@@ -1,0 +1,34 @@
+<div bsModal #edit="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Subcategoria</h4>
+                <button type="button" class="close" (click)="edit.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="subcategory">
+                <form>
+                    <div class="form-group">
+                        <label for="branchOffice">Categoria</label>
+                        <select [(ngModel)]="subcategory.category" name="category" class="form-control"
+                            id="branchOffice">
+                            <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}
+                            </option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Subcategoria</label>
+                        <input [(ngModel)]="subcategory.name" name="name" type="text" class="form-control" id="name"
+                            placeholder="Subcategoria">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="edit.hide()">Cancelar</button>
+                <button type="button" class="btn btn-info">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>

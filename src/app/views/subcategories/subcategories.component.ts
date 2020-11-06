@@ -5,6 +5,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { Subcategory } from '../../models/subcategory';
 import { CategoryService } from '../../services/category.service';
 import { SubcategoryService } from '../../services/subcategory.service';
+import * as _ from 'lodash';
 
 @Component({
   templateUrl: 'subcategories.component.html',
@@ -12,11 +13,11 @@ import { SubcategoryService } from '../../services/subcategory.service';
 })
 
 export class SubcategoriesComponent implements OnInit {
-  @ViewChild('infoModal') public infoModal: ModalDirective;
   categories: any[] = [];
   subcategories: any[];
   subcategoryName;
   categorySelected;
+  subcategory;
 
   constructor(
     private toastrService: ToastrService,
@@ -28,39 +29,46 @@ export class SubcategoriesComponent implements OnInit {
     this.subcategoryService.getAll()
       .pipe(
         switchMap(subcategories => {
-          this.subcategories = subcategories.subcategories;
+          this.subcategories = _.orderBy(subcategories.subcategories, 'category.name');
           return this.categoryService.getAll();
         }),
         switchMap(categories => {
-          this.categories = categories.categories;
+          this.categories = _.orderBy(categories.categories, 'name');
           return this.categories;
         })
       ).subscribe();
   }
 
-  save() {
-    const subcategory = new Subcategory(null, this.subcategoryName, this.categorySelected);
+  changeStatus(subcategory) {
+    let status = 'false';
+    if (subcategory.active === true) {
+      status = 'false';
+    } else {
+      status = 'true';
+    }
 
-    this.subcategoryService.save(subcategory)
-      .subscribe(subcategorySaved => {
+    this.subcategoryService.changeStatus(subcategory._id, status)
+      .subscribe(resp => {
+        this.toastrService.success(resp.message, '¡Exito!');
         this.subcategoryService.getAll()
           .pipe(
             tap(subcategories => {
-              this.cancel();
-              this.subcategories = subcategories.subcategories;
-              this.toastrService.success('Categoria creada', '¡Exito!');
+              this.subcategories = _.orderBy(subcategories.subcategories, 'category.name');
             })
           ).subscribe();
-      },
-        err => {
-          this.cancel();
-          this.toastrService.error(err.error.message, '¡Error!');
-        });
+      });
   }
 
-  cancel() {
-    this.subcategoryName = null;
-    this.categorySelected = null;
-    this.infoModal.hide();
+  subcategorySaved(event) {
+    this.subcategoryService.getAll()
+      .pipe(
+        tap(subcategories =>{
+          this.subcategories = _.orderBy(subcategories.subcategories, 'category.name');
+        })
+      ).subscribe();
+  }
+
+  subcategoryEdited(event) {
+    console.log('editado');
   }
 }

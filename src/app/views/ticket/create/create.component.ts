@@ -48,7 +48,7 @@ export class CreateComponent implements OnInit, OnDestroy {
       this.ticketForm.get('category').valueChanges
         .pipe(takeUntil(this.unsubscribe))
         .subscribe( value => {
-          this.subcategoryService.getByCategory(value).subscribe( subcategories => {
+          this.subcategoryService.getByCategoryAndStatus(value, 'true').subscribe( subcategories => {
             this.subcategories = subcategories.subcategories;
           });
         });

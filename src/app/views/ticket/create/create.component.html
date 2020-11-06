@@ -31,7 +31,6 @@
                         <div class="col-md-6 mt-2">
                             <label for="subcategory">Subcategoria</label>
                             <select formControlName="subcategory"  class="form-control" id="subcategory">
-                                <option *ngIf="subcategories.length === 0" value="">Selecciona una categoria antes</option>
                                 <option *ngFor="let subcategory of subcategories" [value]="subcategory._id">{{ subcategory.name }}</option>
                             </select>
                         </div>
