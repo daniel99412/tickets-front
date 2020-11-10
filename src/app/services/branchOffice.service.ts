@@ -19,7 +19,11 @@ export class BranchOfficeService {
         return this.httpClient.get<any>(`${AppSettings.API}/branch-office/`);
     }
 
-    getById(id): Observable<BranchOffice> {
-        return this.httpClient.get<BranchOffice>(`${AppSettings.API}/branch-office/${id}`);
+    getById(id): Observable<any> {
+        return this.httpClient.get<any>(`${AppSettings.API}/branch-office/${id}`);
+    }
+
+    changeStatus(id, status): Observable<any> {
+        return this.httpClient.delete<any>(`${AppSettings.API}/branch-office/${id}/status/${status}`);
     }
 }

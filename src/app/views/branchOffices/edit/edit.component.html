@@ -1,0 +1,29 @@
+<div bsModal #edit="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Usuario</h4>
+                <button type="button" class="close" (click)="cancel()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="name">Nombre</label>
+                        <input [(ngModel)]="branchOffice" name="name" type="text" class="form-control" id="name" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="address">Domicilio</label>
+                        <input [(ngModel)]="branchOffice" name="address" type="text" class="form-control" id="address" placeholder="Domicilio">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
+                <button type="button" class="btn btn-info">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>

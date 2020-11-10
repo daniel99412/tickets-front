@@ -36,7 +36,7 @@ export class CreateComponent implements OnInit {
 
     this.subcategoryService.save(subcategory)
       .subscribe(subcategorySaved => {
-        this.toastrService.success('Categoria creada', '¡Exito!');
+        this.toastrService.success('Subcategoria creada', '¡Exito!');
         this.cancel();
         this.subcategorySaved.emit(subcategorySaved);
       },

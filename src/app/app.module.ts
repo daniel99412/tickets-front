@@ -46,6 +46,7 @@ import { SocketioService } from './socketio.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginModule } from './views/login/login.module';
 import { AddTokenInterceptor } from './services/addToken.interceptor';
+import { DragulaModule } from 'ng2-dragula';
 
 @NgModule({
   imports: [
@@ -65,7 +66,8 @@ import { AddTokenInterceptor } from './services/addToken.interceptor';
     NgbModule,
     NgbRatingModule,
     HttpClientModule,
-    LoginModule
+    LoginModule,
+    DragulaModule.forRoot()
   ],
   declarations: [
     AppComponent,
