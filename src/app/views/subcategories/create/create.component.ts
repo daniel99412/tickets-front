@@ -16,8 +16,8 @@ export class CreateComponent implements OnInit {
 
   @Output() subcategorySaved = new EventEmitter<any>();
 
-  categorySelected;
-  subcategoryName;
+  categorySelected = null;
+  subcategoryName = null;
 
   constructor(
     private subcategoryService: SubcategoryService,
@@ -25,6 +25,8 @@ export class CreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.categorySelected = null;
+    this.subcategoryName = null;
   }
 
   show() {
@@ -36,7 +38,7 @@ export class CreateComponent implements OnInit {
 
     this.subcategoryService.save(subcategory)
       .subscribe(subcategorySaved => {
-        this.toastrService.success('Subcategoria creada', '¡Exito!');
+        this.toastrService.success('Subcategoria creada', '¡Éxito!');
         this.cancel();
         this.subcategorySaved.emit(subcategorySaved);
       },

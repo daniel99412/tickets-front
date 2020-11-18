@@ -1,18 +1,25 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ModalDirective } from 'ngx-bootstrap/modal';
-import { switchMap, tap } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
+import { Subject } from 'rxjs';
+import { switchMap, takeUntil, tap } from 'rxjs/operators';
+import { User } from '../../../models/user';
 import { BranchOfficeService } from '../../../services/branchOffice.service';
 import { CategoryService } from '../../../services/category.service';
 import { SubcategoryService } from '../../../services/subcategory.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-create-user',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.css']
 })
-export class CreateComponent implements OnInit {
+export class CreateComponent implements OnInit, OnDestroy {
   @ViewChild('create') public create: ModalDirective;
+  @Output() usercreated = new EventEmitter<any>();
+
+  private unsubscribe = new Subject<any>();
 
   userForm: FormGroup;
 
@@ -20,19 +27,20 @@ export class CreateComponent implements OnInit {
   subcategories = [];
   branchOffices = [];
 
-  categorySelected: any;
   subcategoriesSelected = [];
 
   constructor(
-    private catgoryService: CategoryService,
+    private categoryService: CategoryService,
     private subcategoryService: SubcategoryService,
-    private branchOfficeService: BranchOfficeService
+    private branchOfficeService: BranchOfficeService,
+    private userService: UserService,
+    private toastrService: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.initForm();
 
-    this.catgoryService.getAll()
+    this.categoryService.getAll()
       .pipe(
         switchMap(resp => {
           this.categories = resp.categories;
@@ -42,6 +50,24 @@ export class CreateComponent implements OnInit {
           this.branchOffices = resp.branchOffices;
         })
       ).subscribe();
+
+      this.userForm.get('category').valueChanges
+        .pipe(takeUntil(this.unsubscribe))
+        .subscribe( value => {
+          if (value === '---') {
+            this.subcategories = [];
+          } else if (value) {
+            this.subcategoryService.getByCategoryAndStatus(value, 'true')
+              .subscribe(resp => {
+                this.subcategories = resp.subcategories;
+              });
+          }
+        });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
   initForm() {
@@ -87,12 +113,11 @@ export class CreateComponent implements OnInit {
 
     this.categories = [];
     this.subcategories = [];
-    this.categorySelected = null;
     this.subcategoriesSelected = [];
   }
 
   show() {
-    this.catgoryService.getAll()
+    this.categoryService.getAll()
       .pipe(
         switchMap(resp => {
           this.categories = resp.categories;
@@ -106,15 +131,32 @@ export class CreateComponent implements OnInit {
     this.create.show();
   }
 
-  onCategorySelectedChange(event) {
-    this.subcategoryService.getByCategoryAndStatus(event, 'true')
-      .subscribe(resp => {
-        this.subcategories = resp.subcategories;
-      });
-  }
-
   send() {
-    console.log(this.subcategoriesSelected);
-    console.log(this.userForm);
+    const subcategoriesToSend = [];
+    for (let s of this.subcategoriesSelected) {
+      subcategoriesToSend.push(s._id);
+    }
+
+    const user = new User(null,
+      this.userForm.get('name').value,
+      this.userForm.get('lastname').value,
+      this.userForm.get('email').value,
+      this.userForm.get('password').value,
+      this.userForm.get('branchOffice').value,
+      null,
+      subcategoriesToSend,
+      null
+    );
+
+    this.userService.save(user)
+    .subscribe(resp => {
+        this.cancel();
+        this.toastrService.success('Usuario creado', '¡Éxito!');
+        this.usercreated.emit(resp);
+      },
+      err => {
+        this.cancel();
+        this.toastrService.error(err.error.message, '¡Error!');
+      });
   }
 }

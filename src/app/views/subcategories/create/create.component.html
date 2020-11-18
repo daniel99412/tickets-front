@@ -12,9 +12,9 @@
                 <form>
                     <div class="form-group">
                         <label for="branchOffice">Categoria</label>
-                        <select [(ngModel)]="categorySelected" name="categorySelected" class="form-control"
-                            id="branchOffice">
-                            <option *ngFor="let category of categories" [value]="category._id">{{category.name}}
+                        <select [(ngModel)]="categorySelected" name="categorySelected" class="form-control" id="branchOffice">
+                            <option *ngFor="let category of categories" [value]="category._id">
+                                {{category.name}}
                             </option>
                         </select>
                     </div>

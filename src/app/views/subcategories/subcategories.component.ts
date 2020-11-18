@@ -49,7 +49,7 @@ export class SubcategoriesComponent implements OnInit {
 
     this.subcategoryService.changeStatus(subcategory._id, status)
       .subscribe(resp => {
-        this.toastrService.success(resp.message, '¡Exito!');
+        this.toastrService.success(resp.message, '¡Éxito!');
         this.subcategoryService.getAll()
           .pipe(
             tap(subcategories => {

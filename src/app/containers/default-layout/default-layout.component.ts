@@ -1,6 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
+import { ToastrService } from 'ngx-toastr';
+import { UserService } from '../../services/user.service';
 import { navItems } from '../../_nav';
 
 @Component({
@@ -15,8 +17,14 @@ export class DefaultLayoutComponent implements OnInit {
   public navItems = navItems;
   public user;
   public isShowing = false;
+  public password;
+  public confirmPassword;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private userService: UserService,
+    private toastService: ToastrService
+  ) {}
 
   ngOnInit(): void {
     if (sessionStorage.getItem('user')) {
@@ -31,6 +39,7 @@ export class DefaultLayoutComponent implements OnInit {
   logout() {
     sessionStorage.clear();
     this.router.navigate(['login']);
+    this.isShowing = false;
   }
 
   showAside() {
@@ -41,6 +50,19 @@ export class DefaultLayoutComponent implements OnInit {
     } else {
       this.isShowing = false;
       document.getElementsByClassName('app')[0].classList.remove('aside-menu-lg-show');
+    }
+  }
+
+  changePassword() {
+    console.log('aqui');
+    if (this.password === this.confirmPassword) {
+      this.userService.changePassword(this.user._id, this.password)
+        .subscribe(resp => {
+          this.toastService.success('Contraseña actualizada con éxito', '¡Éxito!');
+          this.logout();
+        });
+    } else {
+      this.toastService.error('Las contraseñas no coinciden', '¡Error!');
     }
   }
 }

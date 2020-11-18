@@ -32,6 +32,7 @@
                             <div class="form-group">
                                 <label for="branchOffice">Sucursal</label>
                                 <select formControlName="branchOffice" name="branchOffice" class="form-control" id="branchOffice">
+                                    <option>---</option>
                                     <option *ngFor="let branchOffice of branchOffices" [value]="branchOffice._id">{{ branchOffice.name }}</option>
                                 </select>
                             </div>
@@ -42,7 +43,8 @@
                                 <div class="col-md-8 offset-2">
                                     <div class="form-group">
                                         <label for="category">Categoria</label>
-                                        <select formControlName="category" (ngModelChange)="onCategorySelectedChange($event)" name="category" class="form-control" id="category">
+                                        <select formControlName="category" name="category" class="form-control" id="category">
+                                            <option>---</option>
                                             <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}</option>
                                         </select>
                                     </div>

@@ -4,7 +4,6 @@ import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -18,7 +17,6 @@ import { DefaultLayoutComponent } from './containers';
 
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
-import { LoginComponent } from './views/login/login.component';
 import { RegisterComponent } from './views/register/register.component';
 
 const APP_CONTAINERS = [
@@ -47,6 +45,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginModule } from './views/login/login.module';
 import { AddTokenInterceptor } from './services/addToken.interceptor';
 import { DragulaModule } from 'ng2-dragula';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -67,7 +66,9 @@ import { DragulaModule } from 'ng2-dragula';
     NgbRatingModule,
     HttpClientModule,
     LoginModule,
-    DragulaModule.forRoot()
+    DragulaModule.forRoot(),
+    FormsModule,
+    ToastrModule.forRoot(),
   ],
   declarations: [
     AppComponent,

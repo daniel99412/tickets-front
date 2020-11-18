@@ -1,4 +1,4 @@
-<app-create-user #create></app-create-user>
+<app-create-user #create (usercreated)="onUserSaved($event)"></app-create-user>
 
 <div class="row">
   <div class="col-lg-12 add">
@@ -24,64 +24,20 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td class="info">Daniel Pardo Rodriguez</td>
-              <td class="info">daniel@example.com</td>
+            <tr *ngFor="let user of users">
+              <td class="info">{{user.name + ' ' + user.lastname}}</td>
+              <td class="info">{{user.email}}</td>
               <td class="info">Usuario</td>
               <td>
-                <span class="badge badge-success">Activo</span>
+                <span class="badge badge-success" *ngIf="user.active">Activo</span>
+                <span class="badge badge-secondary" *ngIf="!user.active">Inactivo</span>
               </td>
               <td class="button-actions">
                 <button type="button" class="btn btn-ghost-primary" (click)="infoModal2.show()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                <button type="button" class="btn btn-ghost-primary"><i class="fa fa-times" aria-hidden="true"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td class="info">Josue Martin Marquez</td>
-              <td class="info">josue@example.com</td>
-              <td class="info">Admin</td>
-              <td>
-                <span class="badge badge-success">Activo</span>
-              </td>
-              <td class="button-actions">
-                <button type="button" class="btn btn-ghost-primary" (click)="infoModal2.show()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                <button type="button" class="btn btn-ghost-primary"><i class="fa fa-times" aria-hidden="true"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td class="info">Francisco Quintanilla</td>
-              <td class="info">francisco@example.com</td>
-              <td class="info">Admin</td>
-              <td>
-                <span class="badge badge-success">Activo</span>
-              </td>
-              <td class="button-actions">
-                <button type="button" class="btn btn-ghost-primary" (click)="infoModal2.show()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                <button type="button" class="btn btn-ghost-primary"><i class="fa fa-times" aria-hidden="true"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td class="info">Christian Daniel Vargas</td>
-              <td class="info">christian@example.com</td>
-              <td class="info">Usuario</td>
-              <td>
-                <span class="badge badge-secondary">Inactivo</span>
-              </td>
-              <td class="button-actions">
-                <button type="button" class="btn btn-ghost-primary" (click)="infoModal2.show()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                <button type="button" class="btn btn-ghost-primary"><i class="fa fa-check" aria-hidden="true"></i></button>
-              </td>
-            </tr>
-            <tr>
-              <td class="info">Diego Marquez</td>
-              <td class="info">diego@example.com</td>
-              <td class="info">Usuario</td>
-              <td>
-                <span class="badge badge-success">Activo</span>
-              </td>
-              <td class="button-actions">
-                <button type="button" class="btn btn-ghost-primary" (click)="infoModal2.show()"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
-                <button type="button" class="btn btn-ghost-primary"><i class="fa fa-times" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-ghost-primary" (click)="changeStatus(user)">
+                  <i *ngIf="user.active" class="fa fa-times" aria-hidden="true"></i>
+                  <i *ngIf="!user.active" class="fa fa-check" aria-hidden="true"></i>
+                </button>
               </td>
             </tr>
           </tbody>

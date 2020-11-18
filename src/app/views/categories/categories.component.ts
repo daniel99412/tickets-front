@@ -41,7 +41,7 @@ export class CategoriesComponent implements OnInit {
               tap(categories => {
                 this.cancel();
                 this.categories = categories.categories;
-                this.toastrService.success('Categoria creada', '¡Exito!');
+                this.toastrService.success('Categoria creada', '¡Éxito!');
               })
             ).subscribe();
       },

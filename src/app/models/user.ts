@@ -1,4 +1,6 @@
+import { relativeTimeThreshold } from 'moment';
 import { BranchOffice } from './branchOffice';
+import { Subcategory } from './subcategory';
 
 export class User {
     id: string;
@@ -8,6 +10,7 @@ export class User {
     password: string;
     branchOffice: BranchOffice;
     picture: string;
+    subcategories: Subcategory[];
     active: boolean;
 
     constructor(
@@ -18,6 +21,7 @@ export class User {
         password?: string,
         branchOffice?: BranchOffice,
         picture?: string,
+        subcategories?: Subcategory[],
         active?: boolean
     ) {
         this.id = id;
@@ -27,6 +31,7 @@ export class User {
         this.password = password;
         this.branchOffice = branchOffice;
         this.picture = picture;
+        this.subcategories = subcategories;
         this.active = active;
     }
 }

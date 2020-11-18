@@ -41,7 +41,7 @@ export class CreateComponent implements OnInit {
     this.branchOfficeService.save(branchOffice)
       .subscribe(branchOfficeSaved => {
         this.cancel();
-        this.toastrService.success('Sucursal creada', '¡Exito!');
+        this.toastrService.success('Sucursal creada', '¡Éxito!');
         this.branchOfficeCreated.emit(branchOfficeSaved);
       },
       err => {

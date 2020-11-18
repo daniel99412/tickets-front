@@ -50,7 +50,7 @@ export class BranchOfficesComponent implements OnInit {
 
     this.branchOfficeService.changeStatus(branchOffice._id, status)
       .subscribe(resp => {
-        this.toastrService.success(resp.message, '¡Exito!');
+        this.toastrService.success(resp.message, '¡Éxito!');
 
         this.branchOfficeService.getAll()
           .pipe(

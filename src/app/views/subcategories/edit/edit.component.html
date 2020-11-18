@@ -13,7 +13,7 @@
                     <div class="form-group">
                         <label for="branchOffice">Categoria</label>
                         <select [(ngModel)]="subcategory.category" name="category" class="form-control"
-                            id="branchOffice">
+                            id="branchOffice" [compareWith]="compareFn">
                             <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}
                             </option>
                         </select>
