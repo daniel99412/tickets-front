@@ -26,4 +26,8 @@ export class RoleService {
   update(id: string, role: Role): Observable<Role> {
     return this.httpClient.put<Role>(`${AppSettings.API}/role/${id}`, role);
   }
+
+  changeStatus(id, status): Observable<any> {
+      return this.httpClient.delete<any>(`${AppSettings.API}/role/${id}/status/${status}`);
+  }
 }

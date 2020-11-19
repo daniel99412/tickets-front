@@ -34,6 +34,27 @@ export class RolesComponent {
     this.Refresh();
   }
 
+  chageStatus(role) {
+    let status = 'false';
+    if (role.active === true) {
+      status = 'false';
+    } else {
+      status = 'true';
+    }
+
+    this.roleService.changeStatus(role._id, status)
+      .subscribe(resp => {
+        this.toastrService.success(resp.message, '¡Éxito!');
+
+        this.roleService.getAll()
+          .pipe(
+            tap(roles => {
+              this.roles = roles.roles;
+            })
+          ).subscribe();
+      });
+  }
+
   Refresh() {
     this.roleService.getAll()
       .pipe(

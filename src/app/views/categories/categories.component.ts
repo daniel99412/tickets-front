@@ -33,6 +33,27 @@ export class CategoriesComponent implements OnInit {
     this.Refresh();
   }
 
+  chageStatus(category) {
+    let status = 'false';
+    if (category.active === true) {
+      status = 'false';
+    } else {
+      status = 'true';
+    }
+
+    this.categoryService.changeStatus(category._id, status)
+      .subscribe(resp => {
+        this.toastrService.success(resp.message, '¡Éxito!');
+
+        this.categoryService.getAll()
+          .pipe(
+            tap(categories => {
+              this.categories = categories.categories;
+            })
+          ).subscribe();
+      });
+  }
+
   Refresh() {
     this.categoryService.getAll()
       .pipe(
