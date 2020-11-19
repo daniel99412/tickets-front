@@ -24,7 +24,6 @@ export class BranchOfficesComponent implements OnInit {
       .pipe(
         tap(branchOffices => {
           this.branchOffices = branchOffices.branchOffice;
-          console.log(this.branchOffices);
         })
       ).subscribe();
   }

@@ -26,4 +26,8 @@ export class CategoryService {
   delete(id): Observable<any> {
     return this.httpClient.delete<any>(`${AppSettings.API}/category/${id}`);
   }
+
+  update(id, category): Observable<any> {
+      return this.httpClient.put<any>(`${AppSettings.API}/category/${id}`, category);
+  }
 }

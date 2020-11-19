@@ -42,8 +42,14 @@ export class CategoriesComponent implements OnInit {
       ).subscribe();
   }
 
-  categoryEdited(event) {
-    console.log(event);
+  CategoryUpdate(event) {
+    this.categoryService.getAll()
+      .pipe(
+        switchMap( categories => {
+          this.categories = categories.categories;
+          return this.categories;
+        })
+      ).subscribe();
   }
-
+  
 }
