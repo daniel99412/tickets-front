@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 
 export class CategoriesComponent implements OnInit {
   @ViewChild('infoModal') public infoModal: ModalDirective;
+
   categories: any[];
   categoryName;
 
@@ -31,28 +32,18 @@ export class CategoriesComponent implements OnInit {
       ).subscribe();
   }
 
-  save() {
-    const category = new Category(null, this.categoryName, null);
-
-    this.categoryService.save(category)
-      .subscribe(categorySaved => {
-          this.categoryService.getAll()
-            .pipe(
-              tap(categories => {
-                this.cancel();
-                this.categories = categories.categories;
-                this.toastrService.success('Categoria creada', '¡Éxito!');
-              })
-            ).subscribe();
-      },
-      err => {
-        this.cancel();
-        this.toastrService.error(err.error.message + '.', '¡Error!');
-      });
+  CategorySaved(event) {
+    this.categoryService.getAll()
+      .pipe(
+        switchMap( categories => {
+          this.categories = categories.categories;
+          return this.categories;
+        })
+      ).subscribe();
   }
 
-  cancel() {
-    this.categoryName = null;
-    this.infoModal.hide();
+  categoryEdited(event) {
+    console.log(event);
   }
+
 }

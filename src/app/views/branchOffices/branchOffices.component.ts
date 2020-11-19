@@ -11,6 +11,7 @@ import { BranchOfficeService } from '../../services/branchOffice.service';
 
 export class BranchOfficesComponent implements OnInit {
   @ViewChild('infoModal') public infoModal: ModalDirective;
+
   branchOffices: any[];
 
   constructor(
