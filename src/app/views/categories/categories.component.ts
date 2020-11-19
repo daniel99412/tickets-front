@@ -15,7 +15,6 @@ export class CategoriesComponent implements OnInit {
   @ViewChild('infoModal') public infoModal: ModalDirective;
 
   categories: any[];
-  categoryName;
 
   constructor(
     private toastrService: ToastrService,
@@ -23,16 +22,18 @@ export class CategoriesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.categoryService.getAll()
-      .pipe(
-        switchMap( categories => {
-          this.categories = categories.categories;
-          return this.categories;
-        })
-      ).subscribe();
+    this.Refresh();
   }
 
   CategorySaved(event) {
+    this.Refresh();
+  }
+
+  CategoryUpdate(event) {
+    this.Refresh();
+  }
+
+  Refresh() {
     this.categoryService.getAll()
       .pipe(
         switchMap( categories => {
@@ -42,14 +43,4 @@ export class CategoriesComponent implements OnInit {
       ).subscribe();
   }
 
-  CategoryUpdate(event) {
-    this.categoryService.getAll()
-      .pipe(
-        switchMap( categories => {
-          this.categories = categories.categories;
-          return this.categories;
-        })
-      ).subscribe();
-  }
-  
 }

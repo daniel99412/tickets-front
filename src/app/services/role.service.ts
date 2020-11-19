@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Role } from '../models/role';
 import { Observable } from 'rxjs';
 import { AppSettings } from '../app.settings';
-import { Role } from '../models/role';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class RoleService {
     return this.httpClient.post<any>(`${AppSettings.API}/role/`, role);
   }
 
-  getAll(): Observable<Role[]> {
-    return this.httpClient.get<Role[]>(`${AppSettings.API}/role/`);
+  getAll(): Observable<any> {
+    return this.httpClient.get<any>(`${AppSettings.API}/role/`);
   }
 
   getById(id: string): Observable<Role> {
@@ -24,6 +24,6 @@ export class RoleService {
   }
 
   update(id: string, role: Role): Observable<Role> {
-    return this.httpClient.put<Role>(`${AppSettings}/role/${id}`, role);
+    return this.httpClient.put<Role>(`${AppSettings.API}/role/${id}`, role);
   }
 }

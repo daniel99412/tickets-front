@@ -20,30 +20,15 @@ export class BranchOfficesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.branchOfficeService.getAll()
-      .pipe(
-        tap(branchOffices => {
-          this.branchOffices = branchOffices.branchOffice;
-        })
-      ).subscribe();
+    this.refresh();
   }
 
   branchOfficeSaved(event) {
-    this.branchOfficeService.getAll()
-      .pipe(
-        tap(branchOffices => {
-          this.branchOffices = branchOffices.branchOffice;
-        })
-      ).subscribe();
+    this.refresh();
   }
 
   branchOfficeUpdate(event) {
-    this.branchOfficeService.getAll()
-      .pipe(
-        tap(branchOffices => {
-          this.branchOffices = branchOffices.branchOffice;
-        })
-      ).subscribe();
+    this.refresh();
   }
 
   chageStatus(branchOffice) {
@@ -65,5 +50,14 @@ export class BranchOfficesComponent implements OnInit {
             })
           ).subscribe();
       });
+  }
+
+  refresh(){
+    this.branchOfficeService.getAll()
+      .pipe(
+        tap(branchOffices => {
+          this.branchOffices = branchOffices.branchOffice;
+        })
+      ).subscribe();
   }
 }
