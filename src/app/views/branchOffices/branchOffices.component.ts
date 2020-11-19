@@ -24,6 +24,7 @@ export class BranchOfficesComponent implements OnInit {
       .pipe(
         tap(branchOffices => {
           this.branchOffices = branchOffices.branchOffice;
+          console.log(this.branchOffices);
         })
       ).subscribe();
   }
@@ -37,8 +38,13 @@ export class BranchOfficesComponent implements OnInit {
       ).subscribe();
   }
 
-  branchOfficeEdited(event) {
-    console.log(event);
+  branchOfficeUpdate(event) {
+    this.branchOfficeService.getAll()
+      .pipe(
+        tap(branchOffices => {
+          this.branchOffices = branchOffices.branchOffice;
+        })
+      ).subscribe();
   }
 
   chageStatus(branchOffice) {

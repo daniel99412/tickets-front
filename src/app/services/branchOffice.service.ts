@@ -26,4 +26,8 @@ export class BranchOfficeService {
     changeStatus(id, status): Observable<any> {
         return this.httpClient.delete<any>(`${AppSettings.API}/branch-office/${id}/status/${status}`);
     }
+
+    update(id, branchOffice): Observable<any> {
+        return this.httpClient.put<any>(`${AppSettings.API}/branch-office/${id}`, branchOffice);
+    }
 }
