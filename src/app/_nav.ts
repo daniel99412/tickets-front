@@ -37,6 +37,11 @@ export const navItems: INavData[] = [
     icon: 'icon-organization'
   },
   {
+    name: 'Asignacion de Rol',
+    url: '/assingRole',
+    icon: 'icon-star'
+  },
+  {
     title: true,
     name: 'Theme'
   },

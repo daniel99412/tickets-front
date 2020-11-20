@@ -79,6 +79,10 @@ export const routes: Routes = [
         loadChildren: () => import('./views/subcategories/subcategories.module').then(m => m.SubcategoriesModule)
       },
       {
+        path: 'assingRole',
+        loadChildren: () => import('./views/assingRole/assingRole.module').then(m => m.AssingRoleModule)
+      },
+      {
         path: 'buttons',
         loadChildren: () => import('./views/buttons/buttons.module').then(m => m.ButtonsModule)
       },

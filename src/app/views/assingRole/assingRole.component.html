@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h4>Selecciona un Usuario</h4>
+    <br>
+    <div class="row">
+      <div class="col-lg-12 select">
+        <div class="form-group">
+          <label for="user">Usuario</label>
+          <select [(ngModel)]="user" name="user" id="user" class="userSelect">
+            <option>---</option>
+            <option *ngFor="let user of users" [value]="user._id" (click)="accessSearch()">{{ user.name + ' ' + user.lastname }}</option>
+          </select>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="user && user.length !== 0">
+      <div class="col-lg-12">
+        <div class="row">
+          <div class="col-4" *ngFor="let role of roles">
+            <div class="card">
+              <div class="card-header text-center">
+                <b>Permiso: {{role.name}}</b>
+              </div>
+              <div class="card-footer text-center">
+                <div *ngIf="accessSearch != null">
+                  <ng-container *ngIf="(accessSearch[role._id] != null && accessSearch[role._id][0].state == true); else elseBlock">
+                    <i class="fa fa-ban" (click)="remove(role._id)"></i>
+                  </ng-container>
+                  <ng-template #elseBlock>
+                    <i class="fa fa-check" (click)="send(role._id)"></i>
+                  </ng-template>
+                </div>
+                <br>
+              </div>
+            </div>
+              <br>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
