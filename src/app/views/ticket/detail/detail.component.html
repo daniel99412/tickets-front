@@ -1,6 +1,7 @@
 <input id="fileDetail" type="file" [formControl]="file" class="submit-file">
 <div class="row" *ngIf="ticket">
     <app-assign-ticket #assignModal [ticket]="ticket" (ticketAssigned)="onTicketASsigned($event)"></app-assign-ticket>
+    <app-evaluate-ticket #evaluateModal [ticket]="ticket" [userLogged]="userLogged" (evaluationSaved)="onEvaluationCreated($event)"></app-evaluate-ticket>
     <div class="col-md-12 mb-3">
         <nav class="navbar navbar-dark bg-dark rounded">
             <span class="navbar-brand mb-0 h1"><button class="btn btn-ghost-danger" (click)="return()"><i class="fa fa-chevron-left"></i></button> <i class="fa fa-ticket fa-lg"></i><b> Ticket</b> {{ ticket._id }}</span>
@@ -12,7 +13,7 @@
             <div class="form-inline">
                 <button class="btn btn-ghost-info mr-1" (click)="openFileUpload()"><i class="fa fa-paperclip mr-1"></i>Adj. Archivos</button>
                 <button class="btn btn-ghost-light mr-1" *ngIf="ticket.assignedTo.length < 2"><i class="fa fa-user-plus"></i> Pedir ayuda</button>
-                <button class="btn btn-ghost-danger" *ngIf="ticket.progress !== 4"><i class="fa fa-ban"></i> Cancelar</button>
+                <button class="btn btn-ghost-danger" *ngIf="ticket.progress !== 4" (click)="changeProgress(5)"><i class="fa fa-ban"></i> Cancelar</button>
             </div>
         </nav>
     </div>
@@ -106,8 +107,9 @@
                 <div class="row justify-content-center">
                     <div class="col-md-1">
                         <button type="button" class="btn btn-secondary" *ngIf="ticket.progress === 1" (click)="assignModal.show()">Asignar</button>
-                        <button type="button" class="btn btn-secondary" *ngIf="ticket.progress === 2 && userLogged._id !== ticket.createBy._id">Atender</button>
-                        <button type="button" class="btn btn-secondary" *ngIf="ticket.progress === 3 && userLogged._id !== ticket.createBy._id">Completar</button>
+                        <button type="button" class="btn btn-secondary" *ngIf="ticket.progress === 2 && userLogged._id !== ticket.createBy._id" (click)="changeProgress(3)">Atender</button>
+                        <button type="button" class="btn btn-secondary" *ngIf="ticket.progress === 3 && userLogged._id !== ticket.createBy._id" (click)="evaluateModal.show()">Completar</button>
+                        <button type="button" class="btn btn-secondary" *ngIf="ticket.progress === 4 && userLogged._id === ticket.createBy._id && evaluations && evaluations.lenght === 0" (click)="evaluateModal.show()">Evaluar</button>
                     </div>
                 </div>
                 <div class="row mt-2" *ngIf="ticket.progress === 4 || ticket.progress === 5">

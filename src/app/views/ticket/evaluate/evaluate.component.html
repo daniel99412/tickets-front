@@ -1,0 +1,71 @@
+<div class="modal fade" bsModal #evaluateModal="bs-modal" tabindex="-1">
+    <div class="modal-dialog modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Evaluar ticket</h4>
+                <button type="button" class="close" (click)="hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form [formGroup]="evaluationForm">
+                <div class="modal-body">
+                    <div class="row justify-content-center">
+                        <div class="col-6">
+                            <div class="card text-white bg-info text-center">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <b>Evaluas a</b>
+                                        </div>
+                                        <div class="col-1">
+                                            <div class="avatar avatar-sm">
+                                                <img class="img-avatar" src="assets/img/avatars/1.jpg">
+                                            </div>
+                                        </div>
+                                        <div class="col-9" *ngIf="userLogged._id !== ticket.createBy._id">
+                                            {{ ticket.createBy.name + ' ' + ticket.createBy.lastname }}
+                                        </div>
+                                        <div class="col-9" *ngIf="userLogged._id === ticket.createBy._id">
+                                            {{ ticket.assignedTo[0].name + ' ' + ticket.assignedTo[0].lastname }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <label for="quality">Calidad</label>
+                                </div>
+                                <div class="col-12">
+                                    <ngb-rating id="quality" max="5" formControlName="quality"></ngb-rating>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <label for="speed">Velocidad</label>
+                                </div>
+                                <div class="col-12">
+                                    <ngb-rating id="speed" max="5" formControlName="speed"></ngb-rating>
+                                </div>
+                                <div class="col-12 mt-2">
+                                    <label for="attention">Atención</label>
+                                </div>
+                                <div class="col-12">
+                                    <ngb-rating id="attention" max="5" formControlName="attention"></ngb-rating>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <label for="comments">Comentarios</label>
+                            <textarea class="form-control comments" id="comments" formControlName="comments"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-info" (click)="send()">Evaluar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

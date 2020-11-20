@@ -48,4 +48,8 @@ export class TicketService {
   getAssignedTickets(userId): Observable<any> {
     return this.httpClient.get<any>(`${AppSettings.API}/ticket/assigned-to/${userId}`);
   }
+
+  changeProgress(ticket, progress): Observable<any> {
+    return this.httpClient.put<any>(`${AppSettings.API}/ticket/${ticket}/progress/${progress}`, null);
+  }
 }

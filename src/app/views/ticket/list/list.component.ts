@@ -25,7 +25,6 @@ export class ListComponent implements OnInit {
           return this.ticketService.getAssignedTickets(this.userLogged._id);
         }),
         tap(resp => {
-          console.log('aqui toy loco');
           this.ticketsAssignedToMe = resp;
         })
       ).subscribe();

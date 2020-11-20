@@ -14,6 +14,9 @@ import { ModalModule } from 'ngx-bootstrap/modal';
 import { CategoryService } from '../../services/category.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ToastrModule } from 'ngx-toastr';
+import { EvaluateComponent } from './evaluate/evaluate.component';
+import { CancelComponent } from './cancel/cancel.component';
+
 
 @NgModule({
   imports: [
@@ -33,7 +36,9 @@ import { ToastrModule } from 'ngx-toastr';
     DetailComponent,
     CreateComponent,
     TicketComponent,
-    AssignComponent
+    AssignComponent,
+    EvaluateComponent,
+    CancelComponent
   ],
   exports: [
     TicketComponent

@@ -13,6 +13,17 @@
                 Mis tickets
             </div>
             <div class="card-body">
+                <div class="row" *ngIf="!myTickets">
+                    <div class="col-md-12">
+                        <div class="card text-white bg-danger text-center">
+                            <div class="card-body">
+                                <blockquote class="card-bodyquote">
+                                    <p>No hay tickets</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <tabset *ngIf="myTickets">
                     <tab>
                         <ng-template tabHeading>Pendientes &nbsp;<span class="badge badge-pill badge-warning">{{myTickets.pending.length}}</span></ng-template>
