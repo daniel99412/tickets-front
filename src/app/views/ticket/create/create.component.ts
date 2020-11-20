@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import * as moment from 'moment';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -7,6 +7,10 @@ import { switchMap, takeUntil } from 'rxjs/operators';
 import { BranchOfficeService } from '../../../services/branchOffice.service';
 import { Subject } from 'rxjs';
 import { SubcategoryService } from '../../../services/subcategory.service';
+import { Ticket } from '../../../models/ticket';
+import { User } from '../../../models/user';
+import { TicketService } from '../../../services/ticket.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-create-ticket',
@@ -14,24 +18,42 @@ import { SubcategoryService } from '../../../services/subcategory.service';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit, OnDestroy {
-  @ViewChild('createModal', {static: false}) modal: ModalDirective;
+  @ViewChild('createModal', { static: false }) modal: ModalDirective;
+  @Output() ticketCreated = new EventEmitter<any>();
+
   private unsubscribe = new Subject<any>();
 
-  creationDate = moment().format('yyyy-MM-DD');
+  creationDate: any;
   categories: any[] = [];
   branchOffices: any[] = [];
   subcategories: any[] = [];
+  user: User;
 
   ticketForm: FormGroup;
 
   constructor(
     private categoryService: CategoryService,
     private branchOfficeService: BranchOfficeService,
-    private subcategoryService: SubcategoryService
+    private subcategoryService: SubcategoryService,
+    private ticketService: TicketService,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit(): void {
     this.initForm();
+    if (sessionStorage.getItem('user')) {
+      this.user = new User(
+        JSON.parse(sessionStorage.getItem('user'))._id,
+        JSON.parse(sessionStorage.getItem('user')).name,
+        JSON.parse(sessionStorage.getItem('user')).lastname,
+        JSON.parse(sessionStorage.getItem('user')).email,
+        null,
+        JSON.parse(sessionStorage.getItem('user')).branchOffice,
+        JSON.parse(sessionStorage.getItem('user')).picture,
+        JSON.parse(sessionStorage.getItem('user')).subcategories,
+        JSON.parse(sessionStorage.getItem('user')).active
+      );
+    }
 
     this.categoryService.getAll()
       .pipe(
@@ -71,6 +93,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   show() {
+    this.creationDate = moment().format('YYYY-MM-DD hh:mm:ss.SSS');
     this.ticketForm.get('creationDate').setValue(this.creationDate);
     this.modal.show();
   }
@@ -110,6 +133,28 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   send() {
-    console.log(this.ticketForm.value);
+    const ticket = new Ticket(
+      null,
+      this.user,
+      this.ticketForm.get('reportedFrom').value,
+      null,
+      this.ticketForm.get('description').value,
+      null,
+      this.ticketForm.get('category').value,
+      this.ticketForm.get('subcategory').value,
+      this.ticketForm.get('creationDate').value,
+      null,
+      null,
+      null,
+      null,
+      null,
+      this.ticketForm.get('rating').value
+    );
+
+    this.ticketService.save(ticket).subscribe(resp => {
+      this.hide();
+      this.ticketCreated.emit(resp);
+      this.toastrService.success('Ticket creado', '¡Éxito!');
+    });
   }
 }

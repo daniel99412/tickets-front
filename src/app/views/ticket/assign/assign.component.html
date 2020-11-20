@@ -1,3 +1,102 @@
-<div bsModal #myModal="bs-modal" class="modal fade" tabindex="-1" role="dialog">
-    
+<div class="modal fade" bsModal #assignModal="bs-modal" tabindex="-1">
+    <div class="modal-dialog modal-info modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Asignar</h4>
+                <button type="button" class="close" (click)="hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <label for="promiseDate">Fecha de compromiso</label>
+                        <input [(ngModel)]="promiseDate" id="promiseDate" class="form-control" type="date">
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-3">
+                    <h4 class="col-md-12 text-center">Las 3 mejores opciones</h4>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="avatar avatar-sm">
+                                            <img class="img-avatar" src="assets/img/avatars/1.jpg">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        nombre nombre
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-6">
+                                        [% recom]
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="avatar avatar-sm">
+                                            <img class="img-avatar" src="assets/img/avatars/1.jpg">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        nombre nombre
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-6">
+                                        [% recom]
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="avatar avatar-sm">
+                                            <img class="img-avatar" src="assets/img/avatars/1.jpg">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        nombre nombre
+                                    </div>
+                                </div>
+                                <div class="row justify-content-end">
+                                    <div class="col-md-6">
+                                        [% recom]
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <label for="assignedTo">Asignar a</label>
+                        <select [(ngModel)]="userSelected" class="form-control" id="assignedTo">
+                            <option>---</option>
+                            <ng-container *ngFor="let user of users">
+                                <option *ngIf="userLogged._id !== user._id" [value]="user._id">{{ user.name + ' ' + user.lastname }}</option>
+                            </ng-container>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" (click)="hide()">Cancelar</button>
+                <button class="btn btn-success" *ngIf="!userSelected || userSelected === '---'">Asignar automaticamente</button>
+                <button class="btn btn-info" (click)="assign()">Asignar</button>
+            </div>
+        </div>
+    </div>
 </div>

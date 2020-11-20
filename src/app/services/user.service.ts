@@ -24,6 +24,10 @@ export class UserService {
         return this.httpClient.get(`${AppSettings.API}/user/`);
     }
 
+    public getBySubcategoryAndStatus(subcategory, status): Observable<any> {
+        return this.httpClient.get(`${AppSettings.API}/user/subcategory/${subcategory}/active/${status}`);
+    }
+
     public changeStatus(userId, status): Observable<any> {
         return this.httpClient.delete(`${AppSettings.API}/user/${userId}/status/${status}`);
     }

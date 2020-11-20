@@ -1,19 +1,22 @@
 <div class="card card-accent-{{color}}">
-    <div class="card-body" [routerLink]="['/tickets/view', 1]">
+    <div class="card-body" [routerLink]="['/tickets/view', ticket._id]" *ngIf="ticket">
         <div class="row">
             <div class="col-md-4">
-                lun. 28 sept. 2020 12:09
+                {{this.creationDate.format('DD [de] MMMM [del] YYYY, hh:mm:ss')}}
             </div>
             <div class="col-md-2 offset-6">
-                Pendiente
+                Prioridad
             </div>
         </div>
         <div class="row">
             <div class="col-md-10">
-                [la descripcion va aqui]
+                {{ticket.description}}
             </div>
-            <div class="col-md-2">
+            <div class="col-md-2" *ngIf="ticket.progress === 4">
                 <ngb-rating class="text-warning"  [rate]="1" [readonly]="true" [max]="5"></ngb-rating>
+            </div>
+            <div class="col-md-2" *ngIf="ticket.progress !== 4">
+                <ngb-rating class="text-warning" [rate]="ticket.priority" [readonly]="true" [max]="3"></ngb-rating>
             </div>
         </div>
     </div>

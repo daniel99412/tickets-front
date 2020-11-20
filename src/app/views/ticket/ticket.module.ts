@@ -6,13 +6,14 @@ import { CreateComponent } from './create/create.component';
 import { TicketRoutingModule } from './ticket-routing.module';
 import { ChatModule } from '../chat/chat.module';
 import { NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TicketComponent } from './ticket/ticket.component';
 import { AssignComponent } from './assign/assign.component';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { CategoryService } from '../../services/category.service';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   imports: [
@@ -20,10 +21,12 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
     TicketRoutingModule,
     NgbRatingModule,
     TabsModule,
+    FormsModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),
+    TooltipModule.forRoot(),
+    ToastrModule.forRoot(),
     ChatModule,
-    TooltipModule.forRoot()
   ],
   declarations: [
     ListComponent,

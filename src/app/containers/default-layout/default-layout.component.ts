@@ -40,6 +40,7 @@ export class DefaultLayoutComponent implements OnInit {
     sessionStorage.clear();
     this.router.navigate(['login']);
     this.isShowing = false;
+    document.getElementsByClassName('app')[0].classList.remove('aside-menu-lg-show');
   }
 
   showAside() {
@@ -54,15 +55,18 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   changePassword() {
-    console.log('aqui');
-    if (this.password === this.confirmPassword) {
-      this.userService.changePassword(this.user._id, this.password)
-        .subscribe(resp => {
-          this.toastService.success('Contraseña actualizada con éxito', '¡Éxito!');
-          this.logout();
-        });
+    if (this.password) {
+      if (this.password === this.confirmPassword) {
+        this.userService.changePassword(this.user._id, this.password)
+          .subscribe(resp => {
+            this.toastService.success('Contraseña actualizada con éxito', '¡Éxito!');
+            this.logout();
+          });
+      } else {
+        this.toastService.error('Las contraseñas no coinciden', '¡Error!');
+      }
     } else {
-      this.toastService.error('Las contraseñas no coinciden', '¡Error!');
+      this.toastService.error('Ingresa una contraseña', '¡Error!');
     }
   }
 }

@@ -5,6 +5,7 @@ import { User } from './user';
 
 export class Ticket {
     id: string;
+    createdBy: User;
     reportedFrom: BranchOffice;
     assignedTo: User[];
     description: string;
@@ -17,9 +18,11 @@ export class Ticket {
     finalizationDate: string;
     cancelationDate: string;
     file: File[];
+    priority: number;
 
     constructor(
         id?: string,
+        createdBy?: User,
         reportedFrom?: BranchOffice,
         assignedTo?: User[],
         description?: string,
@@ -31,9 +34,11 @@ export class Ticket {
         startDate?: string,
         finalizationDate?: string,
         cancelationDate?: string,
-        file?: File[]
+        file?: File[],
+        priority?: number
     ) {
         this.id = id;
+        this.createdBy = createdBy;
         this.reportedFrom = reportedFrom;
         this.assignedTo = assignedTo;
         this.description = description;
@@ -46,5 +51,6 @@ export class Ticket {
         this.finalizationDate = finalizationDate;
         this.cancelationDate = cancelationDate;
         this.file = file;
+        this.priority = priority;
     }
 }
