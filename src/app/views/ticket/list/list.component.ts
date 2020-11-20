@@ -22,7 +22,7 @@ export class ListComponent implements OnInit {
       .pipe(
         switchMap(resp => {
           this.myTickets = resp;
-          return this.ticketService.getTicketsByUser(this.userLogged._id);
+          return this.ticketService.getAssignedTickets(this.userLogged._id);
         }),
         tap(resp => {
           console.log('aqui toy loco');
@@ -36,7 +36,7 @@ export class ListComponent implements OnInit {
       .pipe(
         switchMap(resp => {
           this.myTickets = resp;
-          return this.ticketService.getTicketsByUser(this.userLogged._id);
+          return this.ticketService.getAssignedTickets(this.userLogged._id);
         }),
         tap(resp => {
           this.ticketsAssignedToMe = resp;

@@ -120,60 +120,97 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header">
-                Tickets atendidos
+                Tickets que atendido
             </div>
             <div class="card-body">
-                <tabset>
+                <div class="row" *ngIf="!ticketsAssignedToMe">
+                    <div class="col-md-12">
+                        <div class="card text-white bg-danger text-center">
+                            <div class="card-body">
+                                <blockquote class="card-bodyquote">
+                                    <p>No hay tickets</p>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <tabset *ngIf="ticketsAssignedToMe">
                     <tab>
-                        <ng-template tabHeading>Pendientes &nbsp;<span class="badge badge-pill badge-warning">0</span></ng-template>
+                        <ng-template tabHeading>Asignado &nbsp;<span class="badge badge-pill badge-danger">{{ticketsAssignedToMe.assigned.length}}</span>
+                        </ng-template>
                         <div class="ticket-list overflow-auto">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <app-ticket></app-ticket>
+                                <div class="col-md-12" *ngFor="let ticket of ticketsAssignedToMe.assigned">
+                                    <app-ticket [ticket]="ticket"></app-ticket>
+                                </div>
+                                <div class="col-md-12" *ngIf="ticketsAssignedToMe.assigned.length === 0">
+                                    <div class="card text-white bg-danger text-center">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote">
+                                                <p>No hay tickets</p>
+                                            </blockquote>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </tab>
                     <tab>
-                        <ng-template tabHeading>Asignado &nbsp;<span class="badge badge-pill badge-danger">0</span>
+                        <ng-template tabHeading>En progreso &nbsp;<span class="badge badge-pill badge-primary">{{ticketsAssignedToMe.inProggress.length}}</span>
                         </ng-template>
                         <div class="ticket-list overflow-auto">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <app-ticket></app-ticket>
+                                <div class="col-md-12" *ngFor="let ticket of ticketsAssignedToMe.inProggress">
+                                    <app-ticket [ticket]="ticket"></app-ticket>
+                                </div>
+                                <div class="col-md-12" *ngIf="ticketsAssignedToMe.inProggress.length === 0">
+                                    <div class="card text-white bg-danger text-center">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote">
+                                                <p>No hay tickets</p>
+                                            </blockquote>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </tab>
                     <tab>
-                        <ng-template tabHeading>En progreso &nbsp;<span class="badge badge-pill badge-primary">0</span>
+                        <ng-template tabHeading>Completado &nbsp;<span class="badge badge-pill badge-success">{{ticketsAssignedToMe.completed.length}}</span>
                         </ng-template>
                         <div class="ticket-list overflow-auto">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <app-ticket></app-ticket>
+                                <div class="col-md-12" *ngFor="let ticket of ticketsAssignedToMe.completed">
+                                    <app-ticket [ticket]="ticket"></app-ticket>
+                                </div>
+                                <div class="col-md-12" *ngIf="ticketsAssignedToMe.completed.length === 0">
+                                    <div class="card text-white bg-danger text-center">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote">
+                                                <p>No hay tickets</p>
+                                            </blockquote>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </tab>
                     <tab>
-                        <ng-template tabHeading>Completado &nbsp;<span class="badge badge-pill badge-success">0</span>
+                        <ng-template tabHeading>Cancelado &nbsp;<span class="badge badge-pill badge-danger">{{ticketsAssignedToMe.canceled.length}}</span>
                         </ng-template>
                         <div class="ticket-list overflow-auto">
                             <div class="row">
-                                <div class="col-md-12">
-                                    <app-ticket></app-ticket>
+                                <div class="col-md-12" *ngFor="let ticket of ticketsAssignedToMe.canceled">
+                                    <app-ticket [ticket]="ticket"></app-ticket>
                                 </div>
-                            </div>
-                        </div>
-                    </tab>
-                    <tab>
-                        <ng-template tabHeading>Cancelado &nbsp;<span class="badge badge-pill badge-danger">0</span>
-                        </ng-template>
-                        <div class="ticket-list overflow-auto">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <app-ticket></app-ticket>
+                                <div class="col-md-12" *ngIf="ticketsAssignedToMe.canceled.length === 0">
+                                    <div class="card text-white bg-danger text-center">
+                                        <div class="card-body">
+                                            <blockquote class="card-bodyquote">
+                                                <p>No hay tickets</p>
+                                            </blockquote>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

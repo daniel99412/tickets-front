@@ -46,7 +46,6 @@ export class TicketService {
   }
 
   getAssignedTickets(userId): Observable<any> {
-    console.log('aqui');
     return this.httpClient.get<any>(`${AppSettings.API}/ticket/assigned-to/${userId}`);
   }
 }
