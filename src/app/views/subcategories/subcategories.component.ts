@@ -16,7 +16,6 @@ export class SubcategoriesComponent implements OnInit {
   categories: any[] = [];
   subcategories: any[];
   subcategoryName;
-  categorySelected;
   subcategory;
 
   constructor(
@@ -26,17 +25,7 @@ export class SubcategoriesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.subcategoryService.getAll()
-      .pipe(
-        switchMap(subcategories => {
-          this.subcategories = _.orderBy(subcategories.subcategories, 'category.name');
-          return this.categoryService.getAll();
-        }),
-        switchMap(categories => {
-          this.categories = _.orderBy(categories.categories, 'name');
-          return this.categories;
-        })
-      ).subscribe();
+    this.refresh();
   }
 
   changeStatus(subcategory) {
@@ -59,16 +48,25 @@ export class SubcategoriesComponent implements OnInit {
       });
   }
 
-  subcategorySaved(event) {
-    this.subcategoryService.getAll()
-      .pipe(
-        tap(subcategories =>{
-          this.subcategories = _.orderBy(subcategories.subcategories, 'category.name');
-        })
-      ).subscribe();
+  SubCategorySaved(event) {
+    this.refresh();
   }
 
-  subcategoryEdited(event) {
-    console.log('editado');
+  SubCategoryUpdate(event) {
+    this.refresh();
+  }
+
+  refresh() {
+    this.subcategoryService.getAll()
+      .pipe(
+        switchMap(subcategories => {
+          this.subcategories = _.orderBy(subcategories.subcategories, 'category.name');
+          return this.categoryService.getAll();
+        }),
+        switchMap(categories => {
+          this.categories = _.orderBy(categories.categories, 'name');
+          return this.categories;
+        })
+      ).subscribe();
   }
 }

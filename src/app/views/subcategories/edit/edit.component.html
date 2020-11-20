@@ -11,12 +11,12 @@
             <div class="modal-body" *ngIf="subcategory">
                 <form>
                     <div class="form-group">
-                        <label for="branchOffice">Categoria</label>
-                        <select [(ngModel)]="subcategory.category" name="category" class="form-control"
-                            id="branchOffice" [compareWith]="compareFn">
-                            <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}
-                            </option>
-                        </select>
+                      <label for="branchOffice">Categoria</label>
+                      <select [(ngModel)]="categorySelected" name="categorySelected" class="form-control" id="branchOffice">
+                          <option *ngFor="let category of categories" [value]="category._id">
+                              {{category.name}}
+                          </option>
+                      </select>
                     </div>
                     <div class="form-group">
                         <label for="name">Subcategoria</label>
@@ -26,8 +26,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" (click)="edit.hide()">Cancelar</button>
-                <button type="button" class="btn btn-info">Guardar Cambios</button>
+                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="button" class="btn btn-info" (click)="update()">Guardar Cambios</button>
             </div>
         </div>
     </div>

@@ -13,8 +13,8 @@ import { ToastrService } from 'ngx-toastr';
 
 export class CategoriesComponent implements OnInit {
   @ViewChild('infoModal') public infoModal: ModalDirective;
+
   categories: any[];
-  categoryName;
 
   constructor(
     private toastrService: ToastrService,
@@ -22,6 +22,39 @@ export class CategoriesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.Refresh();
+  }
+
+  CategorySaved(event) {
+    this.Refresh();
+  }
+
+  CategoryUpdate(event) {
+    this.Refresh();
+  }
+
+  chageStatus(category) {
+    let status = 'false';
+    if (category.active === true) {
+      status = 'false';
+    } else {
+      status = 'true';
+    }
+
+    this.categoryService.changeStatus(category._id, status)
+      .subscribe(resp => {
+        this.toastrService.success(resp.message, '¡Éxito!');
+
+        this.categoryService.getAll()
+          .pipe(
+            tap(categories => {
+              this.categories = categories.categories;
+            })
+          ).subscribe();
+      });
+  }
+
+  Refresh() {
     this.categoryService.getAll()
       .pipe(
         switchMap( categories => {
@@ -31,28 +64,4 @@ export class CategoriesComponent implements OnInit {
       ).subscribe();
   }
 
-  save() {
-    const category = new Category(null, this.categoryName, null);
-
-    this.categoryService.save(category)
-      .subscribe(categorySaved => {
-          this.categoryService.getAll()
-            .pipe(
-              tap(categories => {
-                this.cancel();
-                this.categories = categories.categories;
-                this.toastrService.success('Categoria creada', '¡Éxito!');
-              })
-            ).subscribe();
-      },
-      err => {
-        this.cancel();
-        this.toastrService.error(err.error.message + '.', '¡Error!');
-      });
-  }
-
-  cancel() {
-    this.categoryName = null;
-    this.infoModal.hide();
-  }
 }

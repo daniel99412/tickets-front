@@ -1,5 +1,5 @@
 <app-craete-branch-office #create (branchOfficeCreated)="branchOfficeSaved($event)"></app-craete-branch-office>
-<app-edit-branch-office #edit (branchOfficeEdited)="branchOfficeEdited($event)"></app-edit-branch-office>
+<app-edit-branch-office #edit (branchOfficeEdited)="branchOfficeUpdate($event)"></app-edit-branch-office>
 
 <div class="row">
   <div class="col-lg-12 add">
@@ -32,7 +32,7 @@
                 <span *ngIf="!branchOffice.active" class="badge badge-secondary">Inactivo</span>
               </td>
               <td class="button-actions">
-                <button type="button" class="btn btn-ghost-primary" (click)="edit.show('prueba')"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
+                <button type="button" class="btn btn-ghost-primary" (click)="edit.show(branchOffice._id)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></button>
                 <button type="button" class="btn btn-ghost-primary" (click)="chageStatus(branchOffice)">
                   <i *ngIf="branchOffice.active" class="fa fa-times" aria-hidden="true"></i>
                   <i *ngIf="!branchOffice.active" class="fa fa-check" aria-hidden="true"></i>

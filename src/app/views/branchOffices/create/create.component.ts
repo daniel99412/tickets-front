@@ -11,6 +11,7 @@ import { BranchOfficeService } from '../../../services/branchOffice.service';
   styleUrls: ['./create.component.css']
 })
 export class CreateComponent implements OnInit {
+
   @ViewChild('create') public create: ModalDirective;
   @Output() branchOfficeCreated = new EventEmitter<any>();
 

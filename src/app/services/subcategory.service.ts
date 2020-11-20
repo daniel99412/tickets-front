@@ -27,6 +27,10 @@ export class SubcategoryService {
     return this.httpClient.post<any>(`${AppSettings.API}/subcategory/`, subcategory);
   }
 
+  update(id, subcategory): Observable<any> {
+      return this.httpClient.put<any>(`${AppSettings.API}/subcategory/${id}`, subcategory);
+  }
+
   changeStatus(subcategory, status): Observable<any> {
     return this.httpClient.delete<any>(`${AppSettings.API}/subcategory/${subcategory}/status/${status}`);
   }
