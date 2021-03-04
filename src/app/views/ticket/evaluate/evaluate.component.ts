@@ -14,6 +14,7 @@ export class EvaluateComponent implements OnInit {
   @ViewChild('evaluateModal') modal: ModalDirective;
   @Input() ticket: any;
   @Input() userLogged: any;
+  @Input() socket;
   @Output() evaluationSaved = new EventEmitter<any>();
 
   evaluationForm: FormGroup;
@@ -25,7 +26,7 @@ export class EvaluateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.ticket);
+    console.log(this.ticket, 'aqui');
     console.log(this.userLogged);
     this.initForm();
   }
@@ -82,6 +83,7 @@ export class EvaluateComponent implements OnInit {
         .subscribe(resp => {
           this.hide();
           this.toastrService.success('Evaluado', '¡!Éxito');
+          this.socket.emit('status-change');
           this.evaluationSaved.emit(resp);
         });
     } else {
@@ -91,6 +93,7 @@ export class EvaluateComponent implements OnInit {
             .subscribe(evaluationResp => {
               this.hide();
               this.toastrService.success(resp.message, '¡!Éxito');
+              this.socket.emit('status-change');
               this.evaluationSaved.emit(evaluationResp);
             });
         });

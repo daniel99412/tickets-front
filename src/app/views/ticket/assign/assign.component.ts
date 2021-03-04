@@ -13,6 +13,7 @@ import { UserService } from '../../../services/user.service';
 export class AssignComponent implements OnInit {
   @ViewChild('assignModal', { static: false }) modal: ModalDirective;
   @Input() ticket: any;
+  @Input() socket;
   @Output() ticketAssigned = new EventEmitter<any>();
 
   users: any[];
@@ -54,6 +55,7 @@ export class AssignComponent implements OnInit {
         resp => {
           this.hide();
           this.ticketAssigned.emit();
+          this.socket.emit('status-change');
           this.toastrService.success('Ticket asignado', '¡Éxito!');
         },
         err => {

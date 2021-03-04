@@ -8,7 +8,6 @@ import { BranchOfficeService } from '../../services/branchOffice.service';
   templateUrl: 'branchOffices.component.html',
   styleUrls: ['branchOffices.component.scss']
 })
-
 export class BranchOfficesComponent implements OnInit {
   @ViewChild('infoModal') public infoModal: ModalDirective;
 

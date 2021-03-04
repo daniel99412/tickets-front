@@ -8,7 +8,6 @@ import { UserService } from '../../services/user.service';
   templateUrl: 'users.component.html',
   styleUrls: ['users.component.scss']
 })
-
 export class UsersComponent implements OnInit {
   @ViewChild('infoModal') public infoModal: ModalDirective;
   users: any[] = [];

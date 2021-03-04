@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import * as moment from 'moment';
 import { FormControl, FormGroup } from '@angular/forms';
@@ -20,6 +20,7 @@ import { ToastrService } from 'ngx-toastr';
 export class CreateComponent implements OnInit, OnDestroy {
   @ViewChild('createModal', { static: false }) modal: ModalDirective;
   @Output() ticketCreated = new EventEmitter<any>();
+  @Input() socket;
 
   private unsubscribe = new Subject<any>();
 
@@ -154,6 +155,7 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.ticketService.save(ticket).subscribe(resp => {
       this.hide();
       this.ticketCreated.emit(resp);
+      this.socket.emit('create');
       this.toastrService.success('Ticket creado', '¡Éxito!');
     });
   }

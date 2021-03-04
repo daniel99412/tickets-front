@@ -24,6 +24,10 @@ export class UserService {
         return this.httpClient.get(`${AppSettings.API}/user/`);
     }
 
+    public getById(id): Observable<any> {
+        return this.httpClient.get(`${AppSettings.API}/user/${id}`);
+    }
+
     public getBySubcategoryAndStatus(subcategory, status): Observable<any> {
         return this.httpClient.get(`${AppSettings.API}/user/subcategory/${subcategory}/active/${status}`);
     }

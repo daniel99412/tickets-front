@@ -4,8 +4,11 @@
             <div class="col-md-4">
                 {{this.creationDate.format('DD [de] MMMM [del] YYYY, hh:mm:ss')}}
             </div>
-            <div class="col-md-2 offset-6">
+            <div class="col-md-2 offset-6" *ngIf="ticket.progress !== 4">
                 Prioridad
+            </div>
+            <div class="col-md-2 offset-6" *ngIf="ticket.progress === 4">
+                Calificación
             </div>
         </div>
         <div class="row">

@@ -1,1 +1,136 @@
-<p>edit works!</p>
+<div bsModal #edit="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-info" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Editar Usuario</h4>
+                <button type="button" class="close" (click)="edit.hide()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- <form>
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" id="name" placeholder="Nombre">
+          </div>
+          <div class="form-group">
+            <label for="lastname">Apellidos</label>
+            <input type="text" class="form-control" id="lastname" placeholder="Apellidos">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" class="form-control" id="email" placeholder="Email">
+          </div>
+          <div class="form-group">
+            <label for="pass">Password</label>
+            <input type="password" class="form-control" id="pass" placeholder="Contraseña">
+          </div>
+          <div class="form-group">
+            <label for="branchOffice">Sucursal</label>
+            <select class="form-control" id="branchOffice">
+              <option>CUCEI</option>
+              <option>CUCEA</option>
+              <option>CUCS</option>
+              <option>CUSH</option>
+              <option>CUAD</option>
+            </select>
+          </div>
+        </form> -->
+                <form [formGroup]="userForm">
+                    <tabset>
+                        <tab>
+                            <ng-template tabHeading><i class="fa fa-id-card"></i> Información</ng-template>
+                            <div class="form-group">
+                                <label for="nameEdit">Nombre</label>
+                                <input formControlName="name" type="text" class="form-control" id="nameEdit" placeholder="Nombre">
+                            </div>
+                            <div class="form-group">
+                                <label for="lastnameEdit">Apellidos</label>
+                                <input formControlName="lastname" type="text" class="form-control" id="lastnameEdit" placeholder="Apellidos">
+                            </div>
+                            <div class="form-group">
+                                <label for="emailEdit">Email</label>
+                                <input formControlName="email" type="email" class="form-control" id="emailEdit" placeholder="Email">
+                            </div>
+                            <div class="form-group">
+                                <label for="branchOfficeEdit">Sucursal</label>
+                                <select formControlName="branchOffice" class="form-control" id="branchOfficeEdit" name="branchOffice">
+                                    <option>---</option>
+                                    <option *ngFor="let branchOffice of branchOffices" [value]="branchOffice._id">{{ branchOffice.name }}</option>
+                                </select>
+                            </div>
+                        </tab>
+                        <tab>
+                            <ng-template tabHeading><i class="fa fa-shield"></i> Permisos</ng-template>
+                            <div class="row">
+                                <div class="col-md-8 offset-2">
+                                    <div class="form-group">
+                                        <label for="categoryEdit">Categoria</label>
+                                        <select formControlName="category" name="category" class="form-control" id="categoryEdit">
+                                            <option>---</option>
+                                            <option *ngFor="let category of categories" [value]="category._id">{{ category.name }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8 offset-2 text-center">
+                                    <h3>Subcategorias</h3>
+                                </div>
+                            </div>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <h4>NO ASIGNADOS</h4>
+                                </div>
+                                <div class="col-6">
+                                    <h4>ASIGNADOS</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6" dragula="SUBCATEGORIES" [(dragulaModel)]="subcategories">
+                                    <div class="card" *ngIf="subcategories && subcategories.length === 0">
+                                        <div class="card-body p-0 clearfix">
+                                            <i class="fa fa-exclamation bg-warning p-4 font-2xl mr-3 float-left"></i>
+                                            <div class="h5 text-warning mb-0 pt-3">Selecciona una categoria</div>
+                                            <div class="text-muted text-uppercase font-weight-bold font-xs">para mostrar subcategorias</div>
+                                        </div>
+                                    </div>
+                                    <div class="card" *ngFor="let subcategory of subcategories">
+                                        <div class="card-body p-0 clearfix">
+                                            <i class="fa fa-tag bg-primary p-4 font-2xl mr-3 float-left"></i>
+                                            <div class="h5 text-primary mb-0 pt-3">{{ subcategory.name | titlecase }}</div>
+                                            <div class="text-muted text-uppercase font-weight-bold font-xs">{{ subcategory.category.name | titlecase
+                                                }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6" dragula="SUBCATEGORIES" [(dragulaModel)]="subcategoriesSelected">
+                                    <div class="card" *ngIf="subcategoriesSelected && subcategoriesSelected.length === 0">
+                                        <div class="card-body p-0 clearfix">
+                                            <i class="fa fa-exclamation bg-warning p-4 font-2xl mr-3 float-left"></i>
+                                            <div class="h5 text-warning mb-0 pt-3">Arrastra aqui las subcategorias</div>
+                                            <div class="text-muted text-uppercase font-weight-bold font-xs">a las que tendra acceso el usuario</div>
+                                        </div>
+                                    </div>
+                                    <div class="card" *ngFor="let subcategorySelct of subcategoriesSelected">
+                                        <div class="card-body p-0 clearfix">
+                                            <i class="fa fa-tag bg-success p-4 font-2xl mr-3 float-left"></i>
+                                            <div class="h5 text-success mb-0 pt-3">{{ subcategorySelct.name | titlecase }}</div>
+                                            <div class="text-muted text-uppercase font-weight-bold font-xs">{{ subcategorySelct.category.name |
+                                                titlecase }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                    </tabset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" (click)="edit.hide()">Cancelar</button>
+                <button type="button" class="btn btn-info">Guardar Cambios</button>
+            </div>
+        </div>
+    </div>
+</div>

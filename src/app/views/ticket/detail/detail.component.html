@@ -1,19 +1,25 @@
 <input id="fileDetail" type="file" [formControl]="file" class="submit-file">
 <div class="row" *ngIf="ticket">
-    <app-assign-ticket #assignModal [ticket]="ticket" (ticketAssigned)="onTicketASsigned($event)"></app-assign-ticket>
-    <app-evaluate-ticket #evaluateModal [ticket]="ticket" [userLogged]="userLogged" (evaluationSaved)="onEvaluationCreated($event)"></app-evaluate-ticket>
+    <app-assign-ticket #assignModal [socket]="socket" [ticket]="ticket" (ticketAssigned)="onTicketAssigned($event)"></app-assign-ticket>
+    <app-evaluate-ticket #evaluateModal [socket]="socket" [ticket]="ticket" [userLogged]="userLogged" (evaluationSaved)="onEvaluationCreated($event)"></app-evaluate-ticket>
     <div class="col-md-12 mb-3">
         <nav class="navbar navbar-dark bg-dark rounded">
-            <span class="navbar-brand mb-0 h1"><button class="btn btn-ghost-danger" (click)="return()"><i class="fa fa-chevron-left"></i></button> <i class="fa fa-ticket fa-lg"></i><b> Ticket</b> {{ ticket._id }}</span>
-            <span class="navbar-text" *ngIf="ticket.promiseDate !== ''"><b class="text-white">Fecha Compromiso </b> {{ticket.promiseDate}}</span>
+            <span class="navbar-brand mb-0 h1"><button class="btn btn-ghost-danger" (click)="return()"><i
+                        class="fa fa-chevron-left"></i></button> <i class="fa fa-ticket fa-lg"></i><b> Ticket</b>
+                {{ ticket._id }}</span>
+            <span class="navbar-text" *ngIf="ticket.promiseDate !== ''"><b class="text-white">Fecha Compromiso </b>
+                {{ticket.promiseDate}}</span>
             <span class="navbar-text text-white">
-                <b>Prioridad </b> 
-                <ngb-rating class="text-danger"  [(rate)]="ticket.priority" [readonly]="true" [max]="3"></ngb-rating>
+                <b>Prioridad </b>
+                <ngb-rating class="text-danger" [(rate)]="ticket.priority" [readonly]="true" [max]="3"></ngb-rating>
             </span>
             <div class="form-inline">
-                <button class="btn btn-ghost-info mr-1" (click)="openFileUpload()"><i class="fa fa-paperclip mr-1"></i>Adj. Archivos</button>
-                <button class="btn btn-ghost-light mr-1" *ngIf="ticket.assignedTo.length < 2"><i class="fa fa-user-plus"></i> Pedir ayuda</button>
-                <button class="btn btn-ghost-danger" *ngIf="ticket.progress !== 4" (click)="changeProgress(5)"><i class="fa fa-ban"></i> Cancelar</button>
+                <button class="btn btn-ghost-info mr-1" (click)="openFileUpload()"><i
+                        class="fa fa-paperclip mr-1"></i>Adj. Archivos</button>
+                <button class="btn btn-ghost-light mr-1" *ngIf="ticket.assignedTo.length < 2"><i
+                        class="fa fa-user-plus"></i> Pedir ayuda</button>
+                <button class="btn btn-ghost-danger" *ngIf="ticket.progress !== 4" (click)="changeProgress(5)"><i
+                        class="fa fa-ban"></i> Cancelar</button>
             </div>
         </nav>
     </div>
@@ -24,7 +30,10 @@
                     <div class="col-md-3 text-center"><small>{{ ticket.creationDate }}</small></div>
                     <div class="col-md-3 text-center"><small>{{ ticket.assignationDate }}</small></div>
                     <div class="col-md-3 text-center"><small>{{ ticket.startDate }}</small></div>
-                    <div class="col-md-3 text-center"><small>{{ ticket.finalizationDate }}</small></div>
+                    <div class="col-md-3 text-center">
+                        <small *ngIf="ticket.progress !== 5">{{ ticket.finalizationDate }}</small>
+                        <small *ngIf="ticket.progress === 5">{{ ticket.cancelationDate }}</small>
+                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-3 text-center">
@@ -37,19 +46,21 @@
                         <span class="badge badge-pill badge-primary" *ngIf="ticket.progress >= 3">Atendiendo</span>
                     </div>
                     <div class="col-md-3 text-center">
-                        <span class="badge badge-pill badge-success" *ngIf="ticket.progress >= 4">Completado</span>
-                        <!-- <span class="badge badge-pill badge-danger">Cancelado</span> -->
+                        <span class="badge badge-pill badge-success" *ngIf="ticket.progress >= 4 && ticket.progress !== 5">Completado</span>
+                        <span class="badge badge-pill badge-danger" *ngIf="ticket.progress === 5">Cancelado</span>
                     </div>
                 </div>
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-6 text-left"><b>Creado por:</b> {{ ticket.createBy.name }} {{ ticket.createBy.lastname }}</div>
+                    <div class="col-md-6 text-left"><b>Creado por:</b> {{ ticket.createBy.name }}
+                        {{ ticket.createBy.lastname }}</div>
                     <div class="col-md-6 text-right"><small>{{ ticket.creationDate }}</small></div>
                 </div>
                 <div class="row mt-3 mb-3">
                     <div class="col-md-6">
-                        <i class="fa fa-location-arrow text-danger"></i> <b>{{ ticket.reportedFrom.name }}</b> {{ ticket.reportedFrom.address }}
+                        <i class="fa fa-location-arrow text-danger"></i> <b>{{ ticket.reportedFrom.name }}</b>
+                        {{ ticket.reportedFrom.address }}
                     </div>
                 </div>
                 <div class="row">
@@ -71,7 +82,8 @@
                                 <i class="fa fa-paperclip"></i> <b>Archivos adjuntos</b>
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item" *ngIf="ticket.files.length === 0">No hay archivos adjuntos</li>
+                                <li class="list-group-item" *ngIf="ticket.files.length === 0">No hay archivos adjuntos
+                                </li>
                                 <li class="list-group-item" *ngFor="let file of ticket.files">Algo</li>
                             </ul>
                         </div>
@@ -79,13 +91,16 @@
                     <div class="col-md-6">
                         <div class="card">
                             <div class="card-header bg-secondary">
-                                <i class="fa fa-user-circle-o"></i> 
+                                <i class="fa fa-user-circle-o"></i>
                                 <b *ngIf="ticket.progress !== 2 && ticket.progress !== 3">Atendido por</b>
-                                <b *ngIf="(ticket.progress === 2 || ticket.progress === 3) && ticket.assignedTo.length === 1">Te atiende</b>
-                                <b *ngIf="(ticket.progress === 2 || ticket.progress === 3) && ticket.assignedTo.length > 1">Te atienden</b>
+                                <b *ngIf="(ticket.progress === 2 || ticket.progress === 3) && ticket.assignedTo.length === 1">Te
+                                    atiende</b>
+                                <b *ngIf="(ticket.progress === 2 || ticket.progress === 3) && ticket.assignedTo.length > 1">Te
+                                    atienden</b>
                             </div>
                             <ul class="list-group list-group-flush">
-                                <li class="list-group-item" *ngIf="ticket.assignedTo.length === 0">El ticket no es atendido por nadie</li>
+                                <li class="list-group-item" *ngIf="ticket.assignedTo.length === 0">El ticket no es
+                                    atendido por nadie</li>
                                 <li class="list-group-item" *ngFor="let user of ticket.assignedTo">
                                     <div class="row">
                                         <div class="col-1">
@@ -106,22 +121,70 @@
             <div class="card-footer">
                 <div class="row justify-content-center">
                     <div class="col-md-1">
-                        <button type="button" class="btn btn-secondary" *ngIf="ticket.progress === 1" (click)="assignModal.show()">Asignar</button>
-                        <button type="button" class="btn btn-secondary" *ngIf="ticket.progress === 2 && userLogged._id !== ticket.createBy._id" (click)="changeProgress(3)">Atender</button>
-                        <button type="button" class="btn btn-secondary" *ngIf="ticket.progress === 3 && userLogged._id !== ticket.createBy._id" (click)="evaluateModal.show()">Completar</button>
-                        <button type="button" class="btn btn-secondary" *ngIf="ticket.progress === 4 && userLogged._id === ticket.createBy._id && evaluations && evaluations.lenght === 0" (click)="evaluateModal.show()">Evaluar</button>
-                    </div>
-                </div>
-                <div class="row mt-2" *ngIf="ticket.progress === 4 || ticket.progress === 5">
-                    <div class="col-md-12">
-                        <b>Evaluacion General </b>
-                        <small>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. In fuga iste cum aut nemo ut suscipit itaque officia harum magni reiciendis, consequuntur dignissimos laboriosam nobis maxime quam nam at explicabo.
-                        </small>
+                        <button type="button" class="btn btn-secondary" *ngIf="ticket.progress === 1"
+                            (click)="assignModal.show()">Asignar</button>
+                        <button type="button" class="btn btn-secondary"
+                            *ngIf="ticket.progress === 2 && userLogged._id !== ticket.createBy._id"
+                            (click)="changeProgress(3)">Atender</button>
+                        <button type="button" class="btn btn-secondary"
+                            *ngIf="ticket.progress === 3 && userLogged._id !== ticket.createBy._id"
+                            (click)="evaluateModal.show()">Completar</button>
+                        <button type="button" class="btn btn-secondary"
+                            *ngIf="ticket.progress === 4 && userLogged._id === ticket.createBy._id && evaluations"
+                            (click)="evaluateModal.show()">Evaluar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <app-chat class="col-md-4"></app-chat>
+    
+    <app-chat class="col-md-4" *ngIf="ticket.progress !== 4"></app-chat>
+
+    <div class="col-md-4" *ngIf="ticket.progress === 4">
+        <div class="card">
+            <div class="card-header">
+                Evaluaciones
+            </div>
+            <div class="card-body">
+                <div class="card bg-secondary" *ngFor="let evaluation of evaluations">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-1 mt-2 mr-4">
+                                        <div class="avatar avatar-lg">
+                                            <img class="img-avatar" src="assets/img/avatars/1.jpg">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9 mt-2">
+                                        <h3 class="name">{{ evaluation.evaluated.name + ' ' + evaluation.evaluated.lastname }}</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="row text-center">
+                                    <div class="col-4">
+                                        <label>Calidad</label><br>
+                                        <ngb-rating [rate]="evaluation.quality" [max]="5" [readonly]="true"></ngb-rating>
+                                    </div>
+                                    <div class="col-4">
+                                        <label>Rapidez</label><br>
+                                        <ngb-rating [rate]="evaluation.speed" [max]="5" [readonly]="true"></ngb-rating>
+                                    </div>
+                                    <div class="col-4">
+                                        <label>Atención</label><br>
+                                        <ngb-rating [rate]="evaluation.attention" [max]="5" [readonly]="true"></ngb-rating>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 mt-2">
+                                <b>Evaluación general</b><br>
+                                {{ evaluation.comments }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -8,6 +8,7 @@ import { CategoriesRoutingModule } from './categories-routing.module';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { ToastrModule } from 'ngx-toastr';
+import { SocketioService } from '../../socketio.service';
 
 @NgModule({
   imports: [
@@ -17,6 +18,7 @@ import { ToastrModule } from 'ngx-toastr';
     FormsModule,
     ToastrModule.forRoot()
   ],
-  declarations: [ CategoriesComponent, CreateComponent, EditComponent ]
+  declarations: [ CategoriesComponent, CreateComponent, EditComponent ],
+  providers: [ SocketioService ]
 })
 export class CategoriesModule { }

@@ -1,9 +1,10 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { tap } from 'rxjs/operators';
 import { Category } from '../../../models/category';
 import { CategoryService } from '../../../services/category.service';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-craete-category',
@@ -14,10 +15,11 @@ export class CreateComponent implements OnInit {
 
   @ViewChild('create') public create: ModalDirective;
   @Output() categoryCreated = new EventEmitter<any>();
+  @Input() socket;
 
   categoryName: string;
   categories: any[];
-
+  
   constructor(
     private toastrService: ToastrService,
     private categoryService: CategoryService
@@ -45,6 +47,7 @@ export class CreateComponent implements OnInit {
               tap(categories => {
                 this.cancel();
                 this.categories = categories.categories;
+                this.socket.emit('create');
                 this.toastrService.success('Categoria creada', '¡Éxito!');
                 this.categoryCreated.emit(categorySaved);
               })

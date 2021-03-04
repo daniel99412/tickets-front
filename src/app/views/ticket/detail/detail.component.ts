@@ -5,6 +5,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { TicketService } from '../../../services/ticket.service';
 import { ToastrService } from 'ngx-toastr';
 import { EvaluationService } from '../../../services/evaluation.service';
+import * as io from 'socket.io-client';
 
 @Component({
   selector: 'app-detail',
@@ -16,6 +17,7 @@ export class DetailComponent implements OnInit {
   ticket: any;
   userLogged;
   evaluations: any;
+  socket;
 
   constructor(
     private router: Router,
@@ -26,8 +28,24 @@ export class DetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.socket = io.connect('http://localhost:3800');
+
     this.userLogged = JSON.parse(sessionStorage.getItem('user'));
 
+    this.socket.on('status-changed', (data) => {
+      if (data) {
+        this.refresh();
+      }
+    });
+
+    this.refresh();
+
+    this.file.valueChanges.subscribe(value => {
+      console.log(this.file);
+    });
+  }
+
+  refresh() {
     this.ticketService.getById(this.route.snapshot.paramMap.get('id'))
       .pipe(
         switchMap(ticket => {
@@ -39,10 +57,6 @@ export class DetailComponent implements OnInit {
           this.evaluations = evaluations;
         })
       ).subscribe();
-
-    this.file.valueChanges.subscribe(value => {
-      console.log(this.file);
-    });
   }
 
   public openFileUpload(): void {
@@ -53,7 +67,7 @@ export class DetailComponent implements OnInit {
     this.router.navigate(['/tickets/list']);
   }
 
-  onTicketASsigned(event) {
+  onTicketAssigned(event) {
     this.ticketService.getById(this.route.snapshot.paramMap.get('id'))
       .pipe(
         tap(ticket => {
@@ -68,6 +82,7 @@ export class DetailComponent implements OnInit {
         this.ticketService.getById(this.route.snapshot.paramMap.get('id'))
         .pipe(
           tap(ticket => {
+              this.socket.emit('status-change');
               this.toastrService.success(resp.message, '¡Éxito!');
               this.ticket = ticket;
             })
@@ -81,7 +96,7 @@ export class DetailComponent implements OnInit {
     this.evaluationService.getByTicket(this.route.snapshot.paramMap.get('id'))
       .pipe(
         switchMap(evaluationsResp => {
-          console.log(evaluationsResp);
+          this.socket.emit('status-change');
           return this.ticketService.getById(this.route.snapshot.paramMap.get('id'));
         }),
         tap(ticket => {

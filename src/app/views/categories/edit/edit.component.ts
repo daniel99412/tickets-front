@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryService } from '../../../services/category.service';
@@ -14,6 +14,7 @@ export class EditComponent implements OnInit {
 
   @ViewChild('edit') public edit: ModalDirective;
   @Output() categoryEdited = new EventEmitter<any>();
+  @Input() socket;
 
   category: any;
   name: string;
@@ -38,6 +39,7 @@ export class EditComponent implements OnInit {
     this.categoryService.update(this.category.category._id, category)
       .subscribe(categoryUpdate => {
         this.cancel();
+        this.socket.emit('create');
         this.toastrService.success('Categoria editada', '¡Éxito!');
         this.categoryEdited.emit(categoryUpdate);
       },

@@ -18,13 +18,6 @@
         <div class="row">
             <div class="col-12">
                 <div class="input-group">
-                    <div class="input-group-prepend">
-                        <button type="button" class="btn btn-ghost-info" (click)="openFileUpload()"
-                            *ngIf="!file.value" tooltip="Adjuntar archivos" placement="top"><i
-                                class="fa fa-paperclip"></i></button>
-                        <button type="button" class="btn btn-ghost-danger" (click)="deleteFile()" *ngIf="file.value"
-                            tooltip="Borrar archivos" placement="top"><i class="fa fa-trash"></i></button>
-                    </div>
                     <textarea class="form-control" type="textarea" [formControl]="message"
                         placeholder="Escribe un mensaje" (keyup)="autoscroll($event)"></textarea>
                     <div class="input-group-append">

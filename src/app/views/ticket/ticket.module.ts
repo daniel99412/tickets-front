@@ -16,6 +16,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ToastrModule } from 'ngx-toastr';
 import { EvaluateComponent } from './evaluate/evaluate.component';
 import { CancelComponent } from './cancel/cancel.component';
+import { SocketioService } from '../../socketio.service';
 
 
 @NgModule({
@@ -46,6 +47,7 @@ import { CancelComponent } from './cancel/cancel.component';
   providers: [
     CategoryService,
     // BranchOfficeService
+    SocketioService
   ]
 })
 export class TicketModule { }
