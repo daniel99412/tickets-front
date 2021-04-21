@@ -9,7 +9,6 @@ import { Category } from '../../../models/category';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
-
 export class EditComponent implements OnInit {
 
   @ViewChild('edit') public edit: ModalDirective;

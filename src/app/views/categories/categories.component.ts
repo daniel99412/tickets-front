@@ -32,7 +32,6 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     this.socket = io.connect('http://localhost:3800');
 
     this.socket.on('created', (data) => {
-      console.log(data);
       if(data) {
         this.Refresh();
       }

@@ -37,7 +37,7 @@ import { AppRoutingModule } from './app.routing';
 // Import 3rd party components
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { ChartsModule } from 'ng2-charts';
+// import { ChartsModule } from 'ng2-charts';
 import { ToastrModule } from 'ngx-toastr';
 import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
 import { SocketioService } from './socketio.service';
@@ -60,7 +60,7 @@ import { FormsModule } from '@angular/forms';
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ChartsModule,
+    // ChartsModule,
     ToastrModule.forRoot(),
     NgbModule,
     NgbRatingModule,
@@ -72,7 +72,7 @@ import { FormsModule } from '@angular/forms';
   ],
   declarations: [
     AppComponent,
-    ...APP_CONTAINERS,
+    DefaultLayoutComponent,
     P404Component,
     P500Component,
     RegisterComponent,
