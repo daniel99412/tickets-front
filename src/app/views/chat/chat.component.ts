@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import * as moment from 'moment';
 
@@ -68,6 +68,8 @@ const MESSAGES = [
   styleUrls: ['./chat.component.css']
 })
 export class ChatComponent implements OnInit {
+  @Input() socket;
+  @Input() ticket;
   messages = MESSAGES;
   file = new FormControl('');
   message = new FormControl('');
@@ -75,6 +77,7 @@ export class ChatComponent implements OnInit {
   constructor(public element: ElementRef) {}
 
   ngOnInit(): void {
+    console.log(this.ticket);
     this.file.valueChanges.subscribe( filePath => {
       this.message.setValue(filePath);
       this.message.disable();

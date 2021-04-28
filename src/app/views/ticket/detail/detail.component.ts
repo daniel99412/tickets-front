@@ -41,7 +41,7 @@ export class DetailComponent implements OnInit {
     this.refresh();
 
     this.file.valueChanges.subscribe(value => {
-      console.log(this.file);
+      // console.log(this.file);
     });
   }
 
@@ -53,7 +53,7 @@ export class DetailComponent implements OnInit {
           return this.evaluationService.getByTicket(this.route.snapshot.paramMap.get('id'));
         }),
         tap(evaluations => {
-          console.log(evaluations);
+          // console.log(evaluations);
           this.evaluations = evaluations;
         })
       ).subscribe();

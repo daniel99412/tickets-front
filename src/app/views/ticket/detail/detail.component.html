@@ -138,9 +138,9 @@
         </div>
     </div>
     
-    <app-chat class="col-md-4" *ngIf="ticket.progress !== 4"></app-chat>
+    <app-chat [socket]="socket" [ticket]="ticket" class="col-md-4" *ngIf="ticket.progress !== 4"></app-chat>
 
-    <div class="col-md-4" *ngIf="ticket.progress === 4">
+    <div class="col-md-4" *ngIf="ticket.progress === 4 && evaluations">
         <div class="card">
             <div class="card-header">
                 Evaluaciones
