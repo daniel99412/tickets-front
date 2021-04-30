@@ -13,6 +13,7 @@ import { SubcategoryService } from '../../../services/subcategory.service';
 export class CreateComponent implements OnInit {
   @ViewChild('create') public create: ModalDirective;
   @Input() categories;
+  @Input() socket;
 
   @Output() subcategorySaved = new EventEmitter<any>();
 
@@ -39,6 +40,7 @@ export class CreateComponent implements OnInit {
     this.subcategoryService.save(subcategory)
       .subscribe(subcategorySaved => {
         this.toastrService.success('Subcategoria creada', '¡Éxito!');
+        this.socket.emit('create');
         this.cancel();
         this.subcategorySaved.emit(subcategorySaved);
       },

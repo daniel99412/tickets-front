@@ -26,8 +26,6 @@ export class EvaluateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.ticket, 'aqui');
-    console.log(this.userLogged);
     this.initForm();
   }
 
@@ -53,9 +51,6 @@ export class EvaluateComponent implements OnInit {
   }
 
   send() {
-    console.log('ticket', this.ticket);
-    console.log('userLogged', this.userLogged);
-
     this.evaluationForm.get('ticket').setValue(this.ticket._id);
 
     if (this.userLogged._id !== this.ticket.createBy._id) {
@@ -82,7 +77,7 @@ export class EvaluateComponent implements OnInit {
       this.evaluationService.save(evaluation)
         .subscribe(resp => {
           this.hide();
-          this.toastrService.success('Evaluado', '¡!Éxito');
+          this.toastrService.success('Evaluado', '¡Éxito!');
           this.socket.emit('status-change');
           this.evaluationSaved.emit(resp);
         });
@@ -92,7 +87,7 @@ export class EvaluateComponent implements OnInit {
           this.evaluationService.save(evaluation)
             .subscribe(evaluationResp => {
               this.hide();
-              this.toastrService.success(resp.message, '¡!Éxito');
+              this.toastrService.success(resp.message, '¡Éxito!');
               this.socket.emit('status-change');
               this.evaluationSaved.emit(evaluationResp);
             });

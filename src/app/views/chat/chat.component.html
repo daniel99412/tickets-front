@@ -5,11 +5,11 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-12 mb-3">
-                <div class="message-list overflow-auto">
+                <div class="message-list overflow-auto" *ngIf="messages">
                     <div class="row" *ngFor="let item of messages">
                         <div class="col-12">
-                            <app-message [howSend]="item.howSend" [person]="item.person" [hour]="item.hour"
-                                [message]="item.message" [type]="item.type"></app-message>
+                            <app-message [ticket]="item.ticket" [from]="item.from" [to]="item.to"
+                                [message]="item.message" [type]="item.type" [date]="item.date"></app-message>
                         </div>
                     </div>
                 </div>
@@ -21,7 +21,7 @@
                     <textarea class="form-control" type="textarea" [formControl]="message"
                         placeholder="Escribe un mensaje" (keyup)="autoscroll($event)"></textarea>
                     <div class="input-group-append">
-                        <button type="button" class="btn btn-ghost-success" tooltip="Enviar" placement="top"><i
+                        <button type="button" class="btn btn-ghost-success" tooltip="Enviar" placement="top" (click)="send()"><i
                                 class="fa fa-send"></i></button>
                     </div>
                 </div>

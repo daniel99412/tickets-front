@@ -6,3 +6,8 @@
 .name {
     margin-top: 3%;
 }
+
+.evaluator {
+    font-size: 12px;
+    text-align: right;
+}

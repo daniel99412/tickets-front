@@ -6,6 +6,7 @@ import { Subcategory } from '../../models/subcategory';
 import { CategoryService } from '../../services/category.service';
 import { SubcategoryService } from '../../services/subcategory.service';
 import * as _ from 'lodash';
+import * as io from 'socket.io-client';
 
 @Component({
   templateUrl: 'subcategories.component.html',
@@ -17,6 +18,7 @@ export class SubcategoriesComponent implements OnInit {
   subcategories: any[];
   subcategoryName;
   subcategory;
+  socket;
 
   constructor(
     private toastrService: ToastrService,
@@ -26,6 +28,13 @@ export class SubcategoriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.refresh();
+    this.socket = io.connect('http://localhost:3800');
+
+    this.socket.on('created', (data) => {
+      if(data) {
+        this.refresh();
+      }
+    })
   }
 
   changeStatus(subcategory) {
@@ -39,6 +48,7 @@ export class SubcategoriesComponent implements OnInit {
     this.subcategoryService.changeStatus(subcategory._id, status)
       .subscribe(resp => {
         this.toastrService.success(resp.message, '¡Éxito!');
+        this.socket.emit('create');
         this.subcategoryService.getAll()
           .pipe(
             tap(subcategories => {

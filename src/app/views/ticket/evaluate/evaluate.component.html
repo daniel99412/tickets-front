@@ -25,7 +25,7 @@
                                         <div class="col-9" *ngIf="userLogged._id !== ticket.createBy._id">
                                             {{ ticket.createBy.name + ' ' + ticket.createBy.lastname }}
                                         </div>
-                                        <div class="col-9" *ngIf="userLogged._id === ticket.createBy._id">
+                                        <div class="col-9" *ngIf="userLogged._id === ticket.createBy._id && ticket.assignedTo.length !== 0">
                                             {{ ticket.assignedTo[0].name + ' ' + ticket.assignedTo[0].lastname }}
                                         </div>
                                     </div>

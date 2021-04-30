@@ -34,6 +34,7 @@ export class DetailComponent implements OnInit {
 
     this.socket.on('status-changed', (data) => {
       if (data) {
+        console.log('si funcione');
         this.refresh();
       }
     });
@@ -93,15 +94,6 @@ export class DetailComponent implements OnInit {
   }
 
   onEvaluationCreated(event) {
-    this.evaluationService.getByTicket(this.route.snapshot.paramMap.get('id'))
-      .pipe(
-        switchMap(evaluationsResp => {
-          this.socket.emit('status-change');
-          return this.ticketService.getById(this.route.snapshot.paramMap.get('id'));
-        }),
-        tap(ticket => {
-          this.ticket = ticket;
-        })
-      ).subscribe();
+    this.refresh();
   }
 }

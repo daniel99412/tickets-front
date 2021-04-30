@@ -1,18 +1,10 @@
-<div class="message-box {{howSend}}">
+<div class="message-box {{setMessageColor()}}">
     <div class="row mt-1 mb-2">
         <div class="col-md-9 person">
-            <b>{{person}}</b>
+            <b>{{from.name + ' ' + from.lastname}}</b>
         </div>
         <div class="col-md-3 time">
-            <b>{{hour}}</b>
-        </div>
-    </div>
-    <div class="row" *ngIf="type === 'file'">
-        <div class="col-1 dowload-file-logo">
-            <a href="#"><i class="fa fa-download"></i></a>
-        </div>
-        <div class="col-11 download-file">
-            {{message}}
+            <b>{{ moment(date).locale('es-mx').fromNow() }}</b>
         </div>
     </div>
     <div class="row" *ngIf="type === 'message'">

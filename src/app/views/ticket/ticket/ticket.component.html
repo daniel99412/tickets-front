@@ -2,7 +2,7 @@
     <div class="card-body" [routerLink]="['/tickets/view', ticket._id]" *ngIf="ticket">
         <div class="row">
             <div class="col-md-4">
-                {{this.creationDate.format('DD [de] MMMM [del] YYYY, hh:mm:ss')}}
+                {{this.creationDate.format('DD [de] MMMM [del] YYYY, HH:mm:ss')}}
             </div>
             <div class="col-md-2 offset-6" *ngIf="ticket.progress !== 4">
                 Prioridad

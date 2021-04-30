@@ -94,7 +94,7 @@ export class CreateComponent implements OnInit, OnDestroy {
   }
 
   show() {
-    this.creationDate = moment().format('YYYY-MM-DD hh:mm:ss.SSS');
+    this.creationDate = moment().local().format('YYYY-MM-DD HH:mm:ss.SSS');
     this.ticketForm.get('creationDate').setValue(this.creationDate);
     this.modal.show();
   }

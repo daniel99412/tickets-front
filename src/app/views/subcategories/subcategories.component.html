@@ -1,5 +1,5 @@
-<app-create-subcategory #create [categories]="categories" (subcategorySaved)="SubCategorySaved($event)"></app-create-subcategory>
-<app-edit-subcategory #edit [categories]="categories" (subcategoryEdited)="SubCategoryUpdate($event)"></app-edit-subcategory>
+<app-create-subcategory #create [categories]="categories" [socket]="socket" (subcategorySaved)="SubCategorySaved($event)"></app-create-subcategory>
+<app-edit-subcategory #edit [categories]="categories" [socket]="socket" (subcategoryEdited)="SubCategoryUpdate($event)"></app-edit-subcategory>
 
 <div class="row">
   <div class="col-lg-12 add">

@@ -8,25 +8,26 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" *ngIf="subcategory">
-                <form>
+            <div class="modal-body">
+                <form [formGroup]="subcategoryForm">
                     <div class="form-group">
                       <label for="branchOffice">Categoria</label>
-                      <select [(ngModel)]="categorySelected" name="categorySelected" class="form-control" id="branchOffice">
-                          <option *ngFor="let category of categories" [value]="category._id">
-                              {{category.name}}
-                          </option>
+                      <select formControlName="category" name="category" class="form-control" id="categoryEdit">
+                        <option>---</option>
+                        <option *ngFor="let category of categories" [value]="category._id">
+                            {{category.name}}
+                        </option>
                       </select>
                     </div>
                     <div class="form-group">
                         <label for="name">Subcategoria</label>
-                        <input [(ngModel)]="subcategory.name" name="name" type="text" class="form-control" id="name"
+                        <input formControlName="subcategory" name="subcategory" type="text" class="form-control" id="subcategoryEdit"
                             placeholder="Subcategoria">
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary">Cancelar</button>
+                <button type="button" class="btn btn-secondary" (click)="cancel()">Cancelar</button>
                 <button type="button" class="btn btn-info" (click)="update()">Guardar Cambios</button>
             </div>
         </div>

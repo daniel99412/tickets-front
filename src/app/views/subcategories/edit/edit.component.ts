@@ -4,6 +4,7 @@ import { Subcategory } from '../../../models/subcategory';
 import { SubcategoryService } from '../../../services/subcategory.service';
 import { ToastrService } from 'ngx-toastr';
 import { tap } from 'rxjs/operators';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-edit-subcategory',
@@ -13,13 +14,11 @@ import { tap } from 'rxjs/operators';
 export class EditComponent implements OnInit {
   @ViewChild('edit') public edit: ModalDirective;
   @Input() categories;
+  @Input() socket;
 
   @Output() subcategoryEdited = new EventEmitter<any>();
 
-  subcategory;
-  category;
-  categorySelected = null;
-  subcategoryName = null;
+  subcategoryForm: FormGroup;
 
   constructor(
     private subcategoryService: SubcategoryService,
@@ -27,21 +26,34 @@ export class EditComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.initForm();
+  }
+
+  initForm() {
+    this.subcategoryForm = new FormGroup({
+      id: new FormControl(null),
+      category: new FormControl(null),
+      subcategory: new FormControl(null)
+    });
   }
 
   show(subcategory) {
-    this.subcategory = subcategory;
-    this.categorySelected = subcategory.category;
-    console.log(this.categorySelected, "Completo");
+    this.setInfoInForm(subcategory);
     this.edit.show();
   }
 
+  setInfoInForm(subcategory) {
+    this.subcategoryForm.get('id').setValue(subcategory._id);
+    this.subcategoryForm.get('category').setValue(subcategory.category);
+    this.subcategoryForm.get('subcategory').setValue(subcategory.name);
+  }
+
   update() {
-    this.categorySelected;
-    const subcategory = new Subcategory(this.subcategory._id, this.subcategory.name, this.categorySelected);
-    this.subcategoryService.update(this.subcategory._id, subcategory)
+    const subcategory = new Subcategory(this.subcategoryForm.get('id').value, this.subcategoryForm.get('subcategory').value, this.subcategoryForm.get('category').value._id);
+    this.subcategoryService.update(this.subcategoryForm.value._id, subcategory)
       .subscribe(subcategorySaved => {
         this.toastrService.success('Subcategoria creada', '¡Éxito!');
+        this.socket.emit('create');
         this.cancel();
         this.subcategoryEdited.emit(subcategorySaved);
       },
@@ -60,8 +72,7 @@ export class EditComponent implements OnInit {
   }
 
   cancel() {
-    this.subcategoryName = null;
-    this.categorySelected = null;
+    this.subcategoryForm.reset();
     this.edit.hide();
   }
 }
