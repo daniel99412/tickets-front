@@ -20,6 +20,10 @@ export class UserService {
         return this.httpClient.put(`${AppSettings.API}/user/reset/${id}`, passwordBody);
     }
 
+    public update(id, user): Observable<any> {
+      return this.httpClient.put(`${AppSettings.API}/user/${id}`, user);
+    }
+
     public getAll(): Observable<any> {
         return this.httpClient.get(`${AppSettings.API}/user/`);
     }
