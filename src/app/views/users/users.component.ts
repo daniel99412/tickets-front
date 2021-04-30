@@ -35,6 +35,15 @@ export class UsersComponent implements OnInit {
       ).subscribe();
   }
 
+  onUserEdited(event) {
+    this.userService.getAll()
+      .pipe(
+        tap(resp => {
+          this.users = resp.users;
+        })
+      ).subscribe();
+  }
+
   changeStatus(user) {
     let status = 'false';
     if (user.active === true) {

@@ -1,5 +1,5 @@
 <app-create-user #create (usercreated)="onUserSaved($event)"></app-create-user>
-<app-edit-user #edit></app-edit-user>
+<app-edit-user #edit (userEdited)="onUserEdited($event)"></app-edit-user>
 
 <div class="row">
   <div class="col-lg-12 add">
