@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { TicketService } from '../../../services/ticket.service';
 import { ToastrService } from 'ngx-toastr';
 import { EvaluationService } from '../../../services/evaluation.service';
@@ -18,6 +18,7 @@ export class DetailComponent implements OnInit {
   userLogged;
   evaluations: any;
   socket;
+  promiseDate;
 
   constructor(
     private router: Router,
@@ -31,10 +32,10 @@ export class DetailComponent implements OnInit {
     this.socket = io.connect('http://localhost:3800');
 
     this.userLogged = JSON.parse(sessionStorage.getItem('user'));
+    console.log(this.userLogged);
 
     this.socket.on('status-changed', (data) => {
       if (data) {
-        console.log('si funcione');
         this.refresh();
       }
     });
@@ -51,6 +52,7 @@ export class DetailComponent implements OnInit {
       .pipe(
         switchMap(ticket => {
           this.ticket = ticket;
+          console.log(this.ticket);
           return this.evaluationService.getByTicket(this.route.snapshot.paramMap.get('id'));
         }),
         tap(evaluations => {
@@ -78,19 +80,49 @@ export class DetailComponent implements OnInit {
   }
 
   changeProgress(progress) {
-    this.ticketService.changeProgress(this.ticket._id, progress)
-      .subscribe(resp => {
-        this.ticketService.getById(this.route.snapshot.paramMap.get('id'))
-        .pipe(
-          tap(ticket => {
-              this.socket.emit('status-change');
-              this.toastrService.success(resp.message, '¡Éxito!');
+    if(progress === 3) {
+      if (this.promiseDate === '' || !this.promiseDate) {
+        this.toastrService.error('Ingresa la fecha compromiso', '¡Error!');
+      } else {
+        console.log(this.promiseDate);
+        console.log(this.ticket);
+        this.ticketService.assign(this.ticket._id, this.ticket.assignedTo[0]._id, this.promiseDate)
+          .pipe(
+            tap(ticket => {
               this.ticket = ticket;
+              console.log('promiseDate', this.ticket);
+
+              this.ticketService.changeProgress(this.ticket._id, progress)
+                .subscribe(resp => {
+                  this.ticketService.getById(this.route.snapshot.paramMap.get('id'))
+                  .pipe(
+                    tap(ticket => {
+                        this.socket.emit('status-change');
+                        this.toastrService.success(resp.message, '¡Éxito!');
+                        this.ticket = ticket;
+                      })
+                    ).subscribe();
+                }, err => {
+                  this.toastrService.error(err.error.message, '¡Error!');
+                });
             })
           ).subscribe();
-      }, err => {
-        this.toastrService.error(err.error.message, '¡Error!');
-      });
+      }
+    } else {
+      this.ticketService.changeProgress(this.ticket._id, progress)
+        .subscribe(resp => {
+          this.ticketService.getById(this.route.snapshot.paramMap.get('id'))
+          .pipe(
+            tap(ticket => {
+                this.socket.emit('status-change');
+                this.toastrService.success(resp.message, '¡Éxito!');
+                this.ticket = ticket;
+              })
+            ).subscribe();
+        }, err => {
+          this.toastrService.error(err.error.message, '¡Error!');
+        });
+    }
   }
 
   onEvaluationCreated(event) {

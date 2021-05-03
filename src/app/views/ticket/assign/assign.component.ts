@@ -19,7 +19,7 @@ export class AssignComponent implements OnInit {
   users: any[];
   userLogged;
   userSelected: any;
-  promiseDate;
+  promiseDate = "";
 
   constructor(
     private userService: UserService,
@@ -50,6 +50,10 @@ export class AssignComponent implements OnInit {
   }
 
   assign() {
+    if (this.ticket.promiseDate !== '') {
+      this.promiseDate = this.ticket.promiseDate;
+    }
+    
     this.ticketService.assign(this.ticket._id, this.userSelected, this.promiseDate)
       .subscribe(
         resp => {
