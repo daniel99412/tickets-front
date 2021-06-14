@@ -32,7 +32,7 @@ export class DetailComponent implements OnInit {
     this.socket = io.connect('http://localhost:3800');
 
     this.userLogged = JSON.parse(sessionStorage.getItem('user'));
-    console.log(this.userLogged);
+    // console.log(this.userLogged);
 
     this.socket.on('status-changed', (data) => {
       if (data) {
@@ -52,7 +52,7 @@ export class DetailComponent implements OnInit {
       .pipe(
         switchMap(ticket => {
           this.ticket = ticket;
-          console.log(this.ticket);
+          console.log('ticket', this.ticket);
           return this.evaluationService.getByTicket(this.route.snapshot.paramMap.get('id'));
         }),
         tap(evaluations => {
@@ -80,6 +80,8 @@ export class DetailComponent implements OnInit {
   }
 
   changeProgress(progress) {
+    console.log('createdBy', this.ticket.createBy);
+    console.log('userLogged', this.userLogged);
     if(progress === 3) {
       if (this.promiseDate === '' || !this.promiseDate) {
         this.toastrService.error('Ingresa la fecha compromiso', '¡Error!');

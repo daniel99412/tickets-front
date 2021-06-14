@@ -9,7 +9,7 @@
                 {{ ticket._id }}</span>
             <span class="navbar-text" *ngIf="ticket.promiseDate !== ''"><b class="text-white">Fecha Compromiso </b>
                 {{ticket.promiseDate}}</span>
-            <span class="" *ngIf="ticket.promiseDate === '' && ticket.createBy._id !== userLogged._id">
+            <span class="" *ngIf="!ticket.promiseDate && ticket.promiseDate === '' && ticket.createBy._id !== userLogged._id">
                 <label for="promiseDate">Fecha de compromiso</label>
                 <input [(ngModel)]="promiseDate" id="promiseDate" class="form-control" type="date">
             </span>
