@@ -5,6 +5,7 @@ import { UserRoleService } from '../../services/userRole.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { switchMap, tap } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import * as _ from 'lodash';
 
 @Component({
   templateUrl: 'assingRole.component.html',
@@ -14,9 +15,12 @@ export class AssingRoleComponent implements OnInit, OnDestroy {
 
   users: any[] = [];
   subcategories = [];
-  roles: any[];
+  roles = [];
+  rolesByUser = [];
   rolesSelected = [];
-  idUser: any;
+  idUser: any = null;
+  idRole: any;
+  body: any;
 
   userForm: FormGroup;
 
@@ -33,16 +37,13 @@ export class AssingRoleComponent implements OnInit, OnDestroy {
       .pipe(
         tap(resp => {
           this.users = resp.users;
-          console.log(this.users)
         })
       ).subscribe();
 
       this.roleService.getAll()
         .pipe(
-          switchMap( roles => {
-            this.roles = roles.roles;
-            console.log(this.roles)
-            return this.roles;
+          tap( resp => {
+            this.roles = resp.roles;
           })
         ).subscribe();
   }
@@ -52,31 +53,32 @@ export class AssingRoleComponent implements OnInit, OnDestroy {
     this.unsubscribe.complete();
   }
 
-  GetUser(id: number) {
-    console.log("Entre")
-    // this.idUser = id;
-    // console.log(this.idUser)
-  }
-
-  accessSearch() {
-    console.log("Entre")
-  }
-
-  searchAccessList(user) {
+  accessSearch(user) {
     this.userRole.getRoles(user)
       .pipe(
         tap(resp => {
-          this.users = resp;
+          this.rolesByUser = resp.roles;
+          const _accessSearch = _.groupBy(this.rolesByUser, 'role._id')
+          this.rolesByUser = _accessSearch;
         })
       ).subscribe();
   }
 
-  send() {
-
+  send(value) {
+    this.rolesByUser = [];
+    this.body = {
+      user: this.idUser,
+      role: value
+    }
+    this.userRole.setRole(this.body).subscribe(resp => {
+      window.location.reload();
+    })
   }
 
-  remove() {
-
+  remove(value) {
+    this.userRole.unsetRole(value).subscribe(resp => {
+      window.location.reload();
+    })
   }
 
 }

@@ -11,13 +11,15 @@ export class UserRoleService {
     constructor( private httpClient: HttpClient ) {
     }
 
-    setRole() {
+    setRole(user): Observable<any> {
+      return this.httpClient.post<any>(`${AppSettings.API}/user-role/`, user);
     }
 
-    unsetRole() {
+    unsetRole(id) {
+      return this.httpClient.delete<any>(`${AppSettings.API}/user-role/${id}`);
     }
 
-    getRoles(user): Observable<UserRole[]> {
-        return this.httpClient.get<UserRole[]>(`${AppSettings.API}/user-role/user/${user}`);
+    getRoles(user): Observable<any> {
+        return this.httpClient.get<any>(`${AppSettings.API}/user-role/user/${user}`);
     }
 }
