@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { LocationStrategy, HashLocationStrategy } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -18,6 +18,7 @@ import { DefaultLayoutComponent } from './containers';
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { RegisterComponent } from './views/register/register.component';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 const APP_CONTAINERS = [
   DefaultLayoutComponent
@@ -69,6 +70,7 @@ import { FormsModule } from '@angular/forms';
     DragulaModule.forRoot(),
     FormsModule,
     ToastrModule.forRoot(),
+    PickerModule
   ],
   declarations: [
     AppComponent,
@@ -82,6 +84,7 @@ import { FormsModule } from '@angular/forms';
     { provide: LocationStrategy, useClass: HashLocationStrategy },
     { provide: HTTP_INTERCEPTORS, useClass: AddTokenInterceptor, multi: true }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }

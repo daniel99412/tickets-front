@@ -9,3 +9,13 @@
     display: none;
     visibility: hidden;
 }
+
+::ng-deep .popover {
+    max-width: 23rem;
+    background-color: #222;
+}
+
+::ng-deep .emoji-mart {
+    border: 1px solid #222;
+    background: #222;
+}

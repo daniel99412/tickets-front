@@ -18,6 +18,12 @@
         <div class="row">
             <div class="col-12">
                 <div class="input-group">
+                    <div class="input-group-append">
+                        <button type="button" class="btn btn-ghost-dark" 
+                            [popover]="popTemplateHtml" 
+                            placement="top" 
+                            (click)="isEmojiPickerVisible = !isEmojiPickerVisible;"><i class="fa fa-smile-o fa-lg"></i></button>
+                    </div>
                     <textarea class="form-control" type="textarea" [formControl]="message"
                         placeholder="Escribe un mensaje" (keyup)="autoscroll($event)"></textarea>
                     <div class="input-group-append">
@@ -30,3 +36,14 @@
         </div>
     </div>
 </div>
+
+<ng-template #popTemplateHtml>
+    <div>
+        <emoji-mart class="emoji-mart" *ngIf="isEmojiPickerVisible" (emojiSelect)="emojiSelected($event)"
+            [i18n]="{
+                search: 'Buscar',
+                emojilist: 'Lista de Emojis',
+                notfound: 'Emoji no encontrado'
+            }"></emoji-mart>
+    </div>
+</ng-template>

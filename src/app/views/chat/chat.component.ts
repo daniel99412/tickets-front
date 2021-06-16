@@ -1,10 +1,10 @@
-import { Component, ElementRef, Input, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SecurityContext } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import * as moment from 'moment';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { tap } from 'rxjs/operators';
 import { MessageService } from '../../services/message.service';
-import { TicketService } from '../../services/ticket.service';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-chat',
@@ -18,17 +18,22 @@ export class ChatComponent implements OnInit {
   messages = [];
   file = new FormControl('');
   message = new FormControl('');
-
+  html: string = ``;
+  isEmojiPickerVisible: boolean;
+  
   constructor(
     public element: ElementRef,
     public messageService: MessageService,
     private toastrService: ToastrService,
-  ) {}
+    sanitizer: DomSanitizer
+  ) {
+    this.html = sanitizer.sanitize(SecurityContext.HTML, this.html);
+  }
 
   ngOnInit(): void {
     this.user = JSON.parse(sessionStorage.getItem('user'));
     this.refreshMessages();
-
+    
     let roomJoined = {
       'room': this.ticket._id,
       'user': this.user
@@ -58,7 +63,7 @@ export class ChatComponent implements OnInit {
     this.messageService.getByTicket(this.ticket._id)
       .pipe(
         tap(messages => {
-          this.messages = messages;
+          this.messages = _.orderBy(messages, ['date'], ['desc']);
         })
       ).subscribe();
   }
@@ -107,5 +112,9 @@ export class ChatComponent implements OnInit {
           this.refreshMessages();
         })
       ).subscribe();
+  }
+
+  emojiSelected(event) {
+    this.message.setValue(this.message.value + ' ' + event.emoji.native + ' ');
   }
 }
