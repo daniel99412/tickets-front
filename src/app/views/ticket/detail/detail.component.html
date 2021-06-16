@@ -13,16 +13,20 @@
                 <label for="promiseDate">Fecha de compromiso</label>
                 <input [(ngModel)]="promiseDate" id="promiseDate" class="form-control" type="date">
             </span>
-            <span class="navbar-text text-white">
+            <span class="navbar-text text-white" *ngIf="ticket.progress !== 4">
                 <b>Prioridad </b>
                 <ngb-rating class="text-danger" [(rate)]="ticket.priority" [readonly]="true" [max]="3"></ngb-rating>
             </span>
+            <span class="navbar-text text-white" *ngIf="ticket.progress === 4">
+                <b>Calificación General</b>
+                <ngb-rating class="text-danger" [rate]="getEvaluation()" [readonly]="true" [max]="5"></ngb-rating>
+            </span>
             <div class="form-inline">
-                <button class="btn btn-ghost-info mr-1" (click)="openFileUpload()"><i
+                <button class="btn btn-ghost-info mr-1" *ngIf="ticket.progress < 4" (click)="openFileUpload()"><i
                         class="fa fa-paperclip mr-1"></i>Adj. Archivos</button>
-                <button class="btn btn-ghost-light mr-1" *ngIf="ticket.assignedTo.length < 2 && ticket.createBy._id !== userLogged._id" (click)="assignModal.show()"><i
+                <button class="btn btn-ghost-light mr-1" *ngIf="ticket.assignedTo.length < 2 && ticket.createBy._id !== userLogged._id && ticket.progress < 4" (click)="assignModal.show()"><i
                         class="fa fa-user-plus"></i> Pedir ayuda</button>
-                <button class="btn btn-ghost-danger" *ngIf="ticket.progress !== 4" (click)="changeProgress(5)"><i
+                <button class="btn btn-ghost-danger" *ngIf="ticket.progress < 4" (click)="changeProgress(5)"><i
                         class="fa fa-ban"></i> Cancelar</button>
             </div>
         </nav>
@@ -88,7 +92,7 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item" *ngIf="ticket.files.length === 0">No hay archivos adjuntos
                                 </li>
-                                <li class="list-group-item" *ngFor="let file of ticket.files">Algo</li>
+                                <li class="list-group-item" *ngFor="let file of ticket.files">{{file.path}} <i class="fa fa-download" (click)="getImage(file.path)"  aria-hidden="true"></i></li>
                             </ul>
                         </div>
                     </div>

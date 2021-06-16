@@ -6,6 +6,7 @@ import { TicketService } from '../../../services/ticket.service';
 import { ToastrService } from 'ngx-toastr';
 import { EvaluationService } from '../../../services/evaluation.service';
 import * as io from 'socket.io-client';
+import { FileService } from '../../../services/file.service';
 
 @Component({
   selector: 'app-detail',
@@ -25,7 +26,8 @@ export class DetailComponent implements OnInit {
     private route: ActivatedRoute,
     private ticketService: TicketService,
     private toastrService: ToastrService,
-    private evaluationService: EvaluationService
+    private evaluationService: EvaluationService,
+    private fileService: FileService
   ) { }
 
   ngOnInit(): void {
@@ -52,11 +54,10 @@ export class DetailComponent implements OnInit {
       .pipe(
         switchMap(ticket => {
           this.ticket = ticket;
-          console.log('ticket', this.ticket);
+          console.log(this.ticket);
           return this.evaluationService.getByTicket(this.route.snapshot.paramMap.get('id'));
         }),
         tap(evaluations => {
-          // console.log(evaluations);
           this.evaluations = evaluations;
         })
       ).subscribe();
@@ -129,5 +130,27 @@ export class DetailComponent implements OnInit {
 
   onEvaluationCreated(event) {
     this.refresh();
+  }
+
+  getEvaluation(): number {
+    let totalEvaluation = 0;
+
+    if (this.evaluations.length !== 0) {
+      this.evaluations.forEach(evaluation => {
+        if (evaluation.evaluated._id === this.userLogged._id) {
+          totalEvaluation = (evaluation.attention + evaluation.quality + evaluation.speed) / 3
+        }
+      });
+    }
+
+    return totalEvaluation;
+  }
+
+  getImage(fileName) {
+    this.fileService.getImage(fileName).pipe(
+      tap(resp => {
+        console.log(resp)
+      })
+    ).subscribe();
   }
 }

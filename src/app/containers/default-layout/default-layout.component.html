@@ -11,7 +11,7 @@
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
         dropdownToggle (click)="false">
-        <img src="assets/img/avatars/6.jpg" class="img-avatar" alt="admin@bootstrapmaster.com" />
+        <img class="img-avatar" src="{{ url + '/user/picture/' + user.picture }}"/>
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <div class="dropdown-header text-center"><strong>{{user.name}} {{user.lastname}}</strong></div>
@@ -47,7 +47,7 @@
 
   <!-- Notification Panel -->
   <app-aside [fixed]="true" [display]="false" [ngClass]="'test'">
-    <input class="upFile" id="image" type="file">
+    <input class="upFile" id="image" type="file" (change)="upload($event)">
     <tabset #asideMenuTabs>
       <tab>
         <ng-template tabHeading><i class="icon-user"></i></ng-template>
@@ -58,7 +58,7 @@
           </div>
           <div class="list-group-item text-center list-group-item-accent-secondary">
             <div class="avatar avatar-lg mt-4">
-              <img class="img-avatar" src="assets/img/avatars/6.jpg">
+              <img class="img-avatar" src="{{ url + '/user/picture/' + user.picture }}">
               <label for="image" class="avatar-status badge-dark"><i class="fa fa-camera"></i></label>
             </div>
           </div>

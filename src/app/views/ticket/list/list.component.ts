@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { switchMap, tap } from 'rxjs/operators';
 import { TicketService } from '../../../services/ticket.service';
 import * as io from 'socket.io-client';
+import { EvaluationService } from '../../../services/evaluation.service';
 
 @Component({
   selector: 'app-list',

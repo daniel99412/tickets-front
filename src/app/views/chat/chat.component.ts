@@ -1,10 +1,11 @@
-import { Component, ElementRef, Input, OnInit, SecurityContext } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, SecurityContext, ViewChild } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { tap } from 'rxjs/operators';
 import { MessageService } from '../../services/message.service';
 import * as _ from 'lodash';
+import { PopoverDirective } from 'ngx-bootstrap/popover';
 
 @Component({
   selector: 'app-chat',

@@ -39,4 +39,11 @@ export class UserService {
     public changeStatus(userId, status): Observable<any> {
         return this.httpClient.delete(`${AppSettings.API}/user/${userId}/status/${status}`);
     }
+
+    public uploadPicture(userId, file): Observable<any> {
+        let formData: FormData = new FormData();
+        formData.append('image', file, file.name);
+
+        return this.httpClient.post<any>(`${AppSettings.API}/user/${userId}`, formData);
+    }
 }

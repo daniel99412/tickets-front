@@ -16,7 +16,7 @@
                 {{ticket.description}}
             </div>
             <div class="col-md-2" *ngIf="ticket.progress === 4">
-                <ngb-rating class="text-warning"  [rate]="1" [readonly]="true" [max]="5"></ngb-rating>
+                <ngb-rating class="text-warning"  [rate]="getEvaluation()" [readonly]="true" [max]="5"></ngb-rating>
             </div>
             <div class="col-md-2" *ngIf="ticket.progress !== 4">
                 <ngb-rating class="text-warning" [rate]="ticket.priority" [readonly]="true" [max]="3"></ngb-rating>
