@@ -6,6 +6,7 @@ import { TicketService } from '../../../services/ticket.service';
 import { ToastrService } from 'ngx-toastr';
 import { EvaluationService } from '../../../services/evaluation.service';
 import * as io from 'socket.io-client';
+import { FileService } from '../../../services/file.service';
 
 @Component({
   selector: 'app-detail',
@@ -25,14 +26,15 @@ export class DetailComponent implements OnInit {
     private route: ActivatedRoute,
     private ticketService: TicketService,
     private toastrService: ToastrService,
-    private evaluationService: EvaluationService
+    private evaluationService: EvaluationService,
+    private fileService: FileService
   ) { }
 
   ngOnInit(): void {
     this.socket = io.connect('http://localhost:3800');
 
     this.userLogged = JSON.parse(sessionStorage.getItem('user'));
-    console.log(this.userLogged);
+    // console.log(this.userLogged);
 
     this.socket.on('status-changed', (data) => {
       if (data) {
@@ -56,7 +58,6 @@ export class DetailComponent implements OnInit {
           return this.evaluationService.getByTicket(this.route.snapshot.paramMap.get('id'));
         }),
         tap(evaluations => {
-          // console.log(evaluations);
           this.evaluations = evaluations;
         })
       ).subscribe();
@@ -80,6 +81,8 @@ export class DetailComponent implements OnInit {
   }
 
   changeProgress(progress) {
+    console.log('createdBy', this.ticket.createBy);
+    console.log('userLogged', this.userLogged);
     if(progress === 3) {
       if (this.promiseDate === '' || !this.promiseDate) {
         this.toastrService.error('Ingresa la fecha compromiso', '¡Error!');
@@ -127,5 +130,27 @@ export class DetailComponent implements OnInit {
 
   onEvaluationCreated(event) {
     this.refresh();
+  }
+
+  getEvaluation(): number {
+    let totalEvaluation = 0;
+
+    if (this.evaluations.length !== 0) {
+      this.evaluations.forEach(evaluation => {
+        if (evaluation.evaluated._id === this.userLogged._id) {
+          totalEvaluation = (evaluation.attention + evaluation.quality + evaluation.speed) / 3
+        }
+      });
+    }
+
+    return totalEvaluation;
+  }
+
+  getImage(fileName) {
+    this.fileService.getImage(fileName).pipe(
+      tap(resp => {
+        console.log(resp)
+      })
+    ).subscribe();
   }
 }

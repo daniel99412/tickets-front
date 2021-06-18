@@ -149,7 +149,8 @@ export class CreateComponent implements OnInit, OnDestroy {
       null,
       null,
       null,
-      this.ticketForm.get('rating').value
+      this.ticketForm.get('rating').value,
+      null
     );
 
     this.ticketService.save(ticket).subscribe(resp => {

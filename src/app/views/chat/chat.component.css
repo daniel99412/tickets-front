@@ -9,3 +9,21 @@
     display: none;
     visibility: hidden;
 }
+
+::ng-deep .popover {
+    max-width: 23rem;
+    background-color: #222;
+}
+
+::ng-deep .emoji-mart {
+    border: 1px solid #222;
+    background: #222;
+}
+
+::ng-deep .bs-popover-top > .arrow::after, .bs-popover-auto[x-placement^=top] > .arrow::after {
+    border-top-color: #222;
+}
+
+::ng-deep .bs-popover-left > .arrow::after, .bs-popover-auto[x-placement^=left] > .arrow::after {
+    border-left-color: #222;
+}

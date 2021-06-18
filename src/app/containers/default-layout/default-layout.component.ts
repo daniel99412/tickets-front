@@ -2,6 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { TabsetComponent } from 'ngx-bootstrap/tabs';
 import { ToastrService } from 'ngx-toastr';
+import { tap } from 'rxjs/operators';
+import { AppSettings } from '../../app.settings';
 import { UserService } from '../../services/user.service';
 import { navItems } from '../../_nav';
 
@@ -19,12 +21,16 @@ export class DefaultLayoutComponent implements OnInit {
   public isShowing = false;
   public password;
   public confirmPassword;
+  image: File;
+  url: string;
 
   constructor(
     private router: Router,
     private userService: UserService,
     private toastService: ToastrService
-  ) {}
+  ) {
+    this.url = AppSettings.API;
+  }
 
   ngOnInit(): void {
     if (sessionStorage.getItem('user')) {
@@ -68,5 +74,16 @@ export class DefaultLayoutComponent implements OnInit {
     } else {
       this.toastService.error('Ingresa una contraseña', '¡Error!');
     }
+  }
+
+  upload(event) {
+    this.image = event.target.files[0];
+    console.log(this.image)
+    this.userService.uploadPicture(this.user._id, this.image)
+      .pipe(
+        tap(resp => {
+          console.log('respuesta', resp);
+        })
+      ).subscribe()
   }
 }

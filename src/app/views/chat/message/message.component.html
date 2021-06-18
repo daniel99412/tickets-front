@@ -3,13 +3,15 @@
         <div class="col-md-9 person">
             <b>{{from.name + ' ' + from.lastname}}</b>
         </div>
-        <div class="col-md-3 time">
-            <b>{{ moment(date).locale('es-mx').fromNow() }}</b>
-        </div>
     </div>
     <div class="row" *ngIf="type === 'message'">
         <div class="col-12 message">
             {{message}}
+        </div>
+    </div>
+    <div class="row justify-content-end">
+        <div class="col-md-10 time">
+            Enviado<b>{{ ' ' +moment(date).locale('es-mx').fromNow() }}</b>
         </div>
     </div>
 </div>

@@ -19,6 +19,7 @@ export class Ticket {
     cancelationDate: string;
     file: File[];
     priority: number;
+    promiseDate: string;
 
     constructor(
         id?: string,
@@ -35,7 +36,8 @@ export class Ticket {
         finalizationDate?: string,
         cancelationDate?: string,
         file?: File[],
-        priority?: number
+        priority?: number,
+        promiseDate?: string
     ) {
         this.id = id;
         this.createdBy = createdBy;
@@ -52,5 +54,6 @@ export class Ticket {
         this.cancelationDate = cancelationDate;
         this.file = file;
         this.priority = priority;
+        this.promiseDate = promiseDate
     }
 }
