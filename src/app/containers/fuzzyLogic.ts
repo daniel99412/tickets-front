@@ -102,8 +102,6 @@ export function getCalidad(a: any): any {
   else if (aux == aux3)
     resultado = "Media";
 
-  console.log(resultado, "Calidad")
-
   return resultado;
 }
 
@@ -127,8 +125,6 @@ export function getAtencion(l: any): any {
   else if (aux == aux3)
     resultado = "Medio";
 
-  console.log(resultado, "Atencion")
-
   return resultado;
 }
 
@@ -151,8 +147,6 @@ export function getVelocidad(t: any): any {
     resultado = "Mucho";
   else if (aux == aux3)
     resultado = "Normal";
-
-  console.log(resultado, "Velocidad")
 
   return resultado;
 }

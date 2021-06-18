@@ -10,8 +10,10 @@
             <div class="modal-body">
                 <div class="row justify-content-center mt-3">
                     <h4 class="col-md-12 text-center">Las 3 mejores opciones</h4>
+                    <small class="col-md-12 text-center">(Presiona sobre el usuario para asignarlo a tu ticket)</small>
+                    <br>
                     <div class="col-md-4" *ngFor="let user of usersRecomend | slice:0:3">
-                        <div class="card">
+                        <div class="card" (click)="cardAssign(user.id)">
                             <div class="card-body">
                                 <div class="row">
                                     <div class="col-md-1">
@@ -46,7 +48,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" (click)="hide()">Cancelar</button>
-                <button class="btn btn-success" *ngIf="!userSelected || userSelected === '---'">Asignar automaticamente</button>
+                <button class="btn btn-success" (click)="autoAssign()" *ngIf="!userSelected || userSelected === '---'">Asignar automaticamente</button>
                 <button class="btn btn-info" (click)="assign()">Asignar</button>
             </div>
         </div>

@@ -75,6 +75,48 @@ export class AssignComponent implements OnInit {
     this.modal.hide();
   }
 
+  cardAssign(value) {
+    if (this.ticket.promiseDate !== '') {
+      this.promiseDate = this.ticket.promiseDate;
+    }
+
+    this.userSelected = value;
+
+    this.ticketService.assign(this.ticket._id, this.userSelected, this.promiseDate)
+      .subscribe(
+        resp => {
+          this.hide();
+          this.ticketAssigned.emit();
+          this.socket.emit('status-change');
+          this.toastrService.success('Ticket asignado', '¡Éxito!');
+        },
+        err => {
+          this.toastrService.error(err.error.message, '¡Error!');
+        }
+      );
+  }
+
+  autoAssign() {
+    if (this.ticket.promiseDate !== '') {
+      this.promiseDate = this.ticket.promiseDate;
+    }
+
+    this.userSelected = this.usersRecomend[0].id
+
+    this.ticketService.assign(this.ticket._id, this.userSelected, this.promiseDate)
+      .subscribe(
+        resp => {
+          this.hide();
+          this.ticketAssigned.emit();
+          this.socket.emit('status-change');
+          this.toastrService.success('Ticket asignado', '¡Éxito!');
+        },
+        err => {
+          this.toastrService.error(err.error.message, '¡Error!');
+        }
+      );
+  }
+
   assign() {
     if (this.ticket.promiseDate !== '') {
       this.promiseDate = this.ticket.promiseDate;
