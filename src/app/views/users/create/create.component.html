@@ -38,7 +38,52 @@
                             </div>
                         </tab>
                         <tab>
-                            <ng-template tabHeading><i class="fa fa-shield"></i> Permisos</ng-template>
+                            <ng-template tabHeading><i class="fa fa-id-badge"></i> Permisos</ng-template>
+                            <div class="row text-center">
+                                <div class="col-6">
+                                    <h4>NO ASIGNADOS</h4>
+                                </div>
+                                <div class="col-6">
+                                    <h4>ASIGNADOS</h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6" dragula="PERMISOS" [(dragulaModel)]="roles">
+                                    <div class="card" *ngIf="roles && roles.length === 0">
+                                        <div class="card-body p-0 clearfix">
+                                            <i class="fa fa-exclamation bg-warning p-4 font-2xl mr-3 float-left"></i>
+                                            <div class="h5 text-warning mb-0 pt-3">No hay roles para asignar</div>
+                                            <div class="text-muted text-uppercase font-weight-bold font-xs">todos los roles fueron asignados</div>
+                                        </div>
+                                    </div>
+                                    <div class="card" *ngFor="let role of roles">
+                                        <div class="card-body p-0 clearfix">
+                                            <i class="fa fa-key bg-primary p-4 font-2xl mr-3 float-left"></i>
+                                            <div class="h5 text-primary mb-0 pt-3">ROL</div>
+                                            <div class="text-muted text-uppercase font-weight-bold font-xs">{{ role.name | uppercase }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6" dragula="PERMISOS" [(dragulaModel)]="rolesSelected">
+                                    <div class="card" *ngIf="rolesSelected && rolesSelected.length === 0">
+                                        <div class="card-body p-0 clearfix">
+                                            <i class="fa fa-exclamation bg-warning p-4 font-2xl mr-3 float-left"></i>
+                                            <div class="h5 text-warning mb-0 pt-3">Aun no hay roles asignados</div>
+                                            <div class="text-muted text-uppercase font-weight-bold font-xs">arrastra aqui para asignar roles</div>
+                                        </div>
+                                    </div>
+                                    <div class="card" *ngFor="let roleSelected of rolesSelected">
+                                        <div class="card-body p-0 clearfix">
+                                            <i class="fa fa-key bg-success p-4 font-2xl mr-3 float-left"></i>
+                                            <div class="h5 text-primary mb-0 pt-3">ROL</div>
+                                            <div class="text-muted text-uppercase font-weight-bold font-xs">{{ roleSelected.name | uppercase }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </tab>
+                        <tab>
+                            <ng-template tabHeading><i class="fa fa-shield"></i> Categorias</ng-template>
                             <div class="row">
                                 <div class="col-md-8 offset-2">
                                     <div class="form-group">
@@ -97,7 +142,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </tab> 
+                        </tab>
                     </tabset>
                 </form>
             </div>

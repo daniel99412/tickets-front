@@ -7,6 +7,7 @@ import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { User } from '../../../models/user';
 import { BranchOfficeService } from '../../../services/branchOffice.service';
 import { CategoryService } from '../../../services/category.service';
+import { RoleService } from '../../../services/role.service';
 import { SubcategoryService } from '../../../services/subcategory.service';
 import { UserService } from '../../../services/user.service';
 
@@ -26,15 +27,18 @@ export class CreateComponent implements OnInit, OnDestroy {
   categories = [];
   subcategories = [];
   branchOffices = [];
+  roles = [];
 
   subcategoriesSelected = [];
+  rolesSelected = [];
 
   constructor(
     private categoryService: CategoryService,
     private subcategoryService: SubcategoryService,
     private branchOfficeService: BranchOfficeService,
     private userService: UserService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private roleService: RoleService
   ) {}
 
   ngOnInit(): void {
@@ -114,6 +118,8 @@ export class CreateComponent implements OnInit, OnDestroy {
     this.categories = [];
     this.subcategories = [];
     this.subcategoriesSelected = [];
+    this.roles = [];
+    this.rolesSelected = [];
   }
 
   show() {
@@ -123,8 +129,12 @@ export class CreateComponent implements OnInit, OnDestroy {
           this.categories = resp.categories;
           return this.branchOfficeService.getAll();
         }),
-        tap(resp => {
+        switchMap(resp => {
           this.branchOffices = resp.branchOffice;
+          return this.roleService.getAll();
+        }),
+        tap(resp => {
+          this.roles = resp.roles;
         })
       ).subscribe();
 

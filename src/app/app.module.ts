@@ -18,7 +18,6 @@ import { DefaultLayoutComponent } from './containers';
 import { P404Component } from './views/error/404.component';
 import { P500Component } from './views/error/500.component';
 import { RegisterComponent } from './views/register/register.component';
-import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 const APP_CONTAINERS = [
   DefaultLayoutComponent
@@ -60,17 +59,13 @@ import { FormsModule } from '@angular/forms';
     AppSidebarModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
-    TabsModule.forRoot(),
     // ChartsModule,
     ToastrModule.forRoot(),
     NgbModule,
-    NgbRatingModule,
     HttpClientModule,
     LoginModule,
-    DragulaModule.forRoot(),
     FormsModule,
-    ToastrModule.forRoot(),
-    PickerModule
+    TabsModule.forRoot()
   ],
   declarations: [
     AppComponent,
