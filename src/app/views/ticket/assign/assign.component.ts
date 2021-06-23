@@ -25,16 +25,7 @@ export class AssignComponent implements OnInit {
   userSelected: any;
   promiseDate = "";
   porcentaje: any;
-  usersFuzzy = [
-    {id: 1, nombre: 'Carlos', apellido: 'Perez',calidad:100, atencion: 100, velocidad: 100, noTickets: 10},
-    {id: 2, nombre: 'Juan', apellido: 'Jimenez',calidad:90, atencion: 100, velocidad: 30, noTickets: 10},
-    {id: 3, nombre: 'Gerardo', apellido: 'Sanchez',calidad:50, atencion: 90, velocidad: 20, noTickets: 10},
-    {id: 4, nombre: 'Diego', apellido: 'Cornejo',calidad:70, atencion: 100, velocidad: 90, noTickets: 10},
-    {id: 5, nombre: 'Pardo', apellido: 'Andrade',calidad:78.8, atencion: 100, velocidad: 100, noTickets: 10},
-    {id: 6, nombre: 'Hector', apellido: 'Ludueña',calidad:56.3, atencion: 100, velocidad: 80, noTickets: 10},
-    {id: 7, nombre: 'Andres', apellido: 'Rodriguez',calidad:80, atencion: 80, velocidad: 100, noTickets: 10},
-    {id: 8, nombre: 'Esteban', apellido: 'Marquez',calidad:10, atencion: 10, velocidad: 10, noTickets: 51}
-  ];
+  usersFuzzy: any[] = [];
 
   constructor(
     private userService: UserService,
@@ -47,26 +38,31 @@ export class AssignComponent implements OnInit {
 
   show() {
     this.usersRecomend = [];
-    console.log(this.ticket);
     this.userLogged = JSON.parse(sessionStorage.getItem('user'));
+    this.auxUsers = [];
 
     this.userService.getBySubcategoryAndStatus(this.ticket.subcategory._id, 'true')
       .pipe(
         tap(users => {
           this.users = users;
+          this.users.forEach(user => {
+            this.ticketService.getAverage(user._id, this.ticket.subcategory._id)
+              .subscribe(resp => {
+                this.usersRecomend = [];
+                let userFuzzy = {
+                  id: user._id,
+                  name: user.name,
+                  lastName: user.lastname,
+                  recomendacion: (fuzzyLogic(resp.quality, resp.attention, resp.speed, resp.totalTickets)) * 100
+                }
+                if (user._id !== this.userLogged._id) {
+                  this.auxUsers.push(userFuzzy);
+                }
+                this.usersRecomend = _.orderBy(this.auxUsers, 'recomendacion', ['desc']);
+              });
+          });
         })
       ).subscribe();
-      for(let x = 0; x < this.usersFuzzy.length; x++){
-        let user = {
-          id: this.usersFuzzy[x].id,
-          name: this.usersFuzzy[x].nombre,
-          lastName: this.usersFuzzy[x].apellido,
-          recomendacion: (fuzzyLogic(this.usersFuzzy[x].calidad, this.usersFuzzy[x].atencion, this.usersFuzzy[x].velocidad, this.usersFuzzy[x].noTickets))*100
-        }
-        this.auxUsers.push(user);
-      }
-      this.usersRecomend = _.orderBy(this.auxUsers, 'recomendacion', ['desc']);
-      console.log(this.usersRecomend);
     this.modal.show();
   }
 

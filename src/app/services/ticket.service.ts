@@ -52,4 +52,8 @@ export class TicketService {
   changeProgress(ticket, progress): Observable<any> {
     return this.httpClient.put<any>(`${AppSettings.API}/ticket/${ticket}/progress/${progress}`, null);
   }
+
+  getAverage(user, subcategory): Observable<any> {
+    return this.httpClient.get<any>(`${AppSettings.API}/ticket/user/${user}/subcategory/${subcategory}`);
+  }
 }
