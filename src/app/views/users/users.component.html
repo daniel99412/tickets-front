@@ -19,7 +19,6 @@
             <tr>
               <th>Usuario</th>
               <th>Email</th>
-              <th>Rol</th>
               <th>Estatus</th>
               <th> </th>
             </tr>
@@ -28,7 +27,6 @@
             <tr *ngFor="let user of users">
               <td class="info">{{user.name + ' ' + user.lastname}}</td>
               <td class="info">{{user.email}}</td>
-              <td class="info">Usuario</td>
               <td>
                 <span class="badge badge-success" *ngIf="user.active">Activo</span>
                 <span class="badge badge-secondary" *ngIf="!user.active">Inactivo</span>

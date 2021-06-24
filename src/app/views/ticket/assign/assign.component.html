@@ -18,7 +18,9 @@
                                 <div class="row">
                                     <div class="col-md-1">
                                         <div class="avatar avatar-sm">
-                                            <img class="img-avatar" src="assets/img/avatars/1.jpg">
+                                            <img *ngIf="user.picture" class="img-avatar" src="{{url + '/user/picture/' + user.picture}}">
+                                            <img *ngIf="!user.picture" class="img-avatar" src="assets/img/avatars/default.jpeg">
+
                                         </div>
                                     </div>
                                     <div class="col-md-9">
@@ -26,8 +28,11 @@
                                     </div>
                                 </div>
                                 <div class="row justify-content-center">
-                                    <div class="col-md-7">
-                                        [{{user.recomendacion}}% recom]
+                                    <div class="col-md-10">
+                                        <div class="callout callout-warning">
+                                            <small class="text-muted"><i class="fa fa-trophy fa-lg" aria-hidden="true"></i> Recomendado</small><br>
+                                            <strong class="h4">{{user.recomendacion}}%</strong>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -35,8 +40,8 @@
                     </div>
                 </div>
                 <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <label for="assignedTo">Asignar a</label>
+                    <div class="col-md-6 text-center">
+                        <label for="assignedTo">o elige a alguien de la siguiente lista</label>
                         <select [(ngModel)]="userSelected" class="form-control" id="assignedTo">
                             <option>---</option>
                             <ng-container *ngFor="let user of users">
@@ -44,6 +49,8 @@
                             </ng-container>
                         </select>
                     </div>
+                    
+                    <small class="col-md-8 text-center mt-2">O si lo prefieres deja que el sistema te recomiende a la mejor opción dando click en asignar automaticamente</small>
                 </div>
             </div>
             <div class="modal-footer">

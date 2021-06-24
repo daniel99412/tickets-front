@@ -1,4 +1,4 @@
-<input id="fileDetail" type="file" [formControl]="file" class="submit-file">
+<input id="fileDetail" type="file" (change)="uploadFile($event)" class="submit-file">
 <div class="row" *ngIf="ticket && userLogged">
     <app-assign-ticket #assignModal [socket]="socket" [ticket]="ticket" (ticketAssigned)="onTicketAssigned($event)"></app-assign-ticket>
     <app-evaluate-ticket #evaluateModal [socket]="socket" [ticket]="ticket" [userLogged]="userLogged" (evaluationSaved)="onEvaluationCreated($event)"></app-evaluate-ticket>
@@ -92,7 +92,7 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item" *ngIf="ticket.files.length === 0">No hay archivos adjuntos
                                 </li>
-                                <li class="list-group-item" *ngFor="let file of ticket.files">{{file.path}} <a class="fa fa-download" targer="_blank" href="{{url + '/file/picture/' + fileName }}" aria-hidden="true"></a></li>
+                                <li class="list-group-item" *ngFor="let file of ticket.files">{{file.path}} <a class="fa fa-download" target="_blank" href="{{url + '/file/picture/' + file.path }}" aria-hidden="true"></a></li>
                             </ul>
                         </div>
                     </div>
@@ -139,16 +139,14 @@
                             *ngIf="ticket.progress === 3 && userLogged._id !== ticket.createBy._id"
                             (click)="evaluateModal.show()">Completar</button>
                         <button type="button" class="btn btn-secondary"
-                            *ngIf="ticket.progress === 4 && userLogged._id === ticket.createBy._id && evaluations"
+                            *ngIf="ticket.progress === 4 && userLogged._id === ticket.createBy._id && evaluations && checkIfAllAreEvaluated()"
                             (click)="evaluateModal.show()">Evaluar</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
     <app-chat [socket]="socket" [ticket]="ticket" class="col-md-4" *ngIf="ticket.progress !== 4"></app-chat>
-
     <div class="col-md-4" *ngIf="ticket.progress === 4 && evaluations">
         <div class="card">
             <div class="card-header">
@@ -160,13 +158,13 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="row">
-                                    <div class="col-md-1 mt-2 mr-4">
-                                        <div class="avatar avatar-lg">
+                                    <div class="col-md-1 mt-2 mr-1">
+                                        <div class="avatar avatar-sm">
                                             <img class="img-avatar" *ngIf="evaluation.evaluated.picture" src="{{url + '/user/picture/' + evaluation.evaluated.picture}}">
                                             <img class="img-avatar" *ngIf="!evaluation.evaluated.picture" src="assets/img/avatars/default.jpeg">
                                         </div>
                                     </div>
-                                    <div class="col-md-9 mt-2">
+                                    <div class="col-md-9">
                                         <h3 class="name">{{ evaluation.evaluated.name + ' ' + evaluation.evaluated.lastname }}</h3>
                                     </div>
                                 </div>
@@ -201,4 +199,6 @@
             </div>
         </div>
     </div>
+    <app-chat [socket]="socket" [ticket]="ticket" class="col-md-12" *ngIf="ticket.progress === 4"></app-chat>
+
 </div>

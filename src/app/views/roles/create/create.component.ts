@@ -16,6 +16,7 @@ export class CreateComponent implements OnInit {
   @Output() roleCreated = new EventEmitter<any>();
 
   roleName: string;
+  roleStength: number;
   roles: any[];
 
   constructor(

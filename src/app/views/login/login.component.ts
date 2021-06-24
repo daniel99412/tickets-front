@@ -27,7 +27,7 @@ export class LoginComponent {
         sessionStorage.setItem('user', JSON.stringify(resp.user));
 
         this.userRoleService.getRoles(resp.user._id).subscribe( userRoles => {
-          sessionStorage.setItem('roles', JSON.stringify(userRoles));
+          sessionStorage.setItem('roles', JSON.stringify(userRoles.roles));
 
           if (sessionStorage.getItem('token')) {
             this.router.navigate(['dashboard']);

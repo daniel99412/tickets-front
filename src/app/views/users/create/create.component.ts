@@ -5,11 +5,13 @@ import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { switchMap, takeUntil, tap } from 'rxjs/operators';
 import { User } from '../../../models/user';
+import { UserRole } from '../../../models/userRole';
 import { BranchOfficeService } from '../../../services/branchOffice.service';
 import { CategoryService } from '../../../services/category.service';
 import { RoleService } from '../../../services/role.service';
 import { SubcategoryService } from '../../../services/subcategory.service';
 import { UserService } from '../../../services/user.service';
+import { UserRoleService } from '../../../services/userRole.service';
 
 @Component({
   selector: 'app-create-user',
@@ -38,7 +40,8 @@ export class CreateComponent implements OnInit, OnDestroy {
     private branchOfficeService: BranchOfficeService,
     private userService: UserService,
     private toastrService: ToastrService,
-    private roleService: RoleService
+    private roleService: RoleService,
+    private userRoleService: UserRoleService
   ) {}
 
   ngOnInit(): void {
@@ -160,6 +163,14 @@ export class CreateComponent implements OnInit, OnDestroy {
 
     this.userService.save(user)
     .subscribe(resp => {
+        this.rolesSelected.forEach(role => {
+          var userRole = new UserRole(null, resp._id, role._id);
+          this.userRoleService.setRole(userRole).subscribe(resp => {
+            this.toastrService.success('Rol asignado', '¡Éxito!');
+          }, err => {
+            this.toastrService.error(err.error.message, '¡Error!');
+          });
+        });
         this.cancel();
         this.toastrService.success('Usuario creado', '¡Éxito!');
         this.usercreated.emit(resp);

@@ -10,6 +10,9 @@ import { SubcategoryService } from '../../../services/subcategory.service';
 import { UserService } from '../../../services/user.service';
 import { User } from '../../../models/user';
 import * as _ from 'lodash';
+import { UserRoleService } from '../../../services/userRole.service';
+import { RoleService } from '../../../services/role.service';
+import { UserRole } from '../../../models/userRole';
 
 @Component({
   selector: 'app-edit-user',
@@ -26,19 +29,24 @@ export class EditComponent implements OnInit, OnDestroy {
   userForm: FormGroup;
   user;
   userBody: any;
-
+  
+  userRoles = [];
   categories = [];
   subcategories = [];
   branchOffices = [];
+  roles = [];
 
   subcategoriesSelected = [];
+  rolesSelected = [];
 
   constructor(
     private toastrService: ToastrService,
     private userService: UserService,
     private categoryService: CategoryService,
     private subcategoryService: SubcategoryService,
-    private branchOfficeService: BranchOfficeService
+    private branchOfficeService: BranchOfficeService,
+    private roleService: RoleService,
+    private userRoleService: UserRoleService
   ) { }
 
   ngOnDestroy(): void {
@@ -77,6 +85,8 @@ export class EditComponent implements OnInit, OnDestroy {
   }
 
   show(id) {
+    this.rolesSelected = [];
+    this.roles = [];
     this.userService.getById(id)
       .pipe(
         switchMap(resp => {
@@ -88,8 +98,24 @@ export class EditComponent implements OnInit, OnDestroy {
           this.categories = resp.categories;
           return this.branchOfficeService.getAll();
         }),
-        tap(resp => {
+        switchMap(resp => {
           this.branchOffices = resp.branchOffice;
+          return this.roleService.getAll();
+        }),
+        switchMap(resp => {
+          this.roles = resp.roles;
+          return this.userRoleService.getRoles(id);
+        }),
+        tap(resp => {
+          resp.roles.forEach(element => {
+            this.rolesSelected.push(element.role);
+          });
+
+          const result = this.roles
+            .filter(({_id: id1}) => !this.rolesSelected.some(({_id:id2}) => id2 === id1));
+          this.roles = result;
+
+          this.userRoles = _.groupBy(resp.roles, 'role._id');
         })
       ).subscribe();
 
@@ -110,7 +136,6 @@ export class EditComponent implements OnInit, OnDestroy {
           this.subcategoriesSelected.push(resp.subcategory);
         })
     }
-    console.log()
   }
 
   cancel() {
@@ -153,6 +178,34 @@ export class EditComponent implements OnInit, OnDestroy {
     console.log(this.userBody);
     this.userService.update(this.userBody._id, this.userBody)
       .subscribe(userUpdate => {
+        // SET ROLES
+        if(this.rolesSelected.length !== 0) {
+          this.rolesSelected.forEach(role => {
+            if(!this.userRoles[role._id]) {
+              var userRole = new UserRole(null, this.user._id, role._id);
+              this.userRoleService.setRole(userRole).subscribe(resp => {
+                this.toastrService.success('Rol asignado', '¡Éxito!');
+              }, err => {
+                this.toastrService.error(err.error.message, '¡Error!');
+              });
+            }
+          });
+        }
+
+        // USET ROLES
+        if(this.roles.length !== 0) {
+          this.roles.forEach(role => {
+            if(this.userRoles[role._id]) {
+              this.userRoleService.unsetRole(this.userRoles[role._id][0]._id)
+                .subscribe(resp => {
+                  this.toastrService.success('Rol eliminado', '¡Éxito!');
+                }, err => {
+                  this.toastrService.error(err.error.message, '¡Error!');
+                });
+            }
+          });
+        }
+
         this.toastrService.success('Usuario editado', '¡Éxito!');
         this.cancel();
         this.userEdited.emit(userUpdate);

@@ -6,6 +6,7 @@ import { TicketService } from '../../../services/ticket.service';
 import { UserService } from '../../../services/user.service';
 import { fuzzyLogic } from '../../../containers/fuzzyLogic';
 import * as _ from 'lodash';
+import { AppSettings } from '../../../app.settings';
 
 @Component({
   selector: 'app-assign-ticket',
@@ -26,12 +27,15 @@ export class AssignComponent implements OnInit {
   promiseDate = "";
   porcentaje: any;
   usersFuzzy: any[] = [];
+  url;
 
   constructor(
     private userService: UserService,
     private ticketService: TicketService,
     private toastrService: ToastrService
-  ) { }
+  ) {
+    this.url = AppSettings.API;
+   }
 
   ngOnInit(): void {
   }

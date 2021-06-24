@@ -36,11 +36,11 @@ export const navItems: INavData[] = [
     url: '/subcategories',
     icon: 'icon-organization'
   },
-  {
-    name: 'Asignacion de Rol',
-    url: '/assingRole',
-    icon: 'icon-star'
-  },
+  // {
+  //   name: 'Asignacion de Rol',
+  //   url: '/assingRole',
+  //   icon: 'icon-star'
+  // },
   // {
   //   title: true,
   //   name: 'Theme'

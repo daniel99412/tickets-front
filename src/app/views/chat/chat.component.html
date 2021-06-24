@@ -15,7 +15,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" *ngIf="ticket.progress !== 4">
             <div class="col-12">
                 <div class="input-group">
                     <div class="input-group-append">
@@ -28,7 +28,6 @@
                                 class="fa fa-send"></i></button>
                     </div>
                 </div>
-                <input id="file" type="file" [formControl]="file" class="submit-file">
             </div>
         </div>
     </div>

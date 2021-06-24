@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { switchMap, tap } from 'rxjs/operators';
 import { TicketService } from '../../../services/ticket.service';
 import { ToastrService } from 'ngx-toastr';
 import { EvaluationService } from '../../../services/evaluation.service';
 import * as io from 'socket.io-client';
 import { FileService } from '../../../services/file.service';
 import { AppSettings } from '../../../app.settings';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-detail',
@@ -15,7 +15,6 @@ import { AppSettings } from '../../../app.settings';
   styleUrls: ['./detail.component.css']
 })
 export class DetailComponent implements OnInit {
-  file = new FormControl('');
   ticket: any;
   userLogged;
   evaluations: any;
@@ -38,19 +37,15 @@ export class DetailComponent implements OnInit {
     this.socket = io.connect('http://localhost:3800');
 
     this.userLogged = JSON.parse(sessionStorage.getItem('user'));
-    // console.log(this.userLogged);
 
     this.socket.on('status-changed', (data) => {
       if (data) {
+        console.log(data);
         this.refresh();
       }
     });
 
     this.refresh();
-
-    this.file.valueChanges.subscribe(value => {
-      // console.log(this.file);
-    });
   }
 
   refresh() {
@@ -58,7 +53,6 @@ export class DetailComponent implements OnInit {
       .pipe(
         switchMap(ticket => {
           this.ticket = ticket;
-          console.log(this.ticket);
           return this.evaluationService.getByTicket(this.route.snapshot.paramMap.get('id'));
         }),
         tap(evaluations => {
@@ -85,20 +79,14 @@ export class DetailComponent implements OnInit {
   }
 
   changeProgress(progress) {
-    console.log('createdBy', this.ticket.createBy);
-    console.log('userLogged', this.userLogged);
     if(progress === 3) {
       if (this.promiseDate === '' || !this.promiseDate) {
         this.toastrService.error('Ingresa la fecha compromiso', '¡Error!');
       } else {
-        console.log(this.promiseDate);
-        console.log(this.ticket);
         this.ticketService.assign(this.ticket._id, this.ticket.assignedTo[0]._id, this.promiseDate)
           .pipe(
             tap(ticket => {
               this.ticket = ticket;
-              console.log('promiseDate', this.ticket);
-
               this.ticketService.changeProgress(this.ticket._id, progress)
                 .subscribe(resp => {
                   this.ticketService.getById(this.route.snapshot.paramMap.get('id'))
@@ -139,7 +127,7 @@ export class DetailComponent implements OnInit {
   getEvaluation(): number {
     let totalEvaluation = 0;
 
-    if (this.evaluations.length !== 0) {
+    if (this.evaluations && this.evaluations.length !== 0) {
       this.evaluations.forEach(evaluation => {
         if (evaluation.evaluated._id === this.userLogged._id) {
           totalEvaluation = (evaluation.attention + evaluation.quality + evaluation.speed) / 3
@@ -150,11 +138,32 @@ export class DetailComponent implements OnInit {
     return totalEvaluation;
   }
 
-  getImage(fileName) {
-    this.fileService.getImage(fileName).pipe(
-      tap(resp => {
-        console.log(resp)
-      })
-    ).subscribe();
+  uploadFile(event) {
+    var file = event.target.files[0];
+    this.fileService.save(this.ticket._id, file)
+      .pipe(
+        tap(resp => {
+          this.refresh();
+          this.toastrService.success('Archivo adjuntado al ticket', '¡Éxito!');
+        })
+      ).subscribe();
   }
+
+  checkIfAllAreEvaluated(): boolean {
+    if (this.evaluations && this.evaluations.length !== 0) {
+      const groupedByEvaluated = _.groupBy(this.evaluations, 'evaluated._id');
+      if (this.ticket.assignedTo.length < 2) {
+        if (groupedByEvaluated[this.ticket.assignedTo[0]._id])
+          return false;
+        else
+          return true;
+      } else {
+        if (groupedByEvaluated[this.ticket.assignedTo[0]._id] && groupedByEvaluated[this.ticket.assignedTo[1]._id])
+          return false;
+        else
+          return true;
+      }
+    }
+  }
+  
 }

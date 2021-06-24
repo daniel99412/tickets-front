@@ -3,6 +3,7 @@ import {ModalDirective} from 'ngx-bootstrap/modal';
 import { ToastrService } from 'ngx-toastr';
 import { switchMap, tap } from 'rxjs/operators';
 import { UserService } from '../../services/user.service';
+import { UserRoleService } from '../../services/userRole.service';
 
 @Component({
   templateUrl: 'users.component.html',
@@ -14,7 +15,8 @@ export class UsersComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private userRoleService: UserRoleService
   ) {}
 
   ngOnInit(): void {
