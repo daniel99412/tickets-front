@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { EvaluationService } from '../../../services/evaluation.service';
 import * as io from 'socket.io-client';
 import { FileService } from '../../../services/file.service';
+import { AppSettings } from '../../../app.settings';
 
 @Component({
   selector: 'app-detail',
@@ -20,6 +21,7 @@ export class DetailComponent implements OnInit {
   evaluations: any;
   socket;
   promiseDate;
+  url;
 
   constructor(
     private router: Router,
@@ -28,7 +30,9 @@ export class DetailComponent implements OnInit {
     private toastrService: ToastrService,
     private evaluationService: EvaluationService,
     private fileService: FileService
-  ) { }
+  ) {
+    this.url = AppSettings.API;
+  }
 
   ngOnInit(): void {
     this.socket = io.connect('http://localhost:3800');

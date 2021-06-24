@@ -1,3 +1,44 @@
 <div class="animated fadeIn">
-  
+    <div class="container">
+        <div class="jumbotron" *ngIf="userLogged">
+            <h1 class="display-4">
+                <img *ngIf="userLogged.picture" class="img-avatar avatar-lg"src="{{url + '/user/picture/' + userLogged.picture}}">
+                <img *ngIf="!userLogged.picture" class="img-avatar avatar-lg" src="assets/img/avatars/default.jpeg">
+                ¡Bienvenido {{userLogged.name + ' ' + userLogged.lastname | titlecase}}!
+            </h1>
+            <p class="lead text-justify">
+                Este es el promedio que tienes en las ramas de evaluación y el total de tickets que tienes completados.
+            </p>
+            <hr class="my-4">
+            <div class="row" *ngIf="average">
+                <div class="col-3">
+                    <div class="callout callout-danger">
+                        <small class="text-muted"><i class="fa fa-certificate fa-lg" aria-hidden="true"></i>
+                            Calidad</small><br>
+                        <strong class="h4">{{ average.qualityAverage }}</strong>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="callout callout-success">
+                        <small class="text-muted"><i class="fa fa-bolt fa-lg" aria-hidden="true"></i> Rápidez</small><br>
+                        <strong class="h4">{{ average.speedAverage }}</strong>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="callout callout-info">
+                        <small class="text-muted"><i class="fa fa-comments fa-lg" aria-hidden="true"></i> Atención</small><br>
+                        <strong class="h4">{{ average.attentionAverage }}</strong>
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div class="callout callout-warning">
+                        <small class="text-muted">
+                            <i class="fa fa-flag-checkered fa-lg" aria-hidden="true"></i>
+                            Tickets completados</small><br>
+                        <strong class="h4">{{ average.totalEvaluations }}</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

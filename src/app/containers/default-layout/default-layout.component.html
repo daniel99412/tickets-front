@@ -11,7 +11,9 @@
     <li class="nav-item dropdown" dropdown placement="bottom right">
       <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"
         dropdownToggle (click)="false">
-        <img class="img-avatar" src="{{ url + '/user/picture/' + user.picture }}"/>
+        <img class="img-avatar" *ngIf="user.picture" src="{{ url + '/user/picture/' + user.picture }}"/>
+        <img class="img-avatar" *ngIf="!user.picture" src="assets/img/avatars/default.jpeg"/>
+
       </a>
       <div class="dropdown-menu dropdown-menu-right" *dropdownMenu aria-labelledby="simple-dropdown">
         <div class="dropdown-header text-center"><strong>{{user.name}} {{user.lastname}}</strong></div>
@@ -58,7 +60,8 @@
           </div>
           <div class="list-group-item text-center list-group-item-accent-secondary">
             <div class="avatar avatar-lg mt-4">
-              <img class="img-avatar" src="{{ url + '/user/picture/' + user.picture }}">
+              <img class="img-avatar" *ngIf="user.picture" src="{{ url + '/user/picture/' + user.picture }}">
+              <img class="img-avatar" *ngIf="!user.picture" src="assets/img/avatars/default.jpeg">
               <label for="image" class="avatar-status badge-dark"><i class="fa fa-camera"></i></label>
             </div>
           </div>
@@ -168,5 +171,5 @@
 </div>
 <app-footer>
   <!-- <span><a>CoreUI</a> &copy; 2020 creativeLabs.</span> -->
-  <span class="ml-auto">&copy; 2020, made with <i class="fa fa-heart"></i> by CUCEI's Students</span>
+  <span class="ml-auto">&copy; 2021, made with <i class="fa fa-heart"></i> by CUCEI's Students</span>
 </app-footer>

@@ -92,7 +92,7 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item" *ngIf="ticket.files.length === 0">No hay archivos adjuntos
                                 </li>
-                                <li class="list-group-item" *ngFor="let file of ticket.files">{{file.path}} <i class="fa fa-download" (click)="getImage(file.path)"  aria-hidden="true"></i></li>
+                                <li class="list-group-item" *ngFor="let file of ticket.files">{{file.path}} <a class="fa fa-download" targer="_blank" href="{{url + '/file/picture/' + fileName }}" aria-hidden="true"></a></li>
                             </ul>
                         </div>
                     </div>
@@ -113,7 +113,8 @@
                                     <div class="row">
                                         <div class="col-1">
                                             <div class="avatar avatar-sm">
-                                                <img class="img-avatar" src="assets/img/avatars/1.jpg">
+                                                <img class="img-avatar" *ngIf="user.picture" src="{{url + '/user/picture/' + user.picture}}">
+                                                <img class="img-avatar" *ngIf="!user.picture" src="assets/img/avatars/default.jpeg">
                                             </div>
                                         </div>
                                         <div class="col-9">
@@ -161,7 +162,8 @@
                                 <div class="row">
                                     <div class="col-md-1 mt-2 mr-4">
                                         <div class="avatar avatar-lg">
-                                            <img class="img-avatar" src="assets/img/avatars/1.jpg">
+                                            <img class="img-avatar" *ngIf="evaluation.evaluated.picture" src="{{url + '/user/picture/' + evaluation.evaluated.picture}}">
+                                            <img class="img-avatar" *ngIf="!evaluation.evaluated.picture" src="assets/img/avatars/default.jpeg">
                                         </div>
                                     </div>
                                     <div class="col-md-9 mt-2">
@@ -186,7 +188,7 @@
                                 </div>
                             </div>
                             <div class="col-md-12 mt-2">
-                                <b>Evaluación general</b><br>
+                                <b>Comentarios de Evaluación</b><br>
                                 {{ evaluation.comments }}
                             </div>
                             <div class="col-md-12 mt-1 evaluator">

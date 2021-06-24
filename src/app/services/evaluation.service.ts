@@ -17,4 +17,8 @@ export class EvaluationService {
   getByTicket(ticket): Observable<any> {
     return this.httpClient.get<any>(`${AppSettings.API}/evaluation/ticket/${ticket}`);
   }
+
+  getAverageByUser(user): Observable<any> {
+    return this.httpClient.get<any>(`${AppSettings.API}/evaluation/${user}`);
+  }
 }
