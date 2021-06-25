@@ -41,7 +41,6 @@ export class DetailComponent implements OnInit {
 
     this.socket.on('status-changed', (data) => {
       if (data) {
-        console.log(data);
         this.refresh();
       }
     });

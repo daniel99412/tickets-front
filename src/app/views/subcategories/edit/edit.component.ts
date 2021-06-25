@@ -66,8 +66,6 @@ export class EditComponent implements OnInit {
   }
 
   compareFn(obj1, obj2): boolean {
-    console.log(obj1);
-    console.log(obj2);
     return obj1 === obj2;
   }
 
