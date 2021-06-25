@@ -175,7 +175,7 @@ export class EditComponent implements OnInit, OnDestroy {
     this.userBody.branchOffice = this.userForm.value.branchOffice;
     this.userBody.email = this.userForm.value.email;
     this.userBody.subcategories = this.subcategoriesSelected;
-    console.log(this.userBody);
+
     this.userService.update(this.userBody._id, this.userBody)
       .subscribe(userUpdate => {
         // SET ROLES
