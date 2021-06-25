@@ -21,6 +21,7 @@ export class DetailComponent implements OnInit {
   socket;
   promiseDate;
   url;
+  socketUrl = AppSettings.SOCKETURL;
 
   constructor(
     private router: Router,
@@ -34,7 +35,7 @@ export class DetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.socket = io.connect('http://localhost:3800');
+    this.socket = io.connect(this.socketUrl);
 
     this.userLogged = JSON.parse(sessionStorage.getItem('user'));
 

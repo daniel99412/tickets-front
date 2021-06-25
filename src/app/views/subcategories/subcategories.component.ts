@@ -7,6 +7,7 @@ import { CategoryService } from '../../services/category.service';
 import { SubcategoryService } from '../../services/subcategory.service';
 import * as _ from 'lodash';
 import * as io from 'socket.io-client';
+import { AppSettings } from '../../app.settings';
 
 @Component({
   templateUrl: 'subcategories.component.html',
@@ -19,6 +20,7 @@ export class SubcategoriesComponent implements OnInit {
   subcategoryName;
   subcategory;
   socket;
+  socketUrl = AppSettings.SOCKETURL;
 
   constructor(
     private toastrService: ToastrService,
@@ -28,7 +30,7 @@ export class SubcategoriesComponent implements OnInit {
 
   ngOnInit(): void {
     this.refresh();
-    this.socket = io.connect('http://localhost:3800');
+    this.socket = io.connect(this.socketUrl);
 
     this.socket.on('created', (data) => {
       if(data) {
