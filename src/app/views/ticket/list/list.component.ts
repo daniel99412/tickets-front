@@ -3,6 +3,7 @@ import { switchMap, tap } from 'rxjs/operators';
 import { TicketService } from '../../../services/ticket.service';
 import * as io from 'socket.io-client';
 import { EvaluationService } from '../../../services/evaluation.service';
+import { AppSettings } from '../../../app.settings';
 
 @Component({
   selector: 'app-list',
@@ -15,6 +16,7 @@ export class ListComponent implements OnInit, OnDestroy {
   ticketsAssignedToMe: any;
   userLogged: any;
   socket: any;
+  socketUrl = AppSettings.SOCKETURL;
 
   constructor(private ticketService: TicketService) { }
 
@@ -23,7 +25,7 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.socket = io.connect('http://localhost:3800');
+    this.socket = io.connect(this.socketUrl);
 
     this.socket.on('created', (data) => {
       if (data) {

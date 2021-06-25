@@ -6,6 +6,7 @@ import { Category } from '../../models/category';
 import { switchMap, tap } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import * as io from 'socket.io-client';
+import { AppSettings } from '../../app.settings';
 
 @Component({
   templateUrl: 'categories.component.html',
@@ -17,6 +18,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   categories: any[];
   socket;
+  socketUrl = AppSettings.SOCKETURL;
 
   constructor(
     private toastrService: ToastrService,
@@ -29,7 +31,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.Refresh();
-    this.socket = io.connect('http://localhost:3800');
+    this.socket = io.connect(this.socketUrl);
 
     this.socket.on('created', (data) => {
       if(data) {
