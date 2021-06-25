@@ -50,7 +50,7 @@ export class EditComponent implements OnInit {
 
   update() {
     const subcategory = new Subcategory(this.subcategoryForm.get('id').value, this.subcategoryForm.get('subcategory').value, this.subcategoryForm.get('category').value._id);
-    this.subcategoryService.update(this.subcategoryForm.value._id, subcategory)
+    this.subcategoryService.update(this.subcategoryForm.get('id').value, subcategory)
       .subscribe(subcategorySaved => {
         this.toastrService.success('Subcategoria creada', '¡Éxito!');
         this.socket.emit('create');
