@@ -25,8 +25,9 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.userLogged = JSON.parse(sessionStorage.getItem('user'));
     this.socket = io.connect(this.socketUrl);
-
+    
     this.socket.on('created', (data) => {
       if (data) {
         this.refresh();
@@ -39,7 +40,6 @@ export class ListComponent implements OnInit, OnDestroy {
       }
     });
 
-    this.userLogged = JSON.parse(sessionStorage.getItem('user'));
 
     this.refresh();
   }

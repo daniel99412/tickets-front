@@ -17,12 +17,14 @@ export class DefaultLayoutComponent implements OnInit {
 
   public sidebarMinimized = false;
   public navItems = navItems;
+  navItemsToShow = [];
   public user;
   public isShowing = false;
   public password;
   public confirmPassword;
   image: File;
   url: string;
+  accesses = [];
 
   constructor(
     private router: Router,
@@ -33,8 +35,19 @@ export class DefaultLayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.navItemsToShow = [];
     if (sessionStorage.getItem('user')) {
       this.user = JSON.parse(sessionStorage.getItem('user'));
+
+      JSON.parse(sessionStorage.getItem('roles')).forEach(userrole => {
+        this.accesses.push(userrole.role.name);
+      });
+
+      this.navItems.forEach(navItem => {
+        if(this.accesses.includes(navItem.attributes.minAccess)) {
+          this.navItemsToShow.push(navItem);
+        }
+      });
     }
   }
 
@@ -78,11 +91,12 @@ export class DefaultLayoutComponent implements OnInit {
 
   upload(event) {
     this.image = event.target.files[0];
-    console.log(this.image)
     this.userService.uploadPicture(this.user._id, this.image)
       .pipe(
         tap(resp => {
-          console.log('respuesta', resp);
+          this.toastService.success('Imagen actualizada', '¡Éxito!');
+          this.user = resp.userUpdated;
+          sessionStorage.setItem('user', JSON.stringify(this.user));
         })
       ).subscribe()
   }

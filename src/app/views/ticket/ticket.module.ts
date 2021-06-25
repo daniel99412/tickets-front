@@ -24,7 +24,7 @@ import { SocketioService } from '../../socketio.service';
     CommonModule,
     TicketRoutingModule,
     NgbRatingModule,
-    TabsModule,
+    TabsModule.forRoot(),
     FormsModule,
     ReactiveFormsModule,
     ModalModule.forRoot(),

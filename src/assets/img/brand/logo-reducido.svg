@@ -14,10 +14,6 @@
    <circle stroke="null" r="48.64196" cy="260.76133" cx="171.69067" fill="#37474F"/>
    <circle stroke="null" r="27.7954" cy="260.76133" cx="171.69067" fill="#546E7A"/>
   </g>
-  <g id="svg_4">
-   <text transform="matrix(3.38323 0 0 3.38323 -710.565 -828.957)" stroke="null" font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Montserrat'" font-size="24" stroke-width="0" id="svg_2" y="350.68719" x="309.59102" fill="#000000">Empresariales</text>
-   <text font-style="normal" transform="matrix(1.61693 0 0 1.61693 -172.741 -33.3143)" stroke="null" font-weight="bold" xml:space="preserve" text-anchor="start" font-family="'Montserrat'" font-size="100" id="svg_3" y="202.89049" x="315.25199" stroke-width="0" fill="#000000">Tickets</text>
-  </g>
  </g>
 
 </svg>
