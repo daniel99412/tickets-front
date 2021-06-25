@@ -1,14 +1,17 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AppSettings } from '../app.settings';
 
 @Injectable({
     providedIn: 'root'
 })
 export class LoginService {
-    endpoint = 'http://localhost:3800/api/v1/auth/login';
+    url;
 
-    constructor( private httpClient: HttpClient ) {}
+    constructor( private httpClient: HttpClient ) {
+        this.url = AppSettings.API;
+    }
 
     login(email: string, password: string): Observable<any> {
         const body = new HttpParams()
@@ -16,7 +19,7 @@ export class LoginService {
         .set('password', password)
         .set('gettoken', 'true');
 
-        return this.httpClient.post(this.endpoint, body.toString(), {
+        return this.httpClient.post(`${this.url}/auth/login`, body.toString(), {
             headers: new HttpHeaders()
             .set('Content-type', 'application/x-www-form-urlencoded')
         });
