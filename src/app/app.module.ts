@@ -15,10 +15,6 @@ import { AppComponent } from './app.component';
 // Import containers
 import { DefaultLayoutComponent } from './containers';
 
-import { P404Component } from './views/error/404.component';
-import { P500Component } from './views/error/500.component';
-import { RegisterComponent } from './views/register/register.component';
-
 const APP_CONTAINERS = [
   DefaultLayoutComponent
 ];
@@ -37,14 +33,12 @@ import { AppRoutingModule } from './app.routing';
 // Import 3rd party components
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-// import { ChartsModule } from 'ng2-charts';
 import { ToastrModule } from 'ngx-toastr';
-import { NgbModule, NgbRatingModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SocketioService } from './socketio.service';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { LoginModule } from './views/login/login.module';
 import { AddTokenInterceptor } from './services/addToken.interceptor';
-import { DragulaModule } from 'ng2-dragula';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -59,7 +53,6 @@ import { FormsModule } from '@angular/forms';
     AppSidebarModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
-    // ChartsModule,
     ToastrModule.forRoot(),
     NgbModule,
     HttpClientModule,
@@ -69,10 +62,7 @@ import { FormsModule } from '@angular/forms';
   ],
   declarations: [
     AppComponent,
-    DefaultLayoutComponent,
-    P404Component,
-    P500Component,
-    RegisterComponent,
+    DefaultLayoutComponent
   ],
   providers: [
     SocketioService,
