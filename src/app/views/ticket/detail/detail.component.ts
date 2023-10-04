@@ -79,7 +79,7 @@ export class DetailComponent implements OnInit {
   }
 
   changeProgress(progress) {
-    if(progress === 3) {
+    if (progress === 3) {
       if (this.promiseDate === '' || !this.promiseDate) {
         this.toastrService.error('Ingresa la fecha compromiso', '¡Error!');
       } else {
@@ -90,8 +90,8 @@ export class DetailComponent implements OnInit {
               this.ticketService.changeProgress(this.ticket._id, progress)
                 .subscribe(resp => {
                   this.ticketService.getById(this.route.snapshot.paramMap.get('id'))
-                  .pipe(
-                    tap(ticket => {
+                    .pipe(
+                      tap(ticket => {
                         this.socket.emit('status-change');
                         this.toastrService.success(resp.message, '¡Éxito!');
                         this.ticket = ticket;
@@ -107,8 +107,8 @@ export class DetailComponent implements OnInit {
       this.ticketService.changeProgress(this.ticket._id, progress)
         .subscribe(resp => {
           this.ticketService.getById(this.route.snapshot.paramMap.get('id'))
-          .pipe(
-            tap(ticket => {
+            .pipe(
+              tap(ticket => {
                 this.socket.emit('status-change');
                 this.toastrService.success(resp.message, '¡Éxito!');
                 this.ticket = ticket;
@@ -165,5 +165,5 @@ export class DetailComponent implements OnInit {
       }
     }
   }
-  
+
 }
