@@ -1,17 +1,17 @@
-<div class="message-box {{setMessageColor()}}">
-    <div class="row mt-1 mb-2">
-        <div class="col-md-9 person">
-            <b>{{from.name + ' ' + from.lastname}}</b>
-        </div>
+<div class="message-box {{ setMessageColor() }}">
+  <div class="row mt-1 mb-2">
+    <div class="col-md-9 person">
+      <b>{{ from.name + " " + from.lastname }}</b>
     </div>
-    <div class="row" *ngIf="type === 'message'">
-        <div class="col-12 message">
-            {{message}}
-        </div>
+  </div>
+  <div class="row" *ngIf="type === 'message'">
+    <div class="col-12 message">
+      {{ message }}
     </div>
-    <div class="row justify-content-end">
-        <div class="col-md-10 time">
-            Enviado<b>{{ ' ' +moment(date).locale('es-mx').fromNow() }}</b>
-        </div>
+  </div>
+  <div class="row justify-content-end">
+    <div class="col-md-10 time">
+      Enviado<b>{{ " " + moment(date).format("DD/MM/YYYY HH:mm A") }}</b>
     </div>
+  </div>
 </div>
