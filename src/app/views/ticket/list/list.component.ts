@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { switchMap, tap } from 'rxjs/operators';
 import { TicketService } from '../../../services/ticket.service';
 import * as io from 'socket.io-client';
-import { EvaluationService } from '../../../services/evaluation.service';
 import { AppSettings } from '../../../app.settings';
 
 @Component({
@@ -11,6 +10,7 @@ import { AppSettings } from '../../../app.settings';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit, OnDestroy {
+  allTicketsPending: any;
   tickets: any;
   myTickets: any;
   ticketsAssignedToMe: any;
@@ -27,7 +27,7 @@ export class ListComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userLogged = JSON.parse(sessionStorage.getItem('user'));
     this.socket = io.connect(this.socketUrl);
-    
+
     this.socket.on('created', (data) => {
       if (data) {
         this.refresh();
@@ -53,11 +53,16 @@ export class ListComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap(resp => {
           this.myTickets = resp;
+          return this.ticketService.getAll();
+        }),
+        switchMap(resp => {
+          this.allTicketsPending = resp['pending'].filter(ticket => ticket.createBy._id !== this.userLogged._id);
+          console.log(this.allTicketsPending);
           return this.ticketService.getAssignedTickets(this.userLogged._id);
         }),
         tap(resp => {
           this.ticketsAssignedToMe = resp;
-        })
+        }),
       ).subscribe();
   }
 }

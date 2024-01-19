@@ -1,7 +1,9 @@
 <input id="fileDetail" type="file" (change)="uploadFile($event)" class="submit-file">
 <div class="row" *ngIf="ticket && userLogged">
-    <app-assign-ticket #assignModal [socket]="socket" [ticket]="ticket" (ticketAssigned)="onTicketAssigned($event)"></app-assign-ticket>
-    <app-evaluate-ticket #evaluateModal [socket]="socket" [ticket]="ticket" [userLogged]="userLogged" (evaluationSaved)="onEvaluationCreated($event)"></app-evaluate-ticket>
+    <app-assign-ticket #assignModal [socket]="socket" [ticket]="ticket"
+        (ticketAssigned)="onTicketAssigned($event)"></app-assign-ticket>
+    <app-evaluate-ticket #evaluateModal [socket]="socket" [ticket]="ticket" [userLogged]="userLogged"
+        (evaluationSaved)="onEvaluationCreated($event)"></app-evaluate-ticket>
     <div class="col-md-12 mb-3">
         <nav class="navbar navbar-dark bg-dark rounded">
             <span class="navbar-brand mb-0 h1"><button class="btn btn-ghost-danger" (click)="return()"><i
@@ -9,7 +11,8 @@
                 {{ ticket._id }}</span>
             <span class="navbar-text" *ngIf="ticket.promiseDate !== ''"><b class="text-white">Fecha Compromiso </b>
                 {{ticket.promiseDate}}</span>
-            <span class="" *ngIf="!ticket.promiseDate && ticket.promiseDate === '' && ticket.createBy._id !== userLogged._id">
+            <span class=""
+                *ngIf="!ticket.promiseDate && ticket.promiseDate === '' && ticket.createBy._id !== userLogged._id">
                 <label for="promiseDate">Fecha de compromiso</label>
                 <input [(ngModel)]="promiseDate" id="promiseDate" class="form-control" type="date">
             </span>
@@ -24,8 +27,9 @@
             <div class="form-inline">
                 <button class="btn btn-ghost-info mr-1" *ngIf="ticket.progress < 4" (click)="openFileUpload()"><i
                         class="fa fa-paperclip mr-1"></i>Adj. Archivos</button>
-                <button class="btn btn-ghost-light mr-1" *ngIf="ticket.assignedTo.length < 2 && ticket.createBy._id !== userLogged._id && ticket.progress < 4" (click)="assignModal.show()"><i
-                        class="fa fa-user-plus"></i> Pedir ayuda</button>
+                <button class="btn btn-ghost-light mr-1"
+                    *ngIf="ticket.assignedTo.length < 2 && ticket.createBy._id !== userLogged._id && ticket.progress < 4"
+                    (click)="assignModal.show()"><i class="fa fa-user-plus"></i> Pedir ayuda</button>
                 <button class="btn btn-ghost-danger" *ngIf="ticket.progress < 4" (click)="changeProgress(5)"><i
                         class="fa fa-ban"></i> Cancelar</button>
             </div>
@@ -54,7 +58,8 @@
                         <span class="badge badge-pill badge-primary" *ngIf="ticket.progress >= 3">Atendiendo</span>
                     </div>
                     <div class="col-md-3 text-center">
-                        <span class="badge badge-pill badge-success" *ngIf="ticket.progress >= 4 && ticket.progress !== 5">Completado</span>
+                        <span class="badge badge-pill badge-success"
+                            *ngIf="ticket.progress >= 4 && ticket.progress !== 5">Completado</span>
                         <span class="badge badge-pill badge-danger" *ngIf="ticket.progress === 5">Cancelado</span>
                     </div>
                 </div>
@@ -92,7 +97,9 @@
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item" *ngIf="ticket.files.length === 0">No hay archivos adjuntos
                                 </li>
-                                <li class="list-group-item" *ngFor="let file of ticket.files">{{file.path}} <a class="fa fa-download" target="_blank" href="{{url + '/file/picture/' + file.path }}" aria-hidden="true"></a></li>
+                                <li class="list-group-item" *ngFor="let file of ticket.files">{{file.path}} <a
+                                        class="fa fa-download" target="_blank"
+                                        href="{{url + '/file/picture/' + file.path }}" aria-hidden="true"></a></li>
                             </ul>
                         </div>
                     </div>
@@ -101,9 +108,11 @@
                             <div class="card-header bg-secondary">
                                 <i class="fa fa-user-circle-o"></i>
                                 <b *ngIf="ticket.progress !== 2 && ticket.progress !== 3">Atendido por</b>
-                                <b *ngIf="(ticket.progress === 2 || ticket.progress === 3) && ticket.assignedTo.length === 1">Te
+                                <b
+                                    *ngIf="(ticket.progress === 2 || ticket.progress === 3) && ticket.assignedTo.length === 1">Te
                                     atiende</b>
-                                <b *ngIf="(ticket.progress === 2 || ticket.progress === 3) && ticket.assignedTo.length > 1">Te
+                                <b
+                                    *ngIf="(ticket.progress === 2 || ticket.progress === 3) && ticket.assignedTo.length > 1">Te
                                     atienden</b>
                             </div>
                             <ul class="list-group list-group-flush">
@@ -113,8 +122,10 @@
                                     <div class="row">
                                         <div class="col-1">
                                             <div class="avatar avatar-sm">
-                                                <img class="img-avatar" *ngIf="user.picture" src="{{url + '/user/picture/' + user.picture}}">
-                                                <img class="img-avatar" *ngIf="!user.picture" src="assets/img/avatars/default.jpeg">
+                                                <img class="img-avatar" *ngIf="user.picture"
+                                                    src="{{url + '/user/picture/' + user.picture}}">
+                                                <img class="img-avatar" *ngIf="!user.picture"
+                                                    src="assets/img/avatars/default.jpeg">
                                             </div>
                                         </div>
                                         <div class="col-9">
@@ -129,9 +140,10 @@
             </div>
             <div class="card-footer">
                 <div class="row justify-content-center">
-                    <div class="col-md-1">
-                        <button type="button" class="btn btn-secondary" *ngIf="ticket.progress === 1"
-                            (click)="assignModal.show()">Asignar</button>
+                    <div class="col-md-2">
+                        <button type="button" class="btn btn-secondary"
+                            *ngIf="ticket.progress === 1 && ticket.createBy._id !== userLogged._id"
+                            (click)="assigntToMe(ticket._id)">Asignarme ticket</button>
                         <button type="button" class="btn btn-secondary"
                             *ngIf="ticket.progress === 2 && userLogged._id !== ticket.createBy._id"
                             (click)="changeProgress(3)">Atender</button>
@@ -160,12 +172,15 @@
                                 <div class="row">
                                     <div class="col-md-1 mt-2 mr-1">
                                         <div class="avatar avatar-sm">
-                                            <img class="img-avatar" *ngIf="evaluation.evaluated.picture" src="{{url + '/user/picture/' + evaluation.evaluated.picture}}">
-                                            <img class="img-avatar" *ngIf="!evaluation.evaluated.picture" src="assets/img/avatars/default.jpeg">
+                                            <img class="img-avatar" *ngIf="evaluation.evaluated.picture"
+                                                src="{{url + '/user/picture/' + evaluation.evaluated.picture}}">
+                                            <img class="img-avatar" *ngIf="!evaluation.evaluated.picture"
+                                                src="assets/img/avatars/default.jpeg">
                                         </div>
                                     </div>
                                     <div class="col-md-9">
-                                        <h3 class="name">{{ evaluation.evaluated.name + ' ' + evaluation.evaluated.lastname }}</h3>
+                                        <h3 class="name">{{ evaluation.evaluated.name + ' ' +
+                                            evaluation.evaluated.lastname }}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -173,7 +188,8 @@
                                 <div class="row text-center">
                                     <div class="col-4">
                                         <label>Calidad</label><br>
-                                        <ngb-rating [rate]="evaluation.quality" [max]="5" [readonly]="true"></ngb-rating>
+                                        <ngb-rating [rate]="evaluation.quality" [max]="5"
+                                            [readonly]="true"></ngb-rating>
                                     </div>
                                     <div class="col-4">
                                         <label>Rapidez</label><br>
@@ -181,7 +197,8 @@
                                     </div>
                                     <div class="col-4">
                                         <label>Atención</label><br>
-                                        <ngb-rating [rate]="evaluation.attention" [max]="5" [readonly]="true"></ngb-rating>
+                                        <ngb-rating [rate]="evaluation.attention" [max]="5"
+                                            [readonly]="true"></ngb-rating>
                                     </div>
                                 </div>
                             </div>

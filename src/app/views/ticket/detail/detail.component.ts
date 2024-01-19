@@ -53,6 +53,7 @@ export class DetailComponent implements OnInit {
       .pipe(
         switchMap(ticket => {
           this.ticket = ticket;
+          this.promiseDate = ticket.promiseDate;
           return this.evaluationService.getByTicket(this.route.snapshot.paramMap.get('id'));
         }),
         tap(evaluations => {
@@ -164,6 +165,21 @@ export class DetailComponent implements OnInit {
           return true;
       }
     }
+  }
+
+  assigntToMe(ticketId) {
+    if (this.promiseDate === '' || !this.promiseDate) {
+      this.toastrService.warning('Ingresa la fecha compromiso', '¡Precausión!');
+    } else {
+      this.ticketService.assign(ticketId, this.userLogged._id, this.promiseDate).subscribe(
+        resp => {
+          this.socket.emit('status-change');
+          this.toastrService.success('Ticket asignado', '¡Éxito!');
+          this.onTicketAssigned(null);
+        }
+      );
+    }
+
   }
 
 }
