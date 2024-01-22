@@ -57,7 +57,8 @@ export class ListComponent implements OnInit, OnDestroy {
         }),
         switchMap(resp => {
           this.allTicketsPending = resp['pending'].filter(ticket => ticket.createBy._id !== this.userLogged._id);
-          console.log(this.allTicketsPending);
+          this.allTicketsPending = this.allTicketsPending.filter(ticket => this.userLogged.subcategories.includes(ticket.subcategory._id));
+
           return this.ticketService.getAssignedTickets(this.userLogged._id);
         }),
         tap(resp => {

@@ -60,21 +60,23 @@ export class CreateComponent implements OnInit, OnDestroy {
       .pipe(
         switchMap(categories => {
           this.categories = categories.categories;
+          this.categories = this.categories.filter(category => category.active === true);
           return this.branchOfficeService.getAll();
         }),
         switchMap(resp => {
           this.branchOffices = resp.branchOffice;
+          this.branchOffices = this.branchOffices.filter(branchOffice => branchOffice.active === true);
           return resp.branchOffice;
         })
       ).subscribe();
 
-      this.ticketForm.get('category').valueChanges
-        .pipe(takeUntil(this.unsubscribe))
-        .subscribe( value => {
-          this.subcategoryService.getByCategoryAndStatus(value, 'true').subscribe( subcategories => {
-            this.subcategories = subcategories.subcategories;
-          });
+    this.ticketForm.get('category').valueChanges
+      .pipe(takeUntil(this.unsubscribe))
+      .subscribe(value => {
+        this.subcategoryService.getByCategoryAndStatus(value, 'true').subscribe(subcategories => {
+          this.subcategories = subcategories.subcategories;
         });
+      });
   }
 
   ngOnDestroy(): void {
